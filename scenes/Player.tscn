@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dfrd31wjhtut6"]
+
+[ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="1_p0vlq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v6fml"]
+
+[node name="Player" type="CharacterBody2D" unique_id=1915667930]
+script = ExtResource("1_p0vlq")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=592752671]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=110172285]
+shape = SubResource("CapsuleShape2D_v6fml")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=175267958]
+position_smoothing_enabled = true
