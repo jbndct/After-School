@@ -32,7 +32,10 @@ func _ready() -> void:
 	$Floor/CollisionShape2D.position = Vector2(0, 0)
 	$Player/CollisionShape2D.position = Vector2(0, -26)
 	
+	$Camera2D.limit_right = 1200
+	
 	$Player.reached_end.connect(_on_player_reached_end)
 
 func _on_player_reached_end() -> void:
 	get_tree().change_scene_to_file(next_scene)
+	

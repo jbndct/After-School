@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://4qu577wxrsqk"]
+
+[ext_resource type="Script" uid="uid://xujsvpw8wr65" path="res://scenes/room_day_1.gd" id="1_gvyvb"]
+
+[node name="RoomDay1" type="Node2D" unique_id=1493447812]
+script = ExtResource("1_gvyvb")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=557540539]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1723931524]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Day 1 — Morning"
