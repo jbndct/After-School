@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cfsxqdyhojtik" path="res://scenes/street.gd" id="1_l8dq3"]
 [ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="1_tr5t1"]
-[ext_resource type="Script" uid="uid://bdc2gnbl067s6" path="res://scenes/camera_2d.gd" id="3_3ffmx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
 size = Vector2(4000, 20)
@@ -41,7 +40,6 @@ color = Color(0.050980393, 0.047058824, 0.043137256, 1)
 [node name="Floor" type="StaticBody2D" parent="." unique_id=870931988]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1766108979]
-position = Vector2(-2000, -10)
 shape = SubResource("RectangleShape2D_t23v0")
 
 [node name="ColorRect" type="ColorRect" parent="Floor" unique_id=931082936]
@@ -55,13 +53,8 @@ color = Color(1, 0.5058824, 1, 1)
 script = ExtResource("1_tr5t1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=389966840]
-position = Vector2(0, 640)
 shape = SubResource("RectangleShape2D_3ffmx")
 
 [node name="ColorRect" type="ColorRect" parent="Player" unique_id=399144416]
 offset_right = 32.0
 offset_bottom = 52.0
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1319311483 node_paths=PackedStringArray("target")]
-script = ExtResource("3_3ffmx")
-target = NodePath("../Player")
