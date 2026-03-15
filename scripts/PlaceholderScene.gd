@@ -5,8 +5,8 @@ extends Node2D
 @export var auto_advance: bool = false
 @export var auto_advance_time: float = 2.0
 
-@onready var label = $CanvasLayer/Label
-@onready var button = $CanvasLayer/Button
+@onready var label = $CanvasLayer/VBoxContainer/Label
+@onready var button = $CanvasLayer/VBoxContainer/Button
 
 func _ready() -> void:
 	label.text = scene_name
