@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://r5nc7lqdt8q4"]
+
+[ext_resource type="PackedScene" uid="uid://bqtov8uwgksqx" path="res://scenes/Placeholder.tscn" id="1_2qnob"]
+
+[node name="SchoolDay1" type="Node2D" unique_id=1831492294]
+
+[node name="Placeholder" parent="." unique_id=1338268759 instance=ExtResource("1_2qnob")]
+scene_name = "School"
+next_scene = "res://scenes/street_day_1_evening.tscn"

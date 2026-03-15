@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://ct0ehqhdymxg5"]
+[gd_scene format=3 uid="uid://uqspo5ul31oq"]
 
-[ext_resource type="Script" uid="uid://cfsxqdyhojtik" path="res://scenes/street.gd" id="1_l8dq3"]
-[ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="1_tr5t1"]
+[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scenes/street.gd" id="1_x8rtj"]
+[ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="2_x7gr6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
 size = Vector2(4000, 20)
@@ -10,7 +10,8 @@ size = Vector2(4000, 20)
 size = Vector2(16, 26)
 
 [node name="StreetScene" type="Node2D" unique_id=1867167975]
-script = ExtResource("1_l8dq3")
+script = ExtResource("1_x8rtj")
+next_scene = "res://scenes/guardpost.tscn"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=87778083]
 
@@ -50,7 +51,7 @@ offset_bottom = 10.0
 color = Color(1, 0.5058824, 1, 1)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1348885061]
-script = ExtResource("1_tr5t1")
+script = ExtResource("2_x7gr6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=389966840]
 shape = SubResource("RectangleShape2D_3ffmx")

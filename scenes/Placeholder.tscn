@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bqtov8uwgksqx"]
+
+[ext_resource type="Script" uid="uid://dwt2fwn53txa7" path="res://scripts/PlaceholderScene.gd" id="1_vrk2s"]
+
+[node name="PlaceholderUI" type="Node2D" unique_id=1338268759]
+script = ExtResource("1_vrk2s")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=370396938]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1562761661]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.5
+offset_top = -29.0
+offset_right = 68.5
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=1980712234]
+layout_mode = 2
+text = "Room Name Here"
+
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer" unique_id=1133554605]
+layout_mode = 2
+text = "Next"
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1497031499]

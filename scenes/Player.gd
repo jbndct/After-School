@@ -3,7 +3,7 @@ extends CharacterBody2D
 const SPEED = 180.0
 const GRAVITY = 800.0
 
-var scene_end_x: float = 3200.0
+var scene_end_x: float = 1200.0
 signal reached_end
 
 var debug_label: Label

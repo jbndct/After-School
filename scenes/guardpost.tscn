@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cbyis58ngqb3e"]
+
+[ext_resource type="PackedScene" uid="uid://bqtov8uwgksqx" path="res://scenes/Placeholder.tscn" id="1_hc6mj"]
+
+[node name="Guardpost" type="Node2D" unique_id=880191435]
+
+[node name="PlaceholderUI" parent="." unique_id=1338268759 instance=ExtResource("1_hc6mj")]
+scene_name = "Work"
+next_scene = "res://scenes/street_night.tscn"

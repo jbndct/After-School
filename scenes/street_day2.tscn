@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://di6bfsv3jysp6"]
+
+[ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="1_cf0be"]
+[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scenes/street.gd" id="1_wrhdd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
+size = Vector2(4000, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ffmx"]
+size = Vector2(16, 26)
+
+[node name="StreetScene" type="Node2D" unique_id=1867167975]
+script = ExtResource("1_wrhdd")
+next_scene = "res://scenes/registrar.tscn"
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=87778083]
+
+[node name="ParallaxLayer (far)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1025162693]
+motion_scale = Vector2(0.2, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=1925726265]
+offset_right = 3840.0
+offset_bottom = 720.0
+color = Color(0.6782177, 0.6097488, 0.54191554, 1)
+
+[node name="ParallaxLayer (mid)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1988227769]
+motion_scale = Vector2(0.5, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer (mid)" unique_id=964204709]
+offset_right = 3840.0
+offset_bottom = 720.0
+color = Color(0.16470589, 0.1254902, 0.09411765, 1)
+
+[node name="ParallaxLayer (near)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1783203336]
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer (near)" unique_id=365133773]
+offset_right = 3840.0
+offset_bottom = 720.0
+color = Color(0.6045807, 0.5869556, 0.56936663, 1)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=870931988]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1766108979]
+shape = SubResource("RectangleShape2D_t23v0")
+
+[node name="ColorRect" type="ColorRect" parent="Floor" unique_id=931082936]
+offset_left = -2000.0
+offset_top = -10.0
+offset_right = 2000.0
+offset_bottom = 10.0
+color = Color(1, 0.5058824, 1, 1)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1348885061]
+script = ExtResource("1_cf0be")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=389966840]
+shape = SubResource("RectangleShape2D_3ffmx")
+
+[node name="ColorRect" type="ColorRect" parent="Player" unique_id=399144416]
+offset_right = 32.0
+offset_bottom = 52.0

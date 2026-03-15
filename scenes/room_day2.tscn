@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c3tuq3ep043ho"]
+
+[ext_resource type="Script" uid="uid://k0ylcdrj5e8c" path="res://scenes/room_day_2.gd" id="1_nufqr"]
+[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_8u6pf"]
+
+[node name="RoomDay2" type="Node2D" unique_id=1493447812]
+script = ExtResource("1_nufqr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=557540539]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1723931524]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Day 1 — Morning"
+
+[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("2_8u6pf")]
