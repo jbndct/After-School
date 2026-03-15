@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://di6bfsv3jysp6"]
 
 [ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="1_cf0be"]
+[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scenes/street.gd" id="1_wrhdd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
 size = Vector2(4000, 20)
@@ -9,6 +10,8 @@ size = Vector2(4000, 20)
 size = Vector2(16, 26)
 
 [node name="StreetScene" type="Node2D" unique_id=1867167975]
+script = ExtResource("1_wrhdd")
+next_scene = "res://scenes/registrar.tscn"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=87778083]
 

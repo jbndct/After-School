@@ -6,4 +6,4 @@
 
 [node name="Placeholder" parent="." unique_id=1338268759 instance=ExtResource("1_mqjok")]
 scene_name = "The End"
-next_scene = "room_day1.tscn"
+next_scene = "res://scenes/room_day1.tscn"

@@ -1,48 +1,7 @@
 [gd_scene format=3 uid="uid://uqspo5ul31oq"]
 
+[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scenes/street.gd" id="1_x8rtj"]
 [ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="2_x7gr6"]
-
-[sub_resource type="GDScript" id="GDScript_lnmqf"]
-script/source = "extends Node2D
-
-@export var next_scene: String = \"res://scenes/school_day_1.tscn\"
-
-func _ready() -> void:
-	# parallax layers
-	$ParallaxBackground/\"ParallaxLayer (far)\"/ColorRect.size = Vector2(3840, 720)
-	$ParallaxBackground/\"ParallaxLayer (mid)\"/ColorRect.size = Vector2(3840, 720)
-	$ParallaxBackground/\"ParallaxLayer (near)\"/ColorRect.size = Vector2(3840, 720)
-	
-	# player rectangle and starting position
-	$Player/ColorRect.size = Vector2(32, 52)
-	$Player/ColorRect.position = Vector2(-16, -52)
-	$Player.position = Vector2(80, 600)
-	
-	# floor rectangle
-	$Floor/ColorRect.size = Vector2(4000, 20)
-	$Floor/ColorRect.position = Vector2(-2000, -10)
-	$Floor.position = Vector2(0, 640)
-	
-	# force the floor collision shape size
-	var floor_shape = RectangleShape2D.new()
-	floor_shape.size = Vector2(4000, 20)
-	$Floor/CollisionShape2D.shape = floor_shape
-	
-	# force the player collision shape size
-	var player_shape = RectangleShape2D.new()
-	player_shape.size = Vector2(32, 52)
-	$Player/CollisionShape2D.shape = player_shape
-	
-	# Force the invisible collision boxes to perfectly match the drawn rectangles
-	$Floor/CollisionShape2D.position = Vector2(0, 0)
-	$Player/CollisionShape2D.position = Vector2(0, -26)
-		
-	$Player.reached_end.connect(_on_player_reached_end)
-
-func _on_player_reached_end() -> void:
-	get_tree().change_scene_to_file(next_scene)
-	
-"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
 size = Vector2(4000, 20)
@@ -51,7 +10,7 @@ size = Vector2(4000, 20)
 size = Vector2(16, 26)
 
 [node name="StreetScene" type="Node2D" unique_id=1867167975]
-script = SubResource("GDScript_lnmqf")
+script = ExtResource("1_x8rtj")
 next_scene = "res://scenes/guardpost.tscn"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=87778083]
