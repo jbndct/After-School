@@ -27,14 +27,10 @@ func _ready() -> void:
 	var player_shape = RectangleShape2D.new()
 	player_shape.size = Vector2(32, 52)
 	$Player/CollisionShape2D.shape = player_shape
-
-	# debug — confirm player shape is set
-	print("Player shape: ", $Player/CollisionShape2D.shape)
-	print("Player shape size: ", $Player/CollisionShape2D.shape.size)
-
-	print("Floor position: ", $Floor.global_position)
-	print("Player position: ", $Player.global_position)
-	print("Floor shape size: ", $Floor/CollisionShape2D.shape.size)
+	
+	# Force the invisible collision boxes to perfectly match the drawn rectangles
+	$Floor/CollisionShape2D.position = Vector2(0, 0)
+	$Player/CollisionShape2D.position = Vector2(0, -26)
 	
 	$Player.reached_end.connect(_on_player_reached_end)
 

@@ -13,4 +13,6 @@ script = ExtResource("1_p0vlq")
 shape = SubResource("CapsuleShape2D_v6fml")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=175267958]
+limit_top = 0
+limit_bottom = 720
 position_smoothing_enabled = true
