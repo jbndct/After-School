@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://4qu577wxrsqk"]
 
 [ext_resource type="Script" uid="uid://xujsvpw8wr65" path="res://scenes/room_day_1.gd" id="1_gvyvb"]
+[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_mmu0o"]
 
 [node name="RoomDay1" type="Node2D" unique_id=1493447812]
 script = ExtResource("1_gvyvb")
@@ -11,3 +12,5 @@ script = ExtResource("1_gvyvb")
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Day 1 — Morning"
+
+[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("2_mmu0o")]
