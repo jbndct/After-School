@@ -5,7 +5,7 @@ signal money_changed(new_amount: int)
 signal notification_added(notif: Dictionary)
 signal sugal_unlocked
 signal buzzing_changed(is_buzzing: bool)
-signal paycheck_received_flag
+signal paycheck_received
 
 # ─── MONEY ────────────────────────────────────────────
 var hand: int = 2000
@@ -20,7 +20,7 @@ var shift_hour: int = 0
 var logbook_signed: int = 0
 
 # ─── PHONE ────────────────────────────────────────────
-var sugal_unlocked: bool = false
+var sugal_unlocked_flag: bool = false
 var buzzing: bool = false
 var notifications: Array = []
 # notif shape: { id, app, text, time, read }
@@ -52,8 +52,8 @@ func receive_dante_loan() -> void:
 func receive_paycheck() -> void:
 	add_money(6500)
 	paycheck_received_flag = true
-	sugal_unlocked = true
-	emit_signal("paycheck_received_flag")
+	sugal_unlocked_flag = true
+	emit_signal("paycheck_received")
 	emit_signal("sugal_unlocked")
 
 func accept_sugal_loan(amount: int) -> void:
@@ -91,7 +91,7 @@ func reset() -> void:
 	path = ""
 	shift_hour = 0
 	logbook_signed = 0
-	sugal_unlocked = false
+	sugal_unlocked_flag = false
 	buzzing = false
 	notifications = []
 	sugal_opened = false
