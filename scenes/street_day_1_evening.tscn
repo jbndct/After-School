@@ -48,7 +48,7 @@ offset_left = -2000.0
 offset_top = -10.0
 offset_right = 2000.0
 offset_bottom = 10.0
-color = Color(1, 0.5058824, 1, 1)
+color = Color(0.14117648, 0.06666667, 0.003921569, 1)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1348885061]
 script = ExtResource("2_x7gr6")
@@ -59,3 +59,6 @@ shape = SubResource("RectangleShape2D_3ffmx")
 [node name="ColorRect" type="ColorRect" parent="Player" unique_id=399144416]
 offset_right = 32.0
 offset_bottom = 52.0
+color = Color(0.5686275, 0.24705882, 0.02745098, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=126629122]
