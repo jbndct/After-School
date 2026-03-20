@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scenes/street.gd" id="1_x8rtj"]
 [ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="2_x7gr6"]
+[ext_resource type="Script" uid="uid://bdc2gnbl067s6" path="res://scenes/camera_2d.gd" id="3_x7gr6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
 size = Vector2(4000, 20)
@@ -61,4 +62,6 @@ offset_right = 32.0
 offset_bottom = 52.0
 color = Color(0.5686275, 0.24705882, 0.02745098, 1)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=126629122]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=126629122 node_paths=PackedStringArray("target")]
+script = ExtResource("3_x7gr6")
+target = NodePath("../Player")
