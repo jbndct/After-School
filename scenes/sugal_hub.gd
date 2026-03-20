@@ -2,7 +2,7 @@ extends Control
 
 const COLS = 6
 const ROWS = 5
-const SYMBOLS = ["🍋", "🍊", "🍇", "💎", "7️⃣", "⭐"]
+const SYMBOLS = ["🖕", "🤌", "🤰", "🐈‍⬛", "😮", "🐔", "😲"]
 const WIN_THRESHOLD = 8
 const CELL_SIZE = 64
 const GAP = 8
@@ -14,11 +14,10 @@ const GAP = 8
 @onready var exit_button = $HBoxContainer/PanelContainer/VBoxContainer/ExitButton
 
 var current_bet: int = 100
-var grid_nodes: Array = [] # 2D array to track [col][row]
+var grid_nodes: Array = [] 
 var spin_total_win: int = 0
 
 func _ready() -> void:
-	# 1. Setup the 2D array and draw the static background slots
 	for c in range(COLS):
 		grid_nodes.append([])
 		for r in range(ROWS):
@@ -43,7 +42,6 @@ func _ready() -> void:
 	GameState.sugal_session_active = true
 	update_ui()
 
-# Math helper to find the exact pixel location of a grid coordinate
 func get_cell_pos(col: int, row: int) -> Vector2:
 	return Vector2(col * (CELL_SIZE + GAP), row * (CELL_SIZE + GAP))
 
@@ -62,27 +60,32 @@ func spin() -> void:
 	spin_total_win = 0
 	win_label.add_theme_color_override("font_color", Color.WHITE)
 	
-	# Clear existing board visuals with an explosive scale tween
+	var has_old_symbols = false
 	var clear_tween = create_tween().set_parallel(true)
+	
 	for c in range(COLS):
 		for r in range(ROWS):
 			var lbl = grid_nodes[c][r]
 			if lbl:
+				has_old_symbols = true
 				clear_tween.tween_property(lbl, "scale", Vector2.ZERO, 0.2)
-				lbl.queue_free()
-			grid_nodes[c][r] = null
 			
-	if clear_tween.get_tween_count() > 0:
+	if has_old_symbols:
 		await clear_tween.finished
+		
+		for child in game_board.get_children():
+			if child is Label:
+				child.queue_free()
+				
+		for c in range(COLS):
+			for r in range(ROWS):
+				grid_nodes[c][r] = null
 
-	# Spawn the initial grid falling from above
 	var drop_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	for c in range(COLS):
 		for r in range(ROWS):
 			var lbl = spawn_symbol(c, r)
-			# Teleport it high above the screen
 			lbl.position.y -= 500 + (r * 50) 
-			# Tween it down to its actual position
 			drop_tween.tween_property(lbl, "position", get_cell_pos(c, r), 0.6 + (r * 0.1))
 	
 	await drop_tween.finished
@@ -96,7 +99,6 @@ func spawn_symbol(col: int, row: int) -> Label:
 	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	lbl.add_theme_font_size_override("font_size", 38)
 	
-	# Pivot in the center so it scales neatly when exploding
 	lbl.pivot_offset = Vector2(CELL_SIZE / 2.0, CELL_SIZE / 2.0)
 	lbl.position = get_cell_pos(col, row)
 	
@@ -124,7 +126,6 @@ func process_cascades() -> void:
 		win_label.text = "CASCADE! Win so far: ₱" + str(spin_total_win)
 		await get_tree().create_timer(0.4).timeout
 		
-		# Explode winning symbols visually
 		var explode_tween = create_tween().set_parallel(true)
 		for c in range(COLS):
 			for r in range(ROWS):
@@ -134,7 +135,6 @@ func process_cascades() -> void:
 					
 		await explode_tween.finished
 		
-		# Delete them from memory and the 2D array
 		for c in range(COLS):
 			for r in range(ROWS):
 				var lbl = grid_nodes[c][r]
@@ -163,34 +163,31 @@ func apply_gravity() -> void:
 	
 	for c in range(COLS):
 		var empty_spaces = 0
-		# Read column bottom to top
 		for r in range(ROWS - 1, -1, -1):
 			var lbl = grid_nodes[c][r]
 			if lbl == null:
 				empty_spaces += 1
 			elif empty_spaces > 0:
-				# Move existing symbol down
 				var new_row = r + empty_spaces
 				grid_nodes[c][new_row] = lbl
 				grid_nodes[c][r] = null
 				gravity_tween.tween_property(lbl, "position", get_cell_pos(c, new_row), 0.25)
 				has_movement = true
 		
-		# Spawn new symbols to fill the empty void at the top
 		for i in range(empty_spaces):
 			var new_row = (empty_spaces - 1) - i
 			var lbl = spawn_symbol(c, new_row)
-			lbl.position.y -= 400 + (i * 50) # Start above screen
+			lbl.position.y -= 400 + (i * 50) 
 			gravity_tween.tween_property(lbl, "position", get_cell_pos(c, new_row), 0.3 + (i * 0.1)).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
 			has_movement = true
 
 	if has_movement:
 		await gravity_tween.finished
-		await get_tree().create_timer(0.2).timeout # Brief pause before checking new wins
+		await get_tree().create_timer(0.2).timeout 
 
 func update_ui() -> void:
 	balance_label.text = "E-Pera: ₱" + str(GameState.hand)
 
 func _on_exit_pressed() -> void:
 	GameState.sugal_session_active = false
-	get_tree().change_scene_to_file("res://scenes/guardpost.tscn")
+	get_tree().change_scene_to_file("res://scenes/street_night.tscn")
