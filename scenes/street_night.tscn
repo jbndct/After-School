@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://drosvds7d2h5n"]
 
-[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scenes/street.gd" id="1_3p2p5"]
+[ext_resource type="Script" uid="uid://ckutkrr3g3jm4" path="res://scenes/street_night.gd" id="1_3p2p5"]
 [ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="2_wm2ly"]
+[ext_resource type="Script" uid="uid://bdc2gnbl067s6" path="res://scenes/camera_2d.gd" id="3_wm2ly"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
 size = Vector2(4000, 20)
@@ -48,7 +49,7 @@ offset_left = -2000.0
 offset_top = -10.0
 offset_right = 2000.0
 offset_bottom = 10.0
-color = Color(1, 0.5058824, 1, 1)
+color = Color(0.14117648, 0.06666667, 0.003921569, 1)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1348885061]
 script = ExtResource("2_wm2ly")
@@ -59,3 +60,8 @@ shape = SubResource("RectangleShape2D_3ffmx")
 [node name="ColorRect" type="ColorRect" parent="Player" unique_id=399144416]
 offset_right = 32.0
 offset_bottom = 52.0
+color = Color(0.5686275, 0.24705882, 0.02745098, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=48414453 node_paths=PackedStringArray("target")]
+script = ExtResource("3_wm2ly")
+target = NodePath("../Player")

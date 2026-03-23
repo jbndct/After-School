@@ -6,4 +6,4 @@
 
 [node name="PlaceholderUI" parent="." unique_id=1338268759 instance=ExtResource("1_hc6mj")]
 scene_name = "Work"
-next_scene = "res://scenes/street_night.tscn"
+next_scene = "res://scenes/SugalHub.tscn"

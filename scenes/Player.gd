@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y += GRAVITY * delta
 
 	# 2. Check standard arrow keys
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = Input.get_axis("move_left", "move_right")
 	
 	if direction != 0:
 		velocity.x = direction * SPEED
