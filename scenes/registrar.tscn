@@ -1,9 +1,16 @@
-[gd_scene format=3 uid="uid://c2j2tmd6fd8d6"]
+[gd_scene format=3 uid="uid://ct3ekaqasjvdv"]
 
-[ext_resource type="PackedScene" uid="uid://bqtov8uwgksqx" path="res://scenes/Placeholder.tscn" id="1_o1b1l"]
+[ext_resource type="Script" uid="uid://4uunytyxforn" path="res://scenes/registrar.gd" id="1_3o05l"]
+[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_kbss6"]
 
-[node name="Registar" type="Node2D" unique_id=1195759037]
+[node name="Registrar" type="Node2D" unique_id=1493447812]
+script = ExtResource("1_3o05l")
 
-[node name="PlaceholderUI" parent="." unique_id=1338268759 instance=ExtResource("1_o1b1l")]
-scene_name = "Registrar "
-next_scene = "res://scenes/ending.tscn"
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=557540539]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1723931524]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Registrar - Ending Scene"
+
+[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("2_kbss6")]
