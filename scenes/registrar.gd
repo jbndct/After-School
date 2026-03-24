@@ -12,8 +12,11 @@ func _ready() -> void:
 			{ "speaker": "REGISTRAR", "text": "Good morning. Tuition payment?" },
 			{ "speaker": "", "text": "..." },
 			{ "speaker": "", "text": "The phone. The balance. The number. It is not enough." },
-			{ "speaker": "REGISTRAR", "text": "I'm sorry. Without full payment we can't enroll you this semester." }
-		]
+			{ "speaker": "REGISTRAR", "text": "I'm sorry. Without full payment we can't enroll you this semester."},
+			{ "speaker": "FRIEND", "text": "Ginamble mo ba yung binigay ko sayo? Bakit mo yun ginawa?"},
+			{ "speaker": "FRIEND", "text": "Don't talk to me. We're done."}
+			
+			]
 	else:
 		dialogue_lines = [
 			{ "speaker": "REGISTRAR", "text": "Good morning. Tuition payment?" },
