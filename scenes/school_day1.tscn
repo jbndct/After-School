@@ -2,9 +2,22 @@
 
 [ext_resource type="Script" uid="uid://d0ixxeb8bu0tn" path="res://scenes/school_day_1.gd" id="1_e7t1i"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_nntrm"]
+[ext_resource type="Texture2D" uid="uid://bgogh8c1rwsyn" path="res://assets/sprites/school.png" id="2_oq6bn"]
 
 [node name="SchoolDay1" type="Node2D" unique_id=1493447812]
 script = ExtResource("1_e7t1i")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=381359362]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_oq6bn")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=557540539]
 

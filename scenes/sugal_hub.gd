@@ -13,7 +13,7 @@ const GAP = 8
 @onready var spin_button = $HBoxContainer/PanelContainer/VBoxContainer/SpinButton
 @onready var exit_button = $HBoxContainer/PanelContainer/VBoxContainer/ExitButton
 
-var current_bet: int = 100
+var current_bet: int = 1000
 var grid_nodes: Array = [] 
 var spin_total_win: int = 0
 
