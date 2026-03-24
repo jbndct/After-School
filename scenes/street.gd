@@ -3,11 +3,6 @@ extends Node2D
 @export var next_scene: String = "res://scenes/room_day1.tscn"
 
 func _ready() -> void:
-	# parallax layers
-	$ParallaxBackground/"ParallaxLayer (far)"/ColorRect.size = Vector2(3840, 720)
-	$ParallaxBackground/"ParallaxLayer (mid)"/ColorRect.size = Vector2(3840, 720)
-	$ParallaxBackground/"ParallaxLayer (near)"/ColorRect.size = Vector2(3840, 720)
-	
 	# player rectangle and starting position
 	$Player.position = Vector2(80, 600)
 	

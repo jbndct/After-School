@@ -1,14 +1,11 @@
 [gd_scene format=3 uid="uid://drosvds7d2h5n"]
 
 [ext_resource type="Script" uid="uid://ckutkrr3g3jm4" path="res://scenes/street_night.gd" id="1_3p2p5"]
-[ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scenes/Player.gd" id="2_wm2ly"]
-[ext_resource type="Script" uid="uid://bdc2gnbl067s6" path="res://scenes/camera_2d.gd" id="3_wm2ly"]
+[ext_resource type="Texture2D" uid="uid://hlu8iiv2el0" path="res://assets/sprites/city-background-variants-v0-dtqv566hx5zb1.png" id="2_wm2ly"]
+[ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="3_vbqcg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
 size = Vector2(4000, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ffmx"]
-size = Vector2(16, 26)
 
 [node name="StreetScene" type="Node2D" unique_id=1867167975]
 script = ExtResource("1_3p2p5")
@@ -16,28 +13,20 @@ next_scene = "res://scenes/room_day2.tscn"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=87778083]
 
+[node name="CanvasModulate" type="CanvasModulate" parent="ParallaxBackground" unique_id=988069436]
+color = Color(0.101960786, 0.10980392, 0.16078432, 1)
+
 [node name="ParallaxLayer (far)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1025162693]
 motion_scale = Vector2(0.2, 1)
+motion_mirroring = Vector2(2000, 0)
 
-[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=1925726265]
-offset_right = 3840.0
-offset_bottom = 720.0
-color = Color(0.101960786, 0.08235294, 0.0627451, 1)
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=2031374087]
+texture = ExtResource("2_wm2ly")
 
 [node name="ParallaxLayer (mid)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1988227769]
 motion_scale = Vector2(0.5, 1)
 
-[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer (mid)" unique_id=964204709]
-offset_right = 3840.0
-offset_bottom = 720.0
-color = Color(0.16470589, 0.1254902, 0.09411765, 1)
-
 [node name="ParallaxLayer (near)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1783203336]
-
-[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer (near)" unique_id=365133773]
-offset_right = 3840.0
-offset_bottom = 720.0
-color = Color(0.050980393, 0.047058824, 0.043137256, 1)
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=870931988]
 
@@ -51,17 +40,4 @@ offset_right = 2000.0
 offset_bottom = 10.0
 color = Color(0.14117648, 0.06666667, 0.003921569, 1)
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1348885061]
-script = ExtResource("2_wm2ly")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=389966840]
-shape = SubResource("RectangleShape2D_3ffmx")
-
-[node name="ColorRect" type="ColorRect" parent="Player" unique_id=399144416]
-offset_right = 32.0
-offset_bottom = 52.0
-color = Color(0.5686275, 0.24705882, 0.02745098, 1)
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=48414453 node_paths=PackedStringArray("target")]
-script = ExtResource("3_wm2ly")
-target = NodePath("../Player")
+[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("3_vbqcg")]
