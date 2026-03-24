@@ -11,7 +11,9 @@ const GAP = 8
 @onready var balance_label = $HBoxContainer/PanelContainer/VBoxContainer/BalanceLabel
 @onready var win_label = $HBoxContainer/PanelContainer/VBoxContainer/WinLabel
 @onready var spin_button = $HBoxContainer/PanelContainer/VBoxContainer/SpinButton
-@onready var exit_button = $HBoxContainer/PanelContainer/VBoxContainer/ExitButton
+
+@onready var fake_exit_button = $HBoxContainer/PanelContainer/VBoxContainer/FakeExitButton
+@onready var real_exit_button = $HBoxContainer/PanelContainer/VBoxContainer/RealExitButton 
 
 var current_bet: int = 1000
 var grid_nodes: Array = [] 
@@ -35,8 +37,10 @@ func _ready() -> void:
 			slot.add_theme_stylebox_override("panel", style)
 			game_board.add_child(slot)
 
+	# FIXED: Connect the buttons to their separate, distinct functions
 	spin_button.pressed.connect(_on_spin_pressed)
-	exit_button.pressed.connect(_on_exit_pressed)
+	fake_exit_button.pressed.connect(_on_fake_exit_pressed)
+	real_exit_button.pressed.connect(_on_real_exit_pressed)
 	
 	GameState.sugal_opened = true
 	GameState.sugal_session_active = true
@@ -53,7 +57,12 @@ func _on_spin_pressed() -> void:
 	GameState.deduct_money(current_bet)
 	GameState.sugal_total_lost += current_bet
 	win_label.text = "Spinning..."
+	
+	# Lock down all escape routes while spinning
 	spin_button.disabled = true
+	fake_exit_button.disabled = true 
+	real_exit_button.disabled = true
+	
 	spin()
 
 func spin() -> void:
@@ -86,7 +95,10 @@ func spin() -> void:
 		for r in range(ROWS):
 			var lbl = spawn_symbol(c, r)
 			lbl.position.y -= 500 + (r * 50) 
-			drop_tween.tween_property(lbl, "position", get_cell_pos(c, r), 0.6 + (r * 0.1))
+			
+			# ADDICTION UPGRADE: Added randf_range to make the drop speed slightly unpredictable
+			var drop_speed = 0.6 + (r * 0.1) + randf_range(0.0, 0.3)
+			drop_tween.tween_property(lbl, "position", get_cell_pos(c, r), drop_speed)
 	
 	await drop_tween.finished
 	await process_cascades()
@@ -155,7 +167,10 @@ func process_cascades() -> void:
 			win_label.add_theme_color_override("font_color", Color.GRAY)
 
 		update_ui()
+		# Re-enable the buttons only after the entire spin/cascade sequence is completely over
 		spin_button.disabled = false
+		fake_exit_button.disabled = false
+		real_exit_button.disabled = false
 
 func apply_gravity() -> void:
 	var gravity_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
@@ -187,7 +202,21 @@ func apply_gravity() -> void:
 
 func update_ui() -> void:
 	balance_label.text = "E-Pera: ₱" + str(GameState.hand)
+	
+func _on_fake_exit_pressed() -> void:
+	var manipulation_texts = [
+		"Are you sure? You're on a hot streak!",
+		"Wait! A HUGE jackpot is dropping soon!",
+		"Don't quit now, your luck is turning around!",
+		"Error: Cannot exit during active event."
+	]
+	win_label.text = manipulation_texts.pick_random()
+	win_label.add_theme_color_override("font_color", Color.RED)
+	
+	fake_exit_button.disabled = true
+	await get_tree().create_timer(1.5).timeout
+	fake_exit_button.disabled = false
 
-func _on_exit_pressed() -> void:
+func _on_real_exit_pressed() -> void:
 	GameState.sugal_session_active = false
 	get_tree().change_scene_to_file("res://scenes/street_night.tscn")

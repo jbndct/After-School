@@ -55,6 +55,11 @@ text = "Ready to spin!"
 layout_mode = 2
 text = "SPIN"
 
-[node name="ExitButton" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=1731628616]
+[node name="RealExitButton" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=1340950022]
+layout_mode = 2
+theme_override_font_sizes/font_size = 3
+text = "X"
+
+[node name="FakeExitButton" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=1731628616]
 layout_mode = 2
 text = "EXIT"
