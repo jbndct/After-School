@@ -4,13 +4,7 @@ extends Node2D
 
 func _ready() -> void:
 	# parallax layers
-	$ParallaxBackground/"ParallaxLayer (far)"/ColorRect.size = Vector2(3840, 720)
-	$ParallaxBackground/"ParallaxLayer (mid)"/ColorRect.size = Vector2(3840, 720)
-	$ParallaxBackground/"ParallaxLayer (near)"/ColorRect.size = Vector2(3840, 720)
 	
-	# player rectangle and starting position
-	$Player/ColorRect.size = Vector2(32, 52)
-	$Player/ColorRect.position = Vector2(16, -52)
 	$Player.position = Vector2(800, 600)
 	
 	# floor rectangle
@@ -29,9 +23,7 @@ func _ready() -> void:
 	$Player/CollisionShape2D.shape = player_shape
 	
 	# Force the invisible collision boxes to perfectly match the drawn rectangles
-	$Floor/CollisionShape2D.position = Vector2(0, 0)
-	$Player/CollisionShape2D.position = Vector2(0, -26)
-		
+	$Floor/CollisionShape2D.position = Vector2(0, 0)		
 	$Player.reached_end.connect(_on_player_reached_end)
 
 func _on_player_reached_end() -> void:
