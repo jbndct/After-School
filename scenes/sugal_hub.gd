@@ -20,6 +20,7 @@ const GAP = 8
 @onready var moving_exit_btn = $WithdrawalOverlay/MovingExitButton
 @onready var fake_buttons_container = $WithdrawalOverlay/FakeButtonsContainer
 
+var is_spinning: bool = false
 var withdrawal_active: bool = false
 var required_exit_clicks: int = 10
 var current_exit_clicks: int = 0
@@ -87,6 +88,7 @@ func _on_spin_pressed() -> void:
 	spin()
 
 func spin() -> void:
+	is_spinning = true
 	spin_total_win = 0
 	win_label.add_theme_color_override("font_color", Color.WHITE)
 	
@@ -187,6 +189,7 @@ func process_cascades() -> void:
 			win_label.add_theme_color_override("font_color", Color.GRAY)
 
 		update_ui()
+		is_spinning = false # Unlock the board here
 		
 		if not withdrawal_active:
 			spin_button.disabled = false
@@ -267,11 +270,20 @@ func _on_moving_exit_pressed() -> void:
 		move_timer.start()
 
 func _on_trap_button_pressed() -> void:
-	var penalty = 500
+	# Use their current bet size as the punishment!
+	var penalty = current_bet 
 	GameState.deduct_money(penalty)
 	GameState.sugal_total_lost += penalty
 	update_ui()
 	
+	_shake_screen()
+	
+	# ACTUALLY spin the board in the background to show the money burning
+	if not is_spinning:
+		win_label.text = "FORCED SPIN!"
+		spin()
+	
+	# Reset their escape progress
 	current_exit_clicks = 0
 	panic_label.text = "CLICK 'CONFIRM EXIT' 10 TIMES TO LEAVE\nPROGRESS: 0/10"
 	
@@ -285,7 +297,7 @@ func _on_trap_button_pressed() -> void:
 	
 	if GameState.hand <= 0:
 		move_timer.stop()
-		get_tree().change_scene_to_file("res://scenes/room_day2.tscn")
+		get_tree().change_scene_to_file("res://scenes/ending.tscn")
 	else:
 		_move_all_buttons()
 		move_timer.start()
@@ -301,3 +313,15 @@ func _pulse_fake_buttons() -> void:
 			var speed = randf_range(0.3, 0.6) 
 			pulse_tween.tween_property(fake_btn, "scale", Vector2(1.05, 1.05), speed).set_trans(Tween.TRANS_SINE)
 			pulse_tween.tween_property(fake_btn, "scale", Vector2(1.0, 1.0), speed).set_trans(Tween.TRANS_SINE)
+
+func _shake_screen() -> void:
+	var original_pos = withdrawal_overlay.position
+	var shake_tween = create_tween()
+	
+	# Jerk the screen back and forth quickly
+	for i in range(5):
+		var offset = Vector2(randf_range(-15, 15), randf_range(-15, 15))
+		shake_tween.tween_property(withdrawal_overlay, "position", original_pos + offset, 0.05)
+		
+	# Return to normal
+	shake_tween.tween_property(withdrawal_overlay, "position", original_pos, 0.05)
