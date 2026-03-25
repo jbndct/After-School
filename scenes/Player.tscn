@@ -17,9 +17,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
 "texture": ExtResource("3_qu4a1")
 }, {
 "duration": 1.0,
@@ -27,7 +24,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 8.0
+"speed": 3.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v6fml"]

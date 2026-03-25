@@ -18,7 +18,7 @@ color = Color(0.101960786, 0.10980392, 0.16078432, 1)
 
 [node name="ParallaxLayer (far)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1025162693]
 motion_scale = Vector2(0.2, 1)
-motion_mirroring = Vector2(2000, 0)
+motion_mirroring = Vector2(2400, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=2031374087]
 texture = ExtResource("2_wm2ly")

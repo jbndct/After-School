@@ -14,7 +14,7 @@ next_scene = "res://scenes/school_day1.tscn"
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=87778083]
 
 [node name="ParallaxLayer (far)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1025162693]
-motion_mirroring = Vector2(1920, 0)
+motion_mirroring = Vector2(2400, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=1979580041]
 texture = ExtResource("2_sck8q")
