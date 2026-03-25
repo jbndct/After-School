@@ -11,7 +11,7 @@ signal paycheck_received
 var hand: int = 2000
 var debt: int = 0
 var paycheck_received_flag: bool = false
-var loan_from_dante: int = 0
+var loan_from_pepito: int = 0
 
 # ─── PROGRESS ─────────────────────────────────────────
 var day: int = 1
@@ -32,8 +32,8 @@ var sugal_total_lost: int = 0
 var sugal_loans_accepted: int = 0
 
 # ─── RELATIONSHIPS ────────────────────────────────────
-var dante_messages_sent: int = 0
-var dante_messages_read: int = 0
+var pepito_messages_sent: int = 0
+var pepito_messages_read: int = 0
 var family_ignored: bool = false
 
 # ─── MONEY FUNCTIONS ──────────────────────────────────
@@ -45,8 +45,8 @@ func deduct_money(amount: int) -> void:
 	hand -= amount
 	emit_signal("money_changed", hand)
 
-func receive_dante_loan() -> void:
-	loan_from_dante = 7500
+func receive_pepito_loan() -> void:
+	loan_from_pepito = 7500
 	add_money(7500)
 
 func receive_paycheck() -> void:
@@ -86,7 +86,7 @@ func reset() -> void:
 	hand = 2000
 	debt = 0
 	paycheck_received_flag = false
-	loan_from_dante = 0
+	loan_from_pepito = 0
 	day = 1
 	path = ""
 	shift_hour = 0
@@ -98,6 +98,6 @@ func reset() -> void:
 	sugal_session_active = false
 	sugal_total_lost = 0
 	sugal_loans_accepted = 0
-	dante_messages_sent = 0
-	dante_messages_read = 0
+	pepito_messages_sent = 0
+	pepito_messages_read = 0
 	family_ignored = false
