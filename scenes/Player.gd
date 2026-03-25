@@ -30,7 +30,3 @@ func _physics_process(delta: float) -> void:
 		
 	# 3. Apply physics
 	move_and_slide()
-
-	# 4. End of scene check
-	if global_position.x >= scene_end_x:
-		emit_signal("reached_end")
