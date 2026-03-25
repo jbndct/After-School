@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bvif1vja8r37w"]
 
 [ext_resource type="Script" uid="uid://dg00b0csfq2wy" path="res://scenes/sugal_hub.gd" id="1_3kho2"]
+[ext_resource type="Texture2D" uid="uid://wx55froaqcbm" path="res://assets/sprites/sugal.png" id="2_rsi76"]
 
 [node name="SugalHub" type="Control" unique_id=862425061]
 layout_mode = 3
@@ -11,20 +12,23 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3kho2")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=720322735]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.039215688, 0.05882353, 0.101960786, 1)
+[node name="TextureRect" type="TextureRect" parent="." unique_id=942286939]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_rsi76")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=180733631]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -268.5
+offset_top = -176.0
+offset_right = 268.5
+offset_bottom = 176.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -57,9 +61,97 @@ text = "SPIN"
 
 [node name="RealExitButton" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=1340950022]
 layout_mode = 2
-theme_override_font_sizes/font_size = 3
-text = "X"
+theme_override_font_sizes/font_size = 12
+text = "Exit"
 
-[node name="FakeExitButton" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=1731628616]
-layout_mode = 2
-text = "EXIT"
+[node name="WithdrawalOverlay" type="ColorRect" parent="." unique_id=1405420356]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21633083, 0, 0.0033587564, 0.8392157)
+
+[node name="PanicLabel" type="Label" parent="WithdrawalOverlay" unique_id=907075722]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -59.0
+offset_right = 59.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "CONFIRM EXIT?"
+
+[node name="IntrusiveThoughtLabel" type="Label" parent="WithdrawalOverlay" unique_id=247992991]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.61627847, 2.0455568e-06, 4.3317675e-07, 1)
+
+[node name="MovingExitButton" type="Button" parent="WithdrawalOverlay" unique_id=1234767865]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Exit?"
+
+[node name="FakeButtonsContainer" type="Node2D" parent="WithdrawalOverlay" unique_id=1918449844]
+
+[node name="FakeButton" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=879710609]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
+theme_override_font_sizes/font_size = 25
+text = "DON'T STOP NOW!"
+
+[node name="FakeButton2" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=2003394611]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
+theme_override_font_sizes/font_size = 25
+text = "KEEP PLAYING!"
+
+[node name="FakeButton3" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=809785898]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
+theme_override_font_sizes/font_size = 25
+text = "JACKPOT INCOMING!"
+
+[node name="FakeButton4" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1070993984]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
+theme_override_font_sizes/font_size = 25
+text = "KEEP ON GOING!"
+
+[node name="FakeButton5" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1984669115]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
+theme_override_font_sizes/font_size = 25
+text = "JUST KEEP PLAYING!"
+
+[node name="FakeButton6" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=526889478]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
+theme_override_font_sizes/font_size = 25
+text = "WIN!"
+
+[node name="FakeButton7" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1831475006]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
+theme_override_font_sizes/font_size = 25
+text = "DON'T EXIT!"

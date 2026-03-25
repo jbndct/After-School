@@ -12,11 +12,21 @@ const GAP = 8
 @onready var win_label = $HBoxContainer/PanelContainer/VBoxContainer/WinLabel
 @onready var spin_button = $HBoxContainer/PanelContainer/VBoxContainer/SpinButton
 
-@onready var fake_exit_button = $HBoxContainer/PanelContainer/VBoxContainer/FakeExitButton
-@onready var real_exit_button = $HBoxContainer/PanelContainer/VBoxContainer/RealExitButton 
+@onready var real_exit_button = $HBoxContainer/PanelContainer/VBoxContainer/RealExitButton
+
+@onready var withdrawal_overlay = $WithdrawalOverlay
+@onready var panic_label = $WithdrawalOverlay/PanicLabel
+@onready var thought_label = $WithdrawalOverlay/IntrusiveThoughtLabel
+@onready var moving_exit_btn = $WithdrawalOverlay/MovingExitButton
+@onready var fake_buttons_container = $WithdrawalOverlay/FakeButtonsContainer
+
+var withdrawal_active: bool = false
+var required_exit_clicks: int = 10
+var current_exit_clicks: int = 0
+var move_timer: Timer
 
 var current_bet: int = 1000
-var grid_nodes: Array = [] 
+var grid_nodes: Array = []
 var spin_total_win: int = 0
 
 func _ready() -> void:
@@ -37,19 +47,32 @@ func _ready() -> void:
 			slot.add_theme_stylebox_override("panel", style)
 			game_board.add_child(slot)
 
-	# FIXED: Connect the buttons to their separate, distinct functions
 	spin_button.pressed.connect(_on_spin_pressed)
-	fake_exit_button.pressed.connect(_on_fake_exit_pressed)
 	real_exit_button.pressed.connect(_on_real_exit_pressed)
 	
 	GameState.sugal_opened = true
 	GameState.sugal_session_active = true
 	update_ui()
+	
+	withdrawal_overlay.hide()
+	
+	move_timer = Timer.new()
+	move_timer.wait_time = 1.2
+	move_timer.timeout.connect(_move_all_buttons)
+	add_child(move_timer)
+	
+	moving_exit_btn.pressed.connect(_on_moving_exit_pressed)
+	
+	for fake_btn in fake_buttons_container.get_children():
+		if fake_btn is Button:
+			fake_btn.pressed.connect(_on_trap_button_pressed)
 
 func get_cell_pos(col: int, row: int) -> Vector2:
 	return Vector2(col * (CELL_SIZE + GAP), row * (CELL_SIZE + GAP))
 
 func _on_spin_pressed() -> void:
+	if withdrawal_active: return
+	
 	if GameState.hand < current_bet:
 		win_label.text = "Insufficient funds. Take a loan?"
 		return
@@ -58,9 +81,7 @@ func _on_spin_pressed() -> void:
 	GameState.sugal_total_lost += current_bet
 	win_label.text = "Spinning..."
 	
-	# Lock down all escape routes while spinning
 	spin_button.disabled = true
-	fake_exit_button.disabled = true 
 	real_exit_button.disabled = true
 	
 	spin()
@@ -94,9 +115,8 @@ func spin() -> void:
 	for c in range(COLS):
 		for r in range(ROWS):
 			var lbl = spawn_symbol(c, r)
-			lbl.position.y -= 500 + (r * 50) 
+			lbl.position.y -= 500 + (r * 50)
 			
-			# ADDICTION UPGRADE: Added randf_range to make the drop speed slightly unpredictable
 			var drop_speed = 0.6 + (r * 0.1) + randf_range(0.0, 0.3)
 			drop_tween.tween_property(lbl, "position", get_cell_pos(c, r), drop_speed)
 	
@@ -167,10 +187,10 @@ func process_cascades() -> void:
 			win_label.add_theme_color_override("font_color", Color.GRAY)
 
 		update_ui()
-		# Re-enable the buttons only after the entire spin/cascade sequence is completely over
-		spin_button.disabled = false
-		fake_exit_button.disabled = false
-		real_exit_button.disabled = false
+		
+		if not withdrawal_active:
+			spin_button.disabled = false
+			real_exit_button.disabled = false
 
 func apply_gravity() -> void:
 	var gravity_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
@@ -192,31 +212,92 @@ func apply_gravity() -> void:
 		for i in range(empty_spaces):
 			var new_row = (empty_spaces - 1) - i
 			var lbl = spawn_symbol(c, new_row)
-			lbl.position.y -= 400 + (i * 50) 
+			lbl.position.y -= 400 + (i * 50)
 			gravity_tween.tween_property(lbl, "position", get_cell_pos(c, new_row), 0.3 + (i * 0.1)).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
 			has_movement = true
 
 	if has_movement:
 		await gravity_tween.finished
-		await get_tree().create_timer(0.2).timeout 
+		await get_tree().create_timer(0.2).timeout
 
 func update_ui() -> void:
 	balance_label.text = "E-Pera: ₱" + str(GameState.hand)
 	
-func _on_fake_exit_pressed() -> void:
-	var manipulation_texts = [
-		"Are you sure? You're on a hot streak!",
-		"Wait! A HUGE jackpot is dropping soon!",
-		"Don't quit now, your luck is turning around!",
-		"Error: Cannot exit during active event."
-	]
-	win_label.text = manipulation_texts.pick_random()
-	win_label.add_theme_color_override("font_color", Color.RED)
-	
-	fake_exit_button.disabled = true
-	await get_tree().create_timer(1.5).timeout
-	fake_exit_button.disabled = false
 
 func _on_real_exit_pressed() -> void:
-	GameState.sugal_session_active = false
-	get_tree().change_scene_to_file("res://scenes/street_night.tscn")
+	if withdrawal_active: return
+	
+	withdrawal_active = true
+	current_exit_clicks = 0
+	thought_label.text = ""
+	
+	spin_button.disabled = true
+	real_exit_button.disabled = true
+	real_exit_button.disabled = true
+	
+	withdrawal_overlay.show()
+	panic_label.text = "CLICK 'CONFIRM EXIT' 10 TIMES TO LEAVE\nPROGRESS: 0/10"
+	
+	_move_all_buttons()
+	move_timer.start()
+	
+func _move_all_buttons() -> void:
+	var screen_size = get_viewport_rect().size
+	
+	var real_x = randf_range(50, screen_size.x - moving_exit_btn.size.x - 50)
+	var real_y = randf_range(100, screen_size.y - moving_exit_btn.size.y - 100)
+	moving_exit_btn.position = Vector2(real_x, real_y)
+	
+	for fake_btn in fake_buttons_container.get_children():
+		if fake_btn is Button:
+			var fx = randf_range(50, screen_size.x - fake_btn.size.x - 50)
+			var fy = randf_range(100, screen_size.y - fake_btn.size.y - 100)
+			fake_btn.position = Vector2(fx, fy)
+	
+func _on_moving_exit_pressed() -> void:
+	current_exit_clicks += 1
+	panic_label.text = "CLICK 'CONFIRM EXIT' 10 TIMES TO LEAVE\nPROGRESS: " + str(current_exit_clicks) + "/10"
+	
+	if current_exit_clicks >= required_exit_clicks:
+		move_timer.stop()
+		GameState.sugal_session_active = false
+		get_tree().change_scene_to_file("res://scenes/street_night.tscn")
+	else:
+		_move_all_buttons()
+		move_timer.start()
+
+func _on_trap_button_pressed() -> void:
+	var penalty = 500
+	GameState.deduct_money(penalty)
+	GameState.sugal_total_lost += penalty
+	update_ui()
+	
+	current_exit_clicks = 0
+	panic_label.text = "CLICK 'CONFIRM EXIT' 10 TIMES TO LEAVE\nPROGRESS: 0/10"
+	
+	var intrusive_thoughts = [
+		"Juan: Damn it, my hand slipped... just one more.",
+		"Juan: I didn't mean to click that! Give it back!",
+		"Juan: I have to win that back now.",
+		"Juan: Why won't it just let me leave?!"
+	]
+	thought_label.text = intrusive_thoughts.pick_random()
+	
+	if GameState.hand <= 0:
+		move_timer.stop()
+		get_tree().change_scene_to_file("res://scenes/room_day2.tscn")
+	else:
+		_move_all_buttons()
+		move_timer.start()
+
+func _pulse_fake_buttons() -> void:
+	for fake_btn in fake_buttons_container.get_children():
+		if fake_btn is Button:
+			# Center the pivot so it scales from the middle
+			fake_btn.pivot_offset = fake_btn.size / 2.0 
+			
+			var pulse_tween = create_tween().set_loops()
+			# Randomize the speed slightly so they don't pulse in unison
+			var speed = randf_range(0.3, 0.6) 
+			pulse_tween.tween_property(fake_btn, "scale", Vector2(1.05, 1.05), speed).set_trans(Tween.TRANS_SINE)
+			pulse_tween.tween_property(fake_btn, "scale", Vector2(1.0, 1.0), speed).set_trans(Tween.TRANS_SINE)
