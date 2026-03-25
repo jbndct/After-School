@@ -8,11 +8,13 @@ func _ready() -> void:
 	GameState.receive_paycheck()
 	
 	dialogue_box.play([
-		{ "speaker": "", "text": "Eight hours. Just me and the logbook." },
-		{ "speaker": "", "text": "[ Paycheck Received: ₱6,500 ]" },
-		{ "speaker": "", "text": "Total balance: ₱16,000. Tuition is ₱15,000." },
-		{ "speaker": "", "text": "I have ₱1,000 to spare. And a lot of time to kill. Boringgggg"}
-	], _on_dialogue_finished)
+	{ "speaker": "", "text": "Another night shift of staring at the wall." },
+	{ "speaker": "", "text": "[ Paycheck Received: ₱6,500 ]" },
+	{ "speaker": "", "text": "₱16,000 total. The tuition is safe." },
+	{ "speaker": "", "text": "The relief is making me crash. I can't fall asleep on shift." },
+	{ "speaker": "", "text": "I've got an extra ₱1,000 sitting there." },
+	{ "speaker": "", "text": "Just a few low bets to pass the time. Nothing crazy. I know when to stop." }
+], _on_dialogue_finished)
 
 func _on_dialogue_finished() -> void:
 	get_tree().change_scene_to_file(NEXT_SCENE)

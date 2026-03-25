@@ -9,16 +9,17 @@ func _ready() -> void:
 	# Evaluate if the player retained enough money after the night shift
 	if GameState.hand < 15000:
 		dialogue_lines = [
-			{ "speaker": "Dominador: ", "text": "Oh no, I gambled all my money." },
-			{ "speaker": "Dominador: ", "text": "I can't enroll anymore." },
-			{ "speaker": "Dominador: ", "text": "I broke everyone's trust." },
-			{ "speaker": "Dominador: ", "text": "Who am I anymore?" }
+			{ "speaker": "Dominador", "text": "No... no, no, no. Where did it all go?" },
+			{ "speaker": "Dominador", "text": "Balance: ₱" + str(GameState.hand) + ". This can't be right. I just had it." },
+			{ "speaker": "Dominador", "text": "I was just trying to get the rest of the tuition. What did I just do?" },
+			{ "speaker": "Dominador", "text": "How am I supposed to tell Ma? I'm completely screwed." }
 		]
 	else:
 		dialogue_lines = [
-			{ "speaker": "Dominador: ", "text": "I survived the night." },
-			{ "speaker": "Dominador: ", "text": "I have ₱" + str(GameState.hand) + ". That's enough for tuition." },
-			{ "speaker": "Dominador: ", "text": "I need to get to the registrar before it closes." }
+			{ "speaker": "Dominador", "text": "Shift's finally over. My head is pounding." },
+			{ "speaker": "Dominador", "text": "Total balance: ₱" + str(GameState.hand) + "." },
+			{ "speaker": "Dominador", "text": "It's enough. I actually held on to it." },
+			{ "speaker": "Dominador", "text": "I just need to drag myself to the registrar before I collapse." }
 		]
 		
 	dialogue_box.play(dialogue_lines, _on_dialogue_finished)
