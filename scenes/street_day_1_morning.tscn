@@ -17,6 +17,7 @@ script = ExtResource("1_pnf02")
 next_scene = "res://scenes/school_day1.tscn"
 
 [node name="SchoolEntrance" type="Area2D" parent="." unique_id=1212827760]
+position = Vector2(-2, -50)
 script = ExtResource("4_jcvx7")
 
 [node name="Sprite2D" type="Sprite2D" parent="SchoolEntrance" unique_id=1702940501]
@@ -46,15 +47,8 @@ motion_mirroring = Vector2(2400, 0)
 position = Vector2(49, -57)
 texture = ExtResource("2_sck8q")
 
-[node name="ParallaxLayer (mid)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1988227769]
-motion_scale = Vector2(0.5, 1)
-
-[node name="ParallaxLayer (near)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1783203336]
-
 [node name="Floor" type="StaticBody2D" parent="." unique_id=870931988]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1766108979]
-shape = SubResource("RectangleShape2D_t23v0")
+position = Vector2(135, 566)
 
 [node name="ColorRect" type="ColorRect" parent="Floor" unique_id=931082936]
 offset_left = -2000.0
@@ -63,4 +57,8 @@ offset_right = 2000.0
 offset_bottom = 10.0
 color = Color(0.14061499, 0.06709069, 0.0024504086, 1)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1766108979]
+shape = SubResource("RectangleShape2D_t23v0")
+
 [node name="Player" parent="." unique_id=1915667930 instance=ExtResource("3_jcvx7")]
+position = Vector2(216, 502)

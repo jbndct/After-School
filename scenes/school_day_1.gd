@@ -15,5 +15,5 @@ func _ready() -> void:
 
 func _on_dialogue_finished() -> void:
 	# This injects the 7500 into the global state before the next scene
-	GameState.receive_PEPITO_loan() 
+	GameState.receive_pepito_loan() 
 	get_tree().change_scene_to_file(NEXT_SCENE)
