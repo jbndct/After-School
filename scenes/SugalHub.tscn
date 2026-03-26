@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bvif1vja8r37w"]
 
-[ext_resource type="Script" uid="uid://dg00b0csfq2wy" path="res://scenes/sugal_hub.gd" id="1_3kho2"]
+[ext_resource type="Script" uid="uid://dg00b0csfq2wy" path="res://scripts/sugal_hub.gd" id="1_3kho2"]
 [ext_resource type="Texture2D" uid="uid://wx55froaqcbm" path="res://assets/sprites/sugal.png" id="2_rsi76"]
 
 [node name="SugalHub" type="Control" unique_id=862425061]

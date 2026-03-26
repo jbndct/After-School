@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cbyis58ngqb3e"]
 
-[ext_resource type="Script" uid="uid://b4jjqkos2etca" path="res://scenes/guardpost.gd" id="1_prjcd"]
+[ext_resource type="Script" uid="uid://b4jjqkos2etca" path="res://scripts/guardpost.gd" id="1_prjcd"]
 [ext_resource type="Texture2D" uid="uid://cqs0qwt0t5usu" path="res://assets/sprites/guard.png" id="2_bmeke"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_vhfco"]
 

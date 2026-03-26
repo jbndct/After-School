@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d2e68l8icticf"]
 
-[ext_resource type="Script" uid="uid://d0ixxeb8bu0tn" path="res://scenes/school_day_1.gd" id="1_e7t1i"]
+[ext_resource type="Script" uid="uid://d0ixxeb8bu0tn" path="res://scripts/school_day_1.gd" id="1_e7t1i"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_nntrm"]
 [ext_resource type="Texture2D" uid="uid://bgogh8c1rwsyn" path="res://assets/sprites/school.png" id="2_oq6bn"]
 
