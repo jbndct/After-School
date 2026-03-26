@@ -1,9 +1,3 @@
 [gd_scene format=3 uid="uid://vfbe0hjt4ggx"]
 
-[ext_resource type="PackedScene" uid="uid://bqtov8uwgksqx" path="res://scenes/Placeholder.tscn" id="1_mqjok"]
-
 [node name="Ending" type="Node2D" unique_id=1634172436]
-
-[node name="Placeholder" parent="." unique_id=1338268759 instance=ExtResource("1_mqjok")]
-scene_name = "The End"
-next_scene = "res://scenes/room_day1.tscn"

@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ct0ehqhdymxg5"]
 
-[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scenes/street.gd" id="1_pnf02"]
+[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scripts/street.gd" id="1_pnf02"]
 [ext_resource type="Texture2D" uid="uid://hlu8iiv2el0" path="res://assets/sprites/city-background-variants-v0-dtqv566hx5zb1.png" id="2_sck8q"]
 [ext_resource type="Texture2D" uid="uid://du2lfudoggyma" path="res://assets/sprites/door.png" id="3_bsj1q"]
-[ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="3_jcvx7"]
-[ext_resource type="Script" uid="uid://cdekshb6fl63t" path="res://scenes/enter.gd" id="4_jcvx7"]
+[ext_resource type="Script" uid="uid://cdekshb6fl63t" path="res://scripts/enter.gd" id="4_jcvx7"]
+[ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="5_bsj1q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sck8q"]
 size = Vector2(280, 349.5)
@@ -60,5 +60,5 @@ color = Color(0.14061499, 0.06709069, 0.0024504086, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1766108979]
 shape = SubResource("RectangleShape2D_t23v0")
 
-[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("3_jcvx7")]
+[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("5_bsj1q")]
 position = Vector2(216, 502)

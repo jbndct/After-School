@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://di6bfsv3jysp6"]
 
-[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scenes/street.gd" id="1_wrhdd"]
-[ext_resource type="Script" uid="uid://cdekshb6fl63t" path="res://scenes/enter.gd" id="2_edeeh"]
+[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scripts/street.gd" id="1_wrhdd"]
+[ext_resource type="Script" uid="uid://cdekshb6fl63t" path="res://scripts/enter.gd" id="2_edeeh"]
 [ext_resource type="Texture2D" uid="uid://hlu8iiv2el0" path="res://assets/sprites/city-background-variants-v0-dtqv566hx5zb1.png" id="2_kweip"]
 [ext_resource type="Texture2D" uid="uid://du2lfudoggyma" path="res://assets/sprites/door.png" id="3_gheio"]
-[ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="3_ylelb"]
+[ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="5_edeeh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6aj1v"]
 size = Vector2(280, 349.5)
@@ -67,4 +67,4 @@ offset_right = 2000.0
 offset_bottom = 10.0
 color = Color(0.14117648, 0.06666667, 0.003921569, 1)
 
-[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("3_ylelb")]
+[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("5_edeeh")]

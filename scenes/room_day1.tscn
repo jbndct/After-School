@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://4qu577wxrsqk"]
 
-[ext_resource type="Script" uid="uid://xujsvpw8wr65" path="res://scenes/room_day_1.gd" id="1_gvyvb"]
+[ext_resource type="Script" uid="uid://xujsvpw8wr65" path="res://scripts/room_day_1.gd" id="1_gvyvb"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_mmu0o"]
 [ext_resource type="Texture2D" uid="uid://dq8dunm84867p" path="res://assets/sprites/room.png" id="2_mo2d4"]
 
