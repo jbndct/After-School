@@ -19,6 +19,16 @@ var path: String = ""  # "honest" | "gambling"
 var shift_hour: int = 0
 var logbook_signed: int = 0
 
+var current_part: int = 1
+var current_step_index: int = 0
+
+var progression_flow: Dictionary = {
+	1: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/MinigameScholarship.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
+	2: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/Workplace.tscn", "res://scenes/MinigameInterview.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
+	3: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/Workplace.tscn", "res://scenes/MinigameWork.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
+	4: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/ending.tscn"]
+}
+
 # ─── PHONE ────────────────────────────────────────────
 var sugal_unlocked_flag: bool = false
 var buzzing: bool = false
@@ -101,3 +111,24 @@ func reset() -> void:
 	pepito_messages_sent = 0
 	pepito_messages_read = 0
 	family_ignored = false
+	current_part = 1
+	current_step_index = 0
+
+# ─── SCENE PROGRESSION ────────────────────────────────
+func advance_scene() -> void:
+	var sequence = progression_flow[current_part]
+	current_step_index += 1
+	
+	# Move to the next part if we finished the current sequence
+	if current_step_index >= sequence.size():
+		current_part += 1
+		current_step_index = 0
+		
+		# Check if the game is over
+		if current_part > 4:
+			resolve_path() # Your existing function
+			# We will handle the specific ending scene logic later
+			return
+			
+	var next_scene_path = progression_flow[current_part][current_step_index]
+	get_tree().change_scene_to_file(next_scene_path)

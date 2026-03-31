@@ -1,10 +1,23 @@
 [gd_scene format=3 uid="uid://uqspo5ul31oq"]
 
-[ext_resource type="Script" uid="uid://4og70nf28htg" path="res://scripts/street.gd" id="1_x8rtj"]
 [ext_resource type="Texture2D" uid="uid://hlu8iiv2el0" path="res://assets/sprites/city-background-variants-v0-dtqv566hx5zb1.png" id="2_x7gr6"]
 [ext_resource type="Script" uid="uid://cdekshb6fl63t" path="res://scripts/enter.gd" id="4_jjmf8"]
 [ext_resource type="Texture2D" uid="uid://du2lfudoggyma" path="res://assets/sprites/door.png" id="5_ivnwv"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="5_jjmf8"]
+
+[sub_resource type="GDScript" id="GDScript_3co6w"]
+script/source = "extends Node
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xqy8p"]
 size = Vector2(280, 349.5)
@@ -13,8 +26,7 @@ size = Vector2(280, 349.5)
 size = Vector2(5592, 56)
 
 [node name="StreetScene" type="Node2D" unique_id=1867167975]
-script = ExtResource("1_x8rtj")
-next_scene = "res://scenes/guardpost.tscn"
+script = SubResource("GDScript_3co6w")
 
 [node name="JobEntrance" type="Area2D" parent="." unique_id=1200104804]
 position = Vector2(557, -1)
@@ -38,6 +50,7 @@ offset_right = 1125.0
 offset_bottom = 389.0
 text = "Press 'E' to enter guard job."
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=87778083]
 

@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dlsn3b4a0k2lx"]
+
+[ext_resource type="Texture2D" uid="uid://dq8dunm84867p" path="res://assets/sprites/room.png" id="1_ffxv4"]
+[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_85yof"]
+
+[node name="Room" type="Node2D" unique_id=1908229503]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1735076240]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ffxv4")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1685027441]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=298894579]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Day 1 — Morning"
+
+[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("2_85yof")]
