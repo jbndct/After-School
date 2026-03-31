@@ -43,8 +43,8 @@ frame_progress = 0.89956206
 shape = SubResource("CapsuleShape2D_v6fml")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=175267958]
-limit_left = -700
+limit_left = -700000
 limit_top = 0
-limit_right = 700
+limit_right = 7000000
 limit_bottom = 0
 position_smoothing_enabled = true

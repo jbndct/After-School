@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://1ubw8sna4way"]
 
-[ext_resource type="Script" uid="uid://cdekshb6fl63t" path="res://scripts/enter.gd" id="1_t23v0"]
+[ext_resource type="Script" uid="uid://dltlyhgwg2l2b" path="res://scripts/street.gd" id="1_wjoh7"]
 [ext_resource type="Texture2D" uid="uid://du2lfudoggyma" path="res://assets/sprites/door.png" id="2_yrasx"]
 [ext_resource type="Texture2D" uid="uid://hlu8iiv2el0" path="res://assets/sprites/city-background-variants-v0-dtqv566hx5zb1.png" id="3_wjoh7"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_7vr8w"]
+[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="5_yrasx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5m0si"]
 size = Vector2(280, 349.5)
@@ -15,15 +16,30 @@ size = Vector2(280, 349.5)
 size = Vector2(280, 349.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nokxu"]
-size = Vector2(4000, 20)
+size = Vector2(5189, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
+size = Vector2(28, 595)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrasx"]
+size = Vector2(147, 1282)
 
 [node name="Street" type="Node2D" unique_id=1240238270]
 position = Vector2(-208, -243)
+script = ExtResource("1_wjoh7")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=558747766]
+
+[node name="ParallaxLayer (far)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1161530505]
+position = Vector2(-208, -243)
+motion_mirroring = Vector2(2400, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=2115970504]
+position = Vector2(49, -57)
+texture = ExtResource("3_wjoh7")
 
 [node name="HomeEntrance" type="Area2D" parent="." unique_id=6531692]
-position = Vector2(-1772, 3)
-script = ExtResource("1_t23v0")
-next_scene_path = "res://scenes/room_day2.tscn"
+position = Vector2(-1882, -96)
 
 [node name="Sprite2D" type="Sprite2D" parent="HomeEntrance" unique_id=1878696425]
 position = Vector2(1006, 458)
@@ -45,9 +61,7 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="JobEntrance" type="Area2D" parent="." unique_id=161928504]
-position = Vector2(557, -1)
-script = ExtResource("1_t23v0")
-next_scene_path = "res://scenes/guardpost.tscn"
+position = Vector2(891, -78)
 
 [node name="Sprite2D" type="Sprite2D" parent="JobEntrance" unique_id=52373354]
 position = Vector2(1006, 458)
@@ -69,8 +83,7 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SchoolEntrance" type="Area2D" parent="." unique_id=1046210740]
-position = Vector2(-2, -50)
-script = ExtResource("1_t23v0")
+position = Vector2(-7, -87)
 
 [node name="Sprite2D" type="Sprite2D" parent="SchoolEntrance" unique_id=1262209321]
 position = Vector2(1006, 458)
@@ -91,29 +104,50 @@ text = "Press 'E' to enter school."
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=558747766]
-
-[node name="ParallaxLayer (far)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1161530505]
-position = Vector2(-208, -243)
-motion_mirroring = Vector2(2400, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=2115970504]
-position = Vector2(49, -57)
-texture = ExtResource("3_wjoh7")
-
 [node name="Floor" type="StaticBody2D" parent="." unique_id=778426084]
 position = Vector2(135, 566)
 
-[node name="ColorRect" type="ColorRect" parent="Floor" unique_id=1261113988]
-offset_left = -2000.0
-offset_top = -10.0
-offset_right = 2000.0
-offset_bottom = 10.0
-color = Color(0.14061499, 0.06709069, 0.0024504086, 1)
-metadata/_edit_use_anchors_ = true
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=80675329]
+position = Vector2(594.5, 1)
 shape = SubResource("RectangleShape2D_nokxu")
+
+[node name="ColorRect" type="ColorRect" parent="Floor" unique_id=1207216509]
+offset_left = -1278.0
+offset_top = -18.0
+offset_right = 3186.0
+offset_bottom = 13.0
+color = Color(0.14622876, 0.14622876, 0.14622873, 1)
 
 [node name="Player" parent="." unique_id=1915667930 instance=ExtResource("4_7vr8w")]
 position = Vector2(216, 502)
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1945931944]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=836129400]
+position = Vector2(-1137, 273.5)
+shape = SubResource("RectangleShape2D_t23v0")
+
+[node name="ObjectiveLabel" type="Label" parent="." unique_id=1667977210]
+offset_left = 189.0
+offset_top = 407.0
+offset_right = 284.0
+offset_bottom = 430.0
+text = "Objective: ..."
+metadata/_edit_use_anchors_ = true
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1943427091]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1354219775]
+position = Vector2(2397, -63)
+shape = SubResource("RectangleShape2D_yrasx")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1808613131]
+
+[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("5_yrasx")]
+
+[connection signal="body_entered" from="HomeEntrance" to="HomeEntrance" method="_on_body_entered"]
+[connection signal="body_exited" from="HomeEntrance" to="HomeEntrance" method="_on_body_exited"]
+[connection signal="body_entered" from="JobEntrance" to="HomeEntrance" method="_on_job_entrance_body_entered"]
+[connection signal="body_exited" from="JobEntrance" to="HomeEntrance" method="_on_job_entrance_body_exited"]
+[connection signal="body_entered" from="SchoolEntrance" to="HomeEntrance" method="_on_school_entrance_body_entered"]
+[connection signal="body_exited" from="SchoolEntrance" to="HomeEntrance" method="_on_school_entrance_body_exited"]
