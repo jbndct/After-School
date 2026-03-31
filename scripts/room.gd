@@ -62,12 +62,11 @@ func _on_dialogue_finished() -> void:
 
 # --- SIGNAL CALLBACKS ---
 
-func _on_interactable_body_entered(body: Node2D) -> void:
+func _on_interactable_item_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in_interact_zone = true
-		# Optional: You can make a small "Press Space" sprite visible here later
 
-func _on_interactable_body_exited(body: Node2D) -> void:
+func _on_interactable_item_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in_interact_zone = false
 
@@ -76,16 +75,4 @@ func _on_exit_door_body_entered(body: Node2D) -> void:
 		if has_talked:
 			GameState.advance_scene()
 		else:
-			pass # Optional: Add a quick dialogue saying "I shouldn't leave yet."
-
-
-func _on_interactable_item_body_entered(body: Node2D) -> void:
-	pass # Replace with function body.
-
-
-func _on_interactable_item_body_exited(body: Node2D) -> void:
-	pass # Replace with function body.
-
-
-func _on_exit_door_body_exited(body: Node2D) -> void:
-	pass # Replace with function body.
+			print("Player needs to interact first!") # Just for testing so you can see it in the console
