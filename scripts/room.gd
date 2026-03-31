@@ -2,11 +2,23 @@ extends Node2D
 
 @onready var dialogue_box = $DialogueBox
 
+var player_in_interact_zone: bool = false
+var has_talked: bool = false
+
 func _ready() -> void:
+	# We leave this empty now. The player must trigger the dialogue manually.
+	pass
+
+# Listens for the interact button
+func _input(event: InputEvent) -> void:
+	if player_in_interact_zone and not has_talked and event.is_action_pressed("ui_accept"):
+		play_room_dialogue()
+
+func play_room_dialogue() -> void:
 	var dialogue_lines = []
 	
 	match GameState.current_part:
-		1: # Part 1: Start of the game (Previously Day 1)
+		1: 
 			dialogue_lines = [
 				{ "speaker": "Dominador", "text": "Tuition is ₱15,000. Deadline is today." },
 				{ "speaker": "Dominador", "text": "Current balance: ₱2,000. Paycheck clearing tonight: ₱6,500." },
@@ -18,15 +30,15 @@ func _ready() -> void:
 				{ "speaker": "Dominador", "text": "It's a trap. I know it is." },
 				{ "speaker": "Dominador", "text": "I just need to keep my head down, finish this night shift, and not do anything stupid." }
 			]
-		2: # Part 2: Looking for a job
+		2: 
 			dialogue_lines = [
-				{ "speaker": "Dominador", "text": "I need to find a job today." } # Placeholder, add your own
+				{ "speaker": "Dominador", "text": "I need to find a job today." } 
 			]
-		3: # Part 3: Going to work
+		3: 
 			dialogue_lines = [
-				{ "speaker": "Dominador", "text": "Time to head to work." } # Placeholder, add your own
+				{ "speaker": "Dominador", "text": "Time to head to work." } 
 			]
-		4: # Part 4: The morning after the night shift (Previously Day 2)
+		4: 
 			if GameState.hand < 15000:
 				dialogue_lines = [
 					{ "speaker": "Dominador", "text": "No... no, no, no. Where did it all go?" },
@@ -42,9 +54,38 @@ func _ready() -> void:
 					{ "speaker": "Dominador", "text": "I just need to drag myself to the registrar before I collapse." }
 				]
 				
-	# Play the dialogue and pass the advance_scene function as the callback
-	dialogue_box.play(dialogue_lines, _on_dialogue_finished)
+	if dialogue_lines.size() > 0:
+		dialogue_box.play(dialogue_lines, _on_dialogue_finished)
 
 func _on_dialogue_finished() -> void:
-	# Let the GameState figure out where to go next!
-	GameState.advance_scene()
+	has_talked = true # Unlocks the door
+
+# --- SIGNAL CALLBACKS ---
+
+func _on_interactable_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		player_in_interact_zone = true
+		# Optional: You can make a small "Press Space" sprite visible here later
+
+func _on_interactable_body_exited(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		player_in_interact_zone = false
+
+func _on_exit_door_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		if has_talked:
+			GameState.advance_scene()
+		else:
+			pass # Optional: Add a quick dialogue saying "I shouldn't leave yet."
+
+
+func _on_interactable_item_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.
+
+
+func _on_interactable_item_body_exited(body: Node2D) -> void:
+	pass # Replace with function body.
+
+
+func _on_exit_door_body_exited(body: Node2D) -> void:
+	pass # Replace with function body.
