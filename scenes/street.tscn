@@ -18,6 +18,7 @@ size = Vector2(280, 349.5)
 size = Vector2(4000, 20)
 
 [node name="Street" type="Node2D" unique_id=1240238270]
+position = Vector2(-208, -243)
 
 [node name="HomeEntrance" type="Area2D" parent="." unique_id=6531692]
 position = Vector2(-1772, 3)
@@ -93,6 +94,7 @@ metadata/_edit_use_anchors_ = true
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=558747766]
 
 [node name="ParallaxLayer (far)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1161530505]
+position = Vector2(-208, -243)
 motion_mirroring = Vector2(2400, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=2115970504]
