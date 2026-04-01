@@ -24,8 +24,8 @@ var current_step_index: int = 0
 
 var progression_flow: Dictionary = {
 	1: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/MinigameScholarship.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
-	2: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/Workplace.tscn", "res://scenes/MinigameInterview.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
-	3: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/Workplace.tscn", "res://scenes/MinigameWork.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
+	2: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/workplace.tscn", "res://scenes/MinigameInterview.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
+	3: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/workplace.tscn", "res://scenes/MinigameWork.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
 	4: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/ending.tscn"]
 }
 
@@ -131,7 +131,6 @@ func advance_scene() -> void:
 			return
 			
 	var next_scene_path = progression_flow[current_part][current_step_index]
-	get_tree().change_scene_to_file(next_scene_path)
 	
 	# --- ADD THIS CHECK ---
 	if ResourceLoader.exists(next_scene_path):

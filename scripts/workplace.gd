@@ -10,11 +10,6 @@ var player_at_door: bool = false
 var has_talked: bool = false
 
 func _ready() -> void:
-	# --- DEBUG OVERRIDE: REMOVE THIS WHEN DONE TESTING ---
-	GameState.current_part = 2
-	GameState.current_step_index = 4 # This is the index for Workplace in Part 2
-	# -----------------------------------------------------
-
 	interact_prompt.visible = false
 	door_prompt.visible = false
 	

@@ -9,13 +9,7 @@ var player_in_interact_zone: bool = false
 var player_at_door: bool = false
 var has_talked: bool = false
 
-func _ready() -> void:
-	
-	# --- DEBUG OVERRIDE: REMOVE THIS WHEN DONE TESTING ---
-	GameState.current_part = 1
-	GameState.current_step_index = 2 # This is the index for the School scene in Part 1
-	# -----------------------------------------------------
-	
+func _ready() -> void:	
 	interact_prompt.visible = false
 	door_prompt.visible = false
 	
