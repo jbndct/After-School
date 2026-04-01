@@ -19,6 +19,9 @@ size = Vector2(200, 172)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxe34"]
 size = Vector2(76, 230)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jn645"]
+size = Vector2(26, 450)
+
 [node name="Room" type="Node2D" unique_id=1908229503]
 position = Vector2(3, 2)
 script = ExtResource("1_85yof")
@@ -91,6 +94,13 @@ offset_right = 378.0
 offset_bottom = 65.0
 text = "[E] to Leave"
 metadata/_edit_use_anchors_ = true
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=1286947090]
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=826862855]
+position = Vector2(398, 20)
+shape = SubResource("RectangleShape2D_jn645")
 
 [connection signal="body_entered" from="InteractableItem" to="." method="_on_interactable_item_body_entered"]
 [connection signal="body_exited" from="InteractableItem" to="." method="_on_interactable_item_body_exited"]

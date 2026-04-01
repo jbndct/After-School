@@ -14,11 +14,6 @@ var base_objective: String = ""
 var has_talked: bool = false
 
 func _ready() -> void:
-	# --- DEBUG OVERRIDE: REMOVE THIS WHEN DONE TESTING ---
-	GameState.current_part = 1
-	GameState.current_step_index = 1
-	# -----------------------------------------------------
-
 	# Hide all labels safely on startup
 	if home_label: home_label.visible = false
 	if job_label: job_label.visible = false
@@ -82,11 +77,6 @@ func setup_street_state() -> void:
 				base_objective = "Objective: Head to the registrar."
 				dialogue_lines = [{ "speaker": "Dominador", "text": "The moment of truth." }]
 				
-	print("--- DEBUG INFO ---")
-	print("Current Part: ", GameState.current_part)
-	print("Current Step: ", GameState.current_step_index)
-	print("Lines to play: ", dialogue_lines.size())
-
 	if objective_label:
 		objective_label.text = base_objective
 	else:

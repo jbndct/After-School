@@ -132,3 +132,12 @@ func advance_scene() -> void:
 			
 	var next_scene_path = progression_flow[current_part][current_step_index]
 	get_tree().change_scene_to_file(next_scene_path)
+	
+	# --- ADD THIS CHECK ---
+	if ResourceLoader.exists(next_scene_path):
+		get_tree().change_scene_to_file(next_scene_path)
+	else:
+		print("CRITICAL ERROR: Tried to load a scene that doesn't exist! Path: ", next_scene_path)
+		# Optional: Force a crash so you notice it!
+		# assert(false, "Scene missing: " + next_scene_path)
+	# ----------------------

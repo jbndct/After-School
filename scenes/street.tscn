@@ -145,9 +145,9 @@ shape = SubResource("RectangleShape2D_yrasx")
 
 [node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("5_yrasx")]
 
-[connection signal="body_entered" from="HomeEntrance" to="HomeEntrance" method="_on_body_entered"]
-[connection signal="body_exited" from="HomeEntrance" to="HomeEntrance" method="_on_body_exited"]
-[connection signal="body_entered" from="JobEntrance" to="HomeEntrance" method="_on_job_entrance_body_entered"]
-[connection signal="body_exited" from="JobEntrance" to="HomeEntrance" method="_on_job_entrance_body_exited"]
-[connection signal="body_entered" from="SchoolEntrance" to="HomeEntrance" method="_on_school_entrance_body_entered"]
-[connection signal="body_exited" from="SchoolEntrance" to="HomeEntrance" method="_on_school_entrance_body_exited"]
+[connection signal="body_entered" from="HomeEntrance" to="." method="_on_home_entrance_body_entered"]
+[connection signal="body_exited" from="HomeEntrance" to="." method="_on_home_entrance_body_exited"]
+[connection signal="body_entered" from="JobEntrance" to="." method="_on_job_entrance_body_entered"]
+[connection signal="body_exited" from="JobEntrance" to="." method="_on_job_entrance_body_exited"]
+[connection signal="body_entered" from="SchoolEntrance" to="." method="_on_school_entrance_body_entered"]
+[connection signal="body_exited" from="SchoolEntrance" to="." method="_on_school_entrance_body_exited"]
