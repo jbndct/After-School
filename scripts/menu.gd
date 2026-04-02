@@ -22,3 +22,10 @@ func _ready() -> void:
 func advance() -> void:
 	if next_scene != "":
 		get_tree().change_scene_to_file(next_scene)
+		
+func _on_play_button_pressed() -> void:
+	# 1. WIPE ALL PROGRESS AND MONEY
+	GameState.reset() 
+	
+	# 2. LOAD THE FIRST SCENE
+	get_tree().change_scene_to_file("res://scenes/room.tscn")

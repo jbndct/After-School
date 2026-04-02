@@ -9,11 +9,18 @@ var player_in_interact_zone: bool = false
 var player_at_door: bool = false
 var has_talked: bool = false
 
-func _ready() -> void:	
+func _ready() -> void:
 	interact_prompt.visible = false
 	door_prompt.visible = false
 	
-	# Set the initial objective based on the part
+	# --- POST-MINIGAME CHECK ---
+	# If we are in Part 1 and at Index 4, we just beat the Scholarship Minigame!
+	if GameState.current_part == 1 and GameState.current_step_index == 4:
+		has_talked = true
+		objective_label.text = "Objective: Head back to the street."
+		return # Stop reading here so it doesn't reset the objective
+
+	# Normal first-visit setup
 	match GameState.current_part:
 		1: objective_label.text = "Objective: Take the scholarship exam."
 		2: objective_label.text = "Objective: Check the bulletin board."
@@ -31,28 +38,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				objective_label.text = "I need to finish what I came here for."
 				await get_tree().create_timer(2.0).timeout
-				_ready() # Reset objective text
+				_ready()
 
 func play_school_dialogue() -> void:
 	var dialogue_lines = []
-	
 	match GameState.current_part:
-		1: 
-			dialogue_lines = [
+		1: dialogue_lines = [
 				{ "speaker": "Dominador", "text": "The scholarship exam is starting soon." },
 				{ "speaker": "Dominador", "text": "If I pass this, I might not have to worry about the rest of the tuition." }
 			]
-		2: 
-			dialogue_lines = [
+		2: dialogue_lines = [
 				{ "speaker": "Dominador", "text": "Just checking the bulletin board for job postings." },
 				{ "speaker": "Dominador", "text": "Nothing good today." }
 			]
-		3: 
-			dialogue_lines = [
-				{ "speaker": "Dominador", "text": "Classes are a blur when you're running on two hours of sleep." }
-			]
-		4: 
-			dialogue_lines = [
+		3: dialogue_lines = [{ "speaker": "Dominador", "text": "Classes are a blur when you're running on two hours of sleep." }]
+		4: dialogue_lines = [
 				{ "speaker": "Dominador", "text": "The registrar's office is just ahead." },
 				{ "speaker": "Dominador", "text": "This is the moment of truth." }
 			]
@@ -64,14 +64,17 @@ func play_school_dialogue() -> void:
 
 func _on_dialogue_finished() -> void:
 	has_talked = true
-	objective_label.text = "Objective: Head back to the street."
 	
-	if player_at_door:
-		door_prompt.visible = true
+	# If this is the scholarship exam day, instantly trigger the minigame!
+	if GameState.current_part == 1 and GameState.current_step_index == 2:
+		GameState.advance_scene()
+	else:
+		# Otherwise, just let them walk out the door normally
+		objective_label.text = "Objective: Head back to the street."
+		if player_at_door:
+			door_prompt.visible = true
 
 # --- SIGNAL CALLBACKS ---
-# These must match the node connections perfectly, just like in the room scene!
-
 func _on_interactable_item_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player") and not has_talked:
 		player_in_interact_zone = true

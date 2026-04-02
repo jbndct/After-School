@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dhonq4d8ooico"]
 
-[ext_resource type="Script" uid="uid://dwt2fwn53txa7" path="res://scripts/PlaceholderScene.gd" id="1_xdvgc"]
+[ext_resource type="Script" uid="uid://dwt2fwn53txa7" path="res://scripts/menu.gd" id="1_xdvgc"]
 
 [node name="PlaceholderUI" type="Node2D" unique_id=1338268759]
 script = ExtResource("1_xdvgc")
