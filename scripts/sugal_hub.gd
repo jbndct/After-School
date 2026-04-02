@@ -2,7 +2,7 @@ extends Control
 
 const COLS = 6
 const ROWS = 5
-const SYMBOLS = ["🖕", "🤌", "🤰", "🐈‍⬛", "😮", "🐔", "😲"]
+const SYMBOLS = ["👸", "✋", "🤰", "🐈‍⬛", "🪼", "🐔", "🙀"]
 const WIN_THRESHOLD = 8
 const CELL_SIZE = 64
 const GAP = 8
@@ -297,7 +297,7 @@ func _on_trap_button_pressed() -> void:
 	
 	if GameState.hand <= 0:
 		move_timer.stop()
-		get_tree().change_scene_to_file("res://scenes/ending.tscn")
+		get_tree().change_scene_to_file("res://scenes/room_day2.tscn")
 	else:
 		_move_all_buttons()
 		move_timer.start()

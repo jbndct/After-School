@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://cvt5ec5sywufh"]
+
+[ext_resource type="Texture2D" uid="uid://cqs0qwt0t5usu" path="res://assets/sprites/guard.png" id="1_66r07"]
+[ext_resource type="Texture2D" uid="uid://dg6jujiglq0br" path="res://assets/sprites/interact.png" id="2_66r07"]
+[ext_resource type="Script" uid="uid://b6p8rokhsyuhe" path="res://scripts/workplace.gd" id="2_368pu"]
+[ext_resource type="Texture2D" uid="uid://du2lfudoggyma" path="res://assets/sprites/door.png" id="3_368pu"]
+[ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_intkj"]
+[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="5_e6hpo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iehiy"]
+size = Vector2(785, 27.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0wiqu"]
+size = Vector2(54, 458)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hse74"]
+size = Vector2(26, 450)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7b8gg"]
+size = Vector2(200, 172)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_diqa4"]
+size = Vector2(76, 230)
+
+[node name="Workplace" type="Node2D" unique_id=194263930]
+script = ExtResource("2_368pu")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1464154478]
+texture = ExtResource("1_66r07")
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=2052073080]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1813260822]
+position = Vector2(-4.5, 232.25)
+shape = SubResource("RectangleShape2D_iehiy")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=1713410261]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1469810905]
+position = Vector2(-417, 19)
+shape = SubResource("RectangleShape2D_0wiqu")
+
+[node name="RightWall" type="StaticBody2D" parent="." unique_id=943027540]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=143814080]
+position = Vector2(398, 20)
+shape = SubResource("RectangleShape2D_hse74")
+
+[node name="InteractableItem" type="Area2D" parent="." unique_id=1036401059]
+
+[node name="Sprite2D" type="Sprite2D" parent="InteractableItem" unique_id=403686031]
+position = Vector2(-219.00002, 131.99998)
+scale = Vector2(0.384, 0.312)
+texture = ExtResource("2_66r07")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableItem" unique_id=1883261161]
+position = Vector2(-206, 133)
+shape = SubResource("RectangleShape2D_7b8gg")
+
+[node name="ExitDoor" type="Area2D" parent="." unique_id=775248299]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor" unique_id=2092569142]
+position = Vector2(359, 105)
+shape = SubResource("RectangleShape2D_diqa4")
+
+[node name="TextureRect" type="TextureRect" parent="ExitDoor" unique_id=260635848]
+offset_left = 273.0
+offset_top = -3.0
+offset_right = 401.0
+offset_bottom = 215.0
+texture = ExtResource("3_368pu")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("4_intkj")]
+
+[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("5_e6hpo")]
+
+[node name="ObjectiveLabel" type="Label" parent="." unique_id=789081101]
+offset_left = -41.0
+offset_top = -175.0
+offset_right = 54.0
+offset_bottom = -152.0
+text = "Objective: ..."
+metadata/_edit_use_anchors_ = true
+
+[node name="InteractPrompt" type="Label" parent="." unique_id=1890632211]
+offset_left = -256.0
+offset_top = 67.0
+offset_right = -169.0
+offset_bottom = 90.0
+text = "[E] to Think"
+metadata/_edit_use_anchors_ = true
+
+[node name="DoorPrompt" type="Label" parent="." unique_id=1025191440]
+offset_left = 289.0
+offset_top = 42.0
+offset_right = 378.0
+offset_bottom = 65.0
+text = "[E] to Leave"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="body_entered" from="InteractableItem" to="." method="_on_interactable_item_body_entered"]
+[connection signal="body_exited" from="InteractableItem" to="." method="_on_interactable_item_body_exited"]
+[connection signal="body_entered" from="ExitDoor" to="." method="_on_exit_door_body_entered"]
+[connection signal="body_exited" from="ExitDoor" to="." method="_on_exit_door_body_exited"]

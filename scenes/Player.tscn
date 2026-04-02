@@ -31,7 +31,7 @@ animations = [{
 radius = 35.0
 height = 114.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1915667930]
+[node name="Player" type="CharacterBody2D" unique_id=1915667930 groups=["Player"]]
 script = ExtResource("1_p0vlq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1284318155]
@@ -43,6 +43,8 @@ frame_progress = 0.89956206
 shape = SubResource("CapsuleShape2D_v6fml")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=175267958]
+limit_left = -700000
 limit_top = 0
-limit_bottom = 675
+limit_right = 7000000
+limit_bottom = 0
 position_smoothing_enabled = true

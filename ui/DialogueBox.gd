@@ -52,7 +52,15 @@ func _on_timer_tick() -> void:
 func _input(event: InputEvent) -> void:
 	if not visible:
 		return
-	if event is InputEventMouseButton and event.pressed:
+		
+	# Check for left mouse click OR the 'E' key (interact action)
+	var is_click = event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT
+	var is_interact_key = event.is_action_pressed("interact")
+	
+	if is_click or is_interact_key:
+		# Consume the input so other nodes don't use it
+		get_viewport().set_input_as_handled() 
+		
 		if is_typing:
 			# skip to full text
 			displayed_text = full_text
