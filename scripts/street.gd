@@ -41,20 +41,20 @@ func setup_street_state() -> void:
 				expected_destination = "school"
 				base_objective = "Objective: Get to school for the exam."
 				dialogue_lines = [{ "speaker": "Dominador", "text": "If I don't pass this scholarship exam, I'm getting dropped." }]
-			elif GameState.current_step_index == 4:
+			elif GameState.current_step_index == 5: # CHANGED from 4 to 5
 				expected_destination = "home"
 				base_objective = "Objective: Head home."
 				dialogue_lines = [{ "speaker": "Dominador", "text": "Finally done. Need to head home." }]
 		2:
 			if GameState.current_step_index == 1:
-				expected_destination = "job" 
+				expected_destination = "school" 
 				base_objective = "Objective: Find a job."
 				dialogue_lines = [{ "speaker": "Dominador", "text": "Another day. Need to find work." }]
 			elif GameState.current_step_index == 3:
 				expected_destination = "job"
 				base_objective = "Objective: Go to the interview."
 				dialogue_lines = [{ "speaker": "Dominador", "text": "Time for the interview. Hope I don't mess this up." }]
-			elif GameState.current_step_index == 6:
+			elif GameState.current_step_index == 7: # CHANGED from 6 to 7
 				expected_destination = "home"
 				base_objective = "Objective: Head home."
 				dialogue_lines = [{ "speaker": "Dominador", "text": "Exhausted. Let's just go home." }]
@@ -67,7 +67,7 @@ func setup_street_state() -> void:
 				expected_destination = "job"
 				base_objective = "Objective: Head to the night shift."
 				dialogue_lines = [{ "speaker": "Dominador", "text": "Time to clock in." }]
-			elif GameState.current_step_index == 6:
+			elif GameState.current_step_index == 7: # CHANGED from 6 to 7
 				expected_destination = "home"
 				base_objective = "Objective: Go home and rest."
 				dialogue_lines = [{ "speaker": "Dominador", "text": "I can barely keep my eyes open." }]
