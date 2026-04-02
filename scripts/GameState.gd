@@ -11,13 +11,23 @@ signal paycheck_received
 var hand: int = 2000
 var debt: int = 0
 var paycheck_received_flag: bool = false
-var loan_from_dante: int = 0
+var loan_from_pepito: int = 0
 
 # ─── PROGRESS ─────────────────────────────────────────
 var day: int = 1
 var path: String = ""  # "honest" | "gambling"
 var shift_hour: int = 0
 var logbook_signed: int = 0
+
+var current_part: int = 1
+var current_step_index: int = 0
+
+var progression_flow: Dictionary = {
+	1: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/MinigameScholarship.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
+	2: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/workplace.tscn", "res://scenes/MinigameInterview.tscn", "res://scenes/workplace.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
+	3: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/workplace.tscn", "res://scenes/MinigameWork.tscn", "res://scenes/workplace.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
+	4: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/ending.tscn"]
+}
 
 # ─── PHONE ────────────────────────────────────────────
 var sugal_unlocked_flag: bool = false
@@ -32,8 +42,8 @@ var sugal_total_lost: int = 0
 var sugal_loans_accepted: int = 0
 
 # ─── RELATIONSHIPS ────────────────────────────────────
-var dante_messages_sent: int = 0
-var dante_messages_read: int = 0
+var pepito_messages_sent: int = 0
+var pepito_messages_read: int = 0
 var family_ignored: bool = false
 
 # ─── MONEY FUNCTIONS ──────────────────────────────────
@@ -45,8 +55,8 @@ func deduct_money(amount: int) -> void:
 	hand -= amount
 	emit_signal("money_changed", hand)
 
-func receive_dante_loan() -> void:
-	loan_from_dante = 7500
+func receive_pepito_loan() -> void:
+	loan_from_pepito = 7500
 	add_money(7500)
 
 func receive_paycheck() -> void:
@@ -86,7 +96,7 @@ func reset() -> void:
 	hand = 2000
 	debt = 0
 	paycheck_received_flag = false
-	loan_from_dante = 0
+	loan_from_pepito = 0
 	day = 1
 	path = ""
 	shift_hour = 0
@@ -98,6 +108,35 @@ func reset() -> void:
 	sugal_session_active = false
 	sugal_total_lost = 0
 	sugal_loans_accepted = 0
-	dante_messages_sent = 0
-	dante_messages_read = 0
+	pepito_messages_sent = 0
+	pepito_messages_read = 0
 	family_ignored = false
+	current_part = 1
+	current_step_index = 0
+
+# ─── SCENE PROGRESSION ────────────────────────────────
+func advance_scene() -> void:
+	var sequence = progression_flow[current_part]
+	current_step_index += 1
+	
+	# Move to the next part if we finished the current sequence
+	if current_step_index >= sequence.size():
+		current_part += 1
+		current_step_index = 0
+		
+		# Check if the game is over
+		if current_part > 4:
+			resolve_path() # Your existing function
+			# We will handle the specific ending scene logic later
+			return
+			
+	var next_scene_path = progression_flow[current_part][current_step_index]
+	
+	# --- ADD THIS CHECK ---
+	if ResourceLoader.exists(next_scene_path):
+		get_tree().change_scene_to_file(next_scene_path)
+	else:
+		print("CRITICAL ERROR: Tried to load a scene that doesn't exist! Path: ", next_scene_path)
+		# Optional: Force a crash so you notice it!
+		# assert(false, "Scene missing: " + next_scene_path)
+	# ----------------------

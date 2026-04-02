@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://c6ys5oa81hglm"]
+
+[ext_resource type="Script" uid="uid://cjo7ydyqmptcn" path="res://scripts/dummy_minigame.gd" id="1_oljvy"]
+
+[node name="DummyMinigame" type="Control" unique_id=871926095]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oljvy")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=937183813]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -10.0
+offset_right = 7.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.8352941, 1, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1145953391]
+layout_mode = 0
+offset_left = 301.0
+offset_top = 218.0
+offset_right = 799.0
+offset_bottom = 273.0
+theme_override_colors/font_color = Color(0.5187819, 0, 0.19595285, 1)
+theme_override_colors/font_outline_color = Color(0, 0.5764706, 0.8, 1)
+theme_override_font_sizes/font_size = 40
+text = "WORK MINIGAME"
+
+[node name="Button" type="Button" parent="." unique_id=1031172439]
+layout_mode = 0
+offset_left = 405.0
+offset_top = 285.0
+offset_right = 710.0
+offset_bottom = 335.0
+theme_override_font_sizes/font_size = 30
+text = "WIN AND CONTINUE"
