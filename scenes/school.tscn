@@ -7,11 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="5_x8rpw"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="6_vrcpw"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_873ml"]
-size = Vector2(785, 27.5)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k7vhd"]
 size = Vector2(54, 458)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_873ml"]
+size = Vector2(1091, 27.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oaecj"]
 size = Vector2(26, 450)
@@ -26,27 +26,33 @@ size = Vector2(76, 230)
 script = ExtResource("1_oaecj")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=2134442191]
+position = Vector2(55.000015, 25.00003)
+scale = Vector2(2.557927, 1.9778599)
 texture = ExtResource("2_oaecj")
 
-[node name="Floor" type="StaticBody2D" parent="." unique_id=1224694711]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=886977025]
-position = Vector2(-4.5, 232.25)
-shape = SubResource("RectangleShape2D_873ml")
-
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=2089998836]
+position = Vector2(-150, 73)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1018751219]
 position = Vector2(-417, 19)
 shape = SubResource("RectangleShape2D_k7vhd")
 
+[node name="Floor" type="StaticBody2D" parent="." unique_id=1224694711]
+position = Vector2(-150, 69)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=886977025]
+position = Vector2(148.5, 232.25)
+shape = SubResource("RectangleShape2D_873ml")
+
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1980543975]
+position = Vector2(150, 73)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=122710050]
 position = Vector2(398, 20)
 shape = SubResource("RectangleShape2D_oaecj")
 
 [node name="InteractableItem" type="Area2D" parent="." unique_id=595968712]
+position = Vector2(-117, 61)
 
 [node name="Sprite2D" type="Sprite2D" parent="InteractableItem" unique_id=1793146107]
 position = Vector2(-219.00002, 131.99998)
@@ -57,7 +63,16 @@ texture = ExtResource("3_r5pcs")
 position = Vector2(-206, 133)
 shape = SubResource("RectangleShape2D_eft4r")
 
+[node name="InteractPrompt" type="Label" parent="InteractableItem" unique_id=1905350838]
+offset_left = -240.0
+offset_top = 172.0
+offset_right = -153.0
+offset_bottom = 195.0
+text = "[E] to Think"
+metadata/_edit_use_anchors_ = true
+
 [node name="ExitDoor" type="Area2D" parent="." unique_id=2072225637]
+position = Vector2(134, 97)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor" unique_id=796445348]
 position = Vector2(359, 105)
@@ -72,33 +87,26 @@ texture = ExtResource("4_w6r4r")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("5_x8rpw")]
-
-[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("6_vrcpw")]
-
-[node name="ObjectiveLabel" type="Label" parent="." unique_id=908892612]
-offset_left = -41.0
-offset_top = -175.0
-offset_right = 54.0
-offset_bottom = -152.0
-text = "Objective: ..."
-metadata/_edit_use_anchors_ = true
-
-[node name="InteractPrompt" type="Label" parent="." unique_id=1905350838]
-offset_left = -256.0
-offset_top = 67.0
-offset_right = -169.0
-offset_bottom = 90.0
-text = "[E] to Think"
-metadata/_edit_use_anchors_ = true
-
-[node name="DoorPrompt" type="Label" parent="." unique_id=1065875788]
-offset_left = 289.0
-offset_top = 42.0
-offset_right = 378.0
-offset_bottom = 65.0
+[node name="DoorPrompt" type="Label" parent="ExitDoor" unique_id=1065875788]
+offset_left = 293.0
+offset_top = 143.0
+offset_right = 382.0
+offset_bottom = 166.0
 text = "[E] to Leave"
 metadata/_edit_use_anchors_ = true
+
+[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("5_x8rpw")]
+position = Vector2(-8, 228)
+
+[node name="ObjectiveLabel" type="Label" parent="Player" unique_id=408605556]
+offset_left = -238.0
+offset_top = -85.0
+offset_right = 252.0
+offset_bottom = -62.0
+text = "Objective: "
+horizontal_alignment = 1
+
+[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("6_vrcpw")]
 
 [connection signal="body_entered" from="InteractableItem" to="." method="_on_interactable_item_body_entered"]
 [connection signal="body_exited" from="InteractableItem" to="." method="_on_interactable_item_body_exited"]

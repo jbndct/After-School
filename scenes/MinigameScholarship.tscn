@@ -26,14 +26,14 @@ color = Color(1, 0.8352941, 1, 1)
 
 [node name="Label" type="Label" parent="." unique_id=1145953391]
 layout_mode = 0
-offset_left = 301.0
-offset_top = 218.0
-offset_right = 799.0
-offset_bottom = 273.0
+offset_left = 328.0
+offset_top = 225.0
+offset_right = 826.0
+offset_bottom = 280.0
 theme_override_colors/font_color = Color(0.5187819, 0, 0.19595285, 1)
 theme_override_colors/font_outline_color = Color(0, 0.5764706, 0.8, 1)
 theme_override_font_sizes/font_size = 40
-text = "MINIGAME PLACEHOLDER"
+text = "SCHOLARSHIP MINIGAME"
 
 [node name="Button" type="Button" parent="." unique_id=1031172439]
 layout_mode = 0
@@ -42,4 +42,4 @@ offset_top = 285.0
 offset_right = 710.0
 offset_bottom = 335.0
 theme_override_font_sizes/font_size = 30
-text = "WIN AND CONTINUE"
+text = " WIN AND CONTINUE "

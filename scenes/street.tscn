@@ -35,7 +35,8 @@ position = Vector2(-208, -243)
 motion_mirroring = Vector2(2400, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=2115970504]
-position = Vector2(49, -57)
+position = Vector2(697.5, 108)
+scale = Vector2(1.5404167, 1.2444445)
 texture = ExtResource("3_wjoh7")
 
 [node name="HomeEntrance" type="Area2D" parent="." unique_id=6531692]
@@ -121,19 +122,20 @@ color = Color(0.14622876, 0.14622876, 0.14622873, 1)
 [node name="Player" parent="." unique_id=1915667930 instance=ExtResource("4_7vr8w")]
 position = Vector2(216, 502)
 
+[node name="ObjectiveLabel" type="Label" parent="Player" unique_id=1445627522]
+offset_left = -446.0
+offset_top = -108.0
+offset_right = 441.0
+offset_bottom = -85.0
+text = "Objective: ..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=1945931944]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=836129400]
 position = Vector2(-1137, 273.5)
 shape = SubResource("RectangleShape2D_t23v0")
-
-[node name="ObjectiveLabel" type="Label" parent="." unique_id=1667977210]
-offset_left = 189.0
-offset_top = 407.0
-offset_right = 284.0
-offset_bottom = 430.0
-text = "Objective: ..."
-metadata/_edit_use_anchors_ = true
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1943427091]
 

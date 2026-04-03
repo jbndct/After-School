@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var dialogue_box = $DialogueBox
-@onready var objective_label = $ObjectiveLabel
+@onready var objective_label = $Player/ObjectiveLabel
 
 # Grab the labels safely right when the scene loads
 @onready var home_label = $HomeEntrance/Label

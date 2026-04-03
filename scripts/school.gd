@@ -1,9 +1,9 @@
 extends Node2D
 
 @onready var dialogue_box = $DialogueBox
-@onready var objective_label = $ObjectiveLabel
-@onready var interact_prompt = $InteractPrompt
-@onready var door_prompt = $DoorPrompt
+@onready var objective_label = $Player/ObjectiveLabel
+@onready var interact_prompt = $InteractableItem/InteractPrompt
+@onready var door_prompt = $ExitDoor/DoorPrompt
 
 var player_in_interact_zone: bool = false
 var player_at_door: bool = false
