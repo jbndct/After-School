@@ -48,9 +48,6 @@ layout_mode = 2
 layout_mode = 2
 text = "Balance: ₱0"
 
-[node name="BetLabel" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=25794286]
-layout_mode = 2
-
 [node name="WinLabel" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=2050938676]
 layout_mode = 2
 text = "Ready to spin!"
@@ -63,6 +60,9 @@ text = "SPIN"
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Exit"
+
+[node name="BetDropdown" type="OptionButton" parent="HBoxContainer/PanelContainer/VBoxContainer" unique_id=681716867]
+layout_mode = 2
 
 [node name="WithdrawalOverlay" type="ColorRect" parent="." unique_id=1405420356]
 visible = false

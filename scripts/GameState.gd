@@ -21,6 +21,7 @@ var logbook_signed: int = 0
 
 var current_part: int = 1
 var current_step_index: int = 0
+var last_scene_path: String = ""
 
 var progression_flow: Dictionary = {
 	1: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/MinigameScholarship.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
@@ -40,7 +41,7 @@ func get_current_objective() -> String:
 	return "No current objectives."
 
 # ─── PHONE ────────────────────────────────────────────
-var sugal_unlocked_flag: bool = false
+var sugal_unlocked_flag: bool = true
 var buzzing: bool = false
 var notifications: Array = []
 # notif shape: { id, app, text, time, read }
@@ -50,6 +51,7 @@ var sugal_opened: bool = false
 var sugal_session_active: bool = false
 var sugal_total_lost: int = 0
 var sugal_loans_accepted: int = 0
+var sugal_visits: int = 0
 
 # ─── RELATIONSHIPS ────────────────────────────────────
 var pepito_messages_sent: int = 0
@@ -111,7 +113,7 @@ func reset() -> void:
 	path = ""
 	shift_hour = 0
 	logbook_signed = 0
-	sugal_unlocked_flag = false
+	sugal_unlocked_flag = true
 	buzzing = false
 	notifications = []
 	sugal_opened = false
@@ -123,6 +125,7 @@ func reset() -> void:
 	family_ignored = false
 	current_part = 1
 	current_step_index = 0
+	sugal_visits = 0
 
 # ─── SCENE PROGRESSION ────────────────────────────────
 func advance_scene() -> void:

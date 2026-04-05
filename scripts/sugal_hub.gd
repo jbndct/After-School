@@ -7,6 +7,9 @@ const WIN_THRESHOLD = 8
 const CELL_SIZE = 64
 const GAP = 8
 
+@onready var bet_dropdown = $HBoxContainer/PanelContainer/VBoxContainer/BetDropdown
+var bet_amounts: Array[int] = [10, 100, 500, 1000, 5000]
+
 @onready var game_board = $HBoxContainer/GameBoard
 @onready var balance_label = $HBoxContainer/PanelContainer/VBoxContainer/BalanceLabel
 @onready var win_label = $HBoxContainer/PanelContainer/VBoxContainer/WinLabel
@@ -22,7 +25,7 @@ const GAP = 8
 
 var is_spinning: bool = false
 var withdrawal_active: bool = false
-var required_exit_clicks: int = 10
+var required_exit_clicks: int = 0
 var current_exit_clicks: int = 0
 var move_timer: Timer
 
@@ -67,6 +70,21 @@ func _ready() -> void:
 	for fake_btn in fake_buttons_container.get_children():
 		if fake_btn is Button:
 			fake_btn.pressed.connect(_on_trap_button_pressed)
+			
+	
+	# Setup the betting dropdown
+	for amount in bet_amounts:
+		bet_dropdown.add_item("₱" + str(amount))
+	
+	# Connect the dropdown selection to our custom function
+	bet_dropdown.item_selected.connect(_on_bet_selected)
+	
+	# Set the initial bet to the first tier (₱10) instead of the hardcoded 1000
+	current_bet = bet_amounts[0]
+	
+	# Fetch the current difficulty, then increment it for the next visit
+	required_exit_clicks = GameState.sugal_visits
+	GameState.sugal_visits += 1
 
 func get_cell_pos(col: int, row: int) -> Vector2:
 	return Vector2(col * (CELL_SIZE + GAP), row * (CELL_SIZE + GAP))
@@ -222,6 +240,7 @@ func apply_gravity() -> void:
 	if has_movement:
 		await gravity_tween.finished
 		await get_tree().create_timer(0.2).timeout
+	
 
 func update_ui() -> void:
 	balance_label.text = "E-Pera: ₱" + str(GameState.hand)
@@ -230,16 +249,23 @@ func update_ui() -> void:
 func _on_real_exit_pressed() -> void:
 	if withdrawal_active: return
 	
+	# NEW: Instant exit on the first visit
+	if required_exit_clicks <= 0:
+		GameState.sugal_session_active = false
+		queue_free()
+		return
+	
 	withdrawal_active = true
 	current_exit_clicks = 0
 	thought_label.text = ""
 	
 	spin_button.disabled = true
 	real_exit_button.disabled = true
-	real_exit_button.disabled = true
 	
 	withdrawal_overlay.show()
-	panic_label.text = "CLICK 'CONFIRM EXIT' 10 TIMES TO LEAVE\nPROGRESS: 0/10"
+	
+	# Make the text dynamic instead of hardcoded to 10
+	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
 	
 	_move_all_buttons()
 	move_timer.start()
@@ -259,24 +285,30 @@ func _move_all_buttons() -> void:
 	
 func _on_moving_exit_pressed() -> void:
 	current_exit_clicks += 1
-	panic_label.text = "CLICK 'CONFIRM EXIT' 10 TIMES TO LEAVE\nPROGRESS: " + str(current_exit_clicks) + "/10"
+	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: " + str(current_exit_clicks) + "/" + str(required_exit_clicks)
 	
 	if current_exit_clicks >= required_exit_clicks:
 		move_timer.stop()
 		GameState.sugal_session_active = false
-		get_tree().change_scene_to_file("res://scenes/street_night.tscn")
+		
+		# THE FIX: Add error handling
+		if GameState.last_scene_path != "":
+			get_tree().change_scene_to_file(GameState.last_scene_path)
+		else:
+			print("CRITICAL ERROR: last_scene_path was empty! Falling back to room.")
+			get_tree().change_scene_to_file("res://scenes/room.tscn")
 	else:
 		_move_all_buttons()
 		move_timer.start()
 
 func _on_trap_button_pressed() -> void:
-	# Use their current bet size as the punishment!
-	var penalty = current_bet 
-	GameState.deduct_money(penalty)
-	GameState.sugal_total_lost += penalty
-	update_ui()
+	# ... your existing penalty code ...
 	
-	_shake_screen()
+	# Reset their escape progress dynamically
+	current_exit_clicks = 0
+	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
+	
+	# ... the rest of your intrusive thoughts logic ...
 	
 	# ACTUALLY spin the board in the background to show the money burning
 	if not is_spinning:
@@ -325,3 +357,6 @@ func _shake_screen() -> void:
 		
 	# Return to normal
 	shake_tween.tween_property(withdrawal_overlay, "position", original_pos, 0.05)
+
+func _on_bet_selected(index: int) -> void:
+	current_bet = bet_amounts[index]
