@@ -1,0 +1,77 @@
+extends CanvasLayer
+
+@onready var phone_bg = $PhoneBackground
+@onready var home_screen = $PhoneBackground/HomeScreen
+@onready var app_epera = $PhoneBackground/AppEpera
+@onready var app_todo = $PhoneBackground/AppToDo
+@onready var app_messages = $PhoneBackground/AppMessages
+@onready var app_sugal = $PhoneBackground/AppSugal
+
+@onready var balance_label = $PhoneBackground/AppEpera/BalanceLabel
+@onready var objective_label = $PhoneBackground/AppToDo/ObjectiveLabel
+@onready var btn_sugal_app = $PhoneBackground/HomeScreen/AppGrid/BtnSugal
+
+func _ready() -> void:
+	phone_bg.hide()
+	show_home_screen()
+	
+	# Connect to GameState signals to keep UI updated
+	GameState.money_changed.connect(_on_money_changed)
+	GameState.sugal_unlocked.connect(_on_sugal_unlocked)
+	
+	# Initial UI Setup based on existing state
+	_on_money_changed(GameState.hand)
+	btn_sugal_app.disabled = !GameState.sugal_unlocked_flag
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_phone"):
+		if phone_bg.visible:
+			phone_bg.hide()
+			# Optionally resume game execution here if you pause the tree
+		else:
+			update_todo_app()
+			phone_bg.show()
+
+# --- Navigation ---
+func show_home_screen() -> void:
+	home_screen.show()
+	app_epera.hide()
+	app_todo.hide()
+	app_messages.hide()
+	app_sugal.hide()
+
+func _on_BtnHome_pressed() -> void:
+	show_home_screen()
+
+# --- App Openers ---
+func _on_BtnEPera_pressed() -> void:
+	show_home_screen()
+	home_screen.hide()
+	app_epera.show()
+
+func _on_BtnToDo_pressed() -> void:
+	show_home_screen()
+	home_screen.hide()
+	update_todo_app()
+	app_todo.show()
+
+func _on_BtnSugal_pressed() -> void:
+	show_home_screen()
+	home_screen.hide()
+	app_sugal.show()
+
+func _on_BtnMessages_pressed() -> void:
+	show_home_screen()
+	home_screen.hide()
+	app_messages.show()
+	# Here you would populate the VBoxContainer with GameState.notifications
+
+# --- Data Updating ---
+func _on_money_changed(new_amount: int) -> void:
+	balance_label.text = "Balance: ₱" + str(new_amount)
+
+func _on_sugal_unlocked() -> void:
+	btn_sugal_app.disabled = false
+
+func update_todo_app() -> void:
+	objective_label.text = "Current Objective:\n" + GameState.get_current_objective()

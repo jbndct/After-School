@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://biif40fa0fqjc"]
+
+[ext_resource type="Script" uid="uid://dgmmkf845mhhl" path="res://scripts/SmartphoneUI.gd" id="1_y5gdu"]
+
+[node name="SmartphoneUi" type="CanvasLayer" unique_id=1788022333]
+script = ExtResource("1_y5gdu")
+
+[node name="PhoneBackground" type="Panel" parent="." unique_id=2071027913]
+offset_left = 341.0
+offset_top = 116.0
+offset_right = 784.0
+offset_bottom = 519.0
+
+[node name="HomeScreen" type="Control" parent="PhoneBackground" unique_id=1763390665]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AppGrid" type="GridContainer" parent="PhoneBackground/HomeScreen" unique_id=619976590]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 170.0
+offset_top = 98.0
+offset_right = 311.5
+offset_bottom = 244.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnMessages" type="Button" parent="PhoneBackground/HomeScreen/AppGrid" unique_id=1723253961]
+layout_mode = 2
+text = "MESSAGES"
+
+[node name="BtnSugal" type="Button" parent="PhoneBackground/HomeScreen/AppGrid" unique_id=1723549991]
+layout_mode = 2
+text = "SUGALHUB"
+
+[node name="BtnToDo" type="Button" parent="PhoneBackground/HomeScreen/AppGrid" unique_id=2025656214]
+layout_mode = 2
+text = "TODO"
+
+[node name="BtnEPera" type="Button" parent="PhoneBackground/HomeScreen/AppGrid" unique_id=129893832]
+layout_mode = 2
+text = "E-PERA"
+
+[node name="AppEpera" type="Control" parent="PhoneBackground" unique_id=1191292805]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BalanceLabel" type="Label" parent="PhoneBackground/AppEpera" unique_id=1889286128]
+layout_mode = 0
+offset_left = 275.0
+offset_top = 270.0
+offset_right = 400.0
+offset_bottom = 293.0
+text = "Current Balance"
+
+[node name="AppToDo" type="Control" parent="PhoneBackground" unique_id=243424488]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ObjectiveLabel" type="Label" parent="PhoneBackground/AppToDo" unique_id=1982390412]
+layout_mode = 0
+offset_left = 298.0
+offset_top = 299.0
+offset_right = 379.0
+offset_bottom = 322.0
+text = "Objectives"
+
+[node name="AppMessages" type="Control" parent="PhoneBackground" unique_id=1255546218]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PhoneBackground/AppMessages" unique_id=1083684446]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AppSugal" type="Control" parent="PhoneBackground" unique_id=1362528239]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LaunchSugalBtn" type="Button" parent="PhoneBackground/AppSugal" unique_id=961984286]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="BtnHome" type="Button" parent="PhoneBackground" unique_id=2145901454]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 343.0
+offset_right = 249.0
+offset_bottom = 374.0
+text = "HOME"
+
+[connection signal="pressed" from="PhoneBackground/HomeScreen/AppGrid/BtnMessages" to="." method="_on_BtnMessages_pressed"]
+[connection signal="pressed" from="PhoneBackground/HomeScreen/AppGrid/BtnSugal" to="." method="_on_BtnSugal_pressed"]
+[connection signal="pressed" from="PhoneBackground/HomeScreen/AppGrid/BtnToDo" to="." method="_on_BtnToDo_pressed"]
+[connection signal="pressed" from="PhoneBackground/HomeScreen/AppGrid/BtnEPera" to="." method="_on_BtnEPera_pressed"]
+[connection signal="pressed" from="PhoneBackground/BtnHome" to="." method="_on_BtnHome_pressed"]

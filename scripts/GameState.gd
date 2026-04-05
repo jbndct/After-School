@@ -29,6 +29,16 @@ var progression_flow: Dictionary = {
 	4: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/ending.tscn"]
 }
 
+var objectives_map: Dictionary = {
+	1: ["Wake up and get ready", "Walk to the terminal", "Go to school", "Take the scholarship exam", "Leave school", "Walk home", "Rest for the night"],
+	# Add arrays for parts 2, 3, and 4...
+}
+
+func get_current_objective() -> String:
+	if objectives_map.has(current_part) and current_step_index < objectives_map[current_part].size():
+		return objectives_map[current_part][current_step_index]
+	return "No current objectives."
+
 # ─── PHONE ────────────────────────────────────────────
 var sugal_unlocked_flag: bool = false
 var buzzing: bool = false

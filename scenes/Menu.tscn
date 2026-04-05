@@ -35,3 +35,5 @@ text = "PLAY"
 offset_right = 88.0
 offset_bottom = 23.0
 text = "Main Menu"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button" to="." method="_on_play_button_pressed"]
