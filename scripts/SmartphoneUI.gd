@@ -5,19 +5,16 @@ extends CanvasLayer
 @onready var app_epera = $PhoneBackground/AppEpera
 @onready var app_todo = $PhoneBackground/AppToDo
 @onready var app_messages = $PhoneBackground/AppMessages
-@onready var app_sugal = $PhoneBackground/AppSugal
 
 @onready var balance_label = $PhoneBackground/AppEpera/BalanceLabel
 @onready var objective_label = $PhoneBackground/AppToDo/ObjectiveLabel
 @onready var btn_sugal_app = $PhoneBackground/HomeScreen/AppGrid/BtnSugal
-@onready var launch_sugal_btn = $PhoneBackground/AppSugal/LaunchSugalBtn
 
 func _ready() -> void:
 	phone_bg.show()
 	show_home_screen()
 	
 	# Connect to GameState signals to keep UI updated
-	launch_sugal_btn.pressed.connect(_on_launch_sugal_pressed)
 	GameState.money_changed.connect(_on_money_changed)
 	GameState.sugal_unlocked.connect(_on_sugal_unlocked)
 	
@@ -40,7 +37,6 @@ func show_home_screen() -> void:
 	app_epera.hide()
 	app_todo.hide()
 	app_messages.hide()
-	app_sugal.hide()
 
 func _on_BtnHome_pressed() -> void:
 	show_home_screen()
@@ -81,11 +77,3 @@ func _on_sugal_unlocked() -> void:
 func update_todo_app() -> void:
 	objective_label.text = "Current Objective:\n" + GameState.get_current_objective()
 	
-
-func _on_launch_sugal_pressed() -> void:
-	# Load the minigame and add it to the root so it covers the whole screen
-	var sugal_scene = load("res://scenes/SugalHub.tscn").instantiate()
-	get_tree().root.add_child(sugal_scene)
-	
-	# Hide the phone while playing
-	phone_bg.hide()

@@ -32,6 +32,9 @@ var move_timer: Timer
 var current_bet: int = 1000
 var grid_nodes: Array = []
 var spin_total_win: int = 0
+var scatter_count: int = 0
+var rig_state: String = "NORMAL"
+var spins_this_session: int = 0
 
 func _ready() -> void:
 	for c in range(COLS):
@@ -110,6 +113,20 @@ func spin() -> void:
 	spin_total_win = 0
 	win_label.add_theme_color_override("font_color", Color.WHITE)
 	
+	# --- NEW: PREDATORY LOGIC SETUP ---
+	spins_this_session += 1
+	scatter_count = 0
+	
+	# The Honeymoon Hook: Force a massive win on their very first spin ever
+	if GameState.sugal_visits == 1 and spins_this_session == 1:
+		rig_state = "HONEYMOON"
+	# The Mercy Drop: They are about to go broke, give them a fake lifeline
+	elif GameState.hand <= current_bet and GameState.hand > 0:
+		rig_state = "MERCY"
+	else:
+		rig_state = "NORMAL"
+	# ----------------------------------
+	
 	var has_old_symbols = false
 	var clear_tween = create_tween().set_parallel(true)
 	
@@ -141,11 +158,42 @@ func spin() -> void:
 			drop_tween.tween_property(lbl, "position", get_cell_pos(c, r), drop_speed)
 	
 	await drop_tween.finished
+	_shake_board()
 	await process_cascades()
 
 func spawn_symbol(col: int, row: int) -> Label:
 	var lbl = Label.new()
+	# --- NEW: RIGGED RNG LOGIC ---
+	var chosen_symbol = ""
+	
+	if rig_state == "HONEYMOON":
+		# 60% chance to spawn the jackpot symbol (👸) for a guaranteed massive cascade
+		chosen_symbol = "👸" if randf() < 0.6 else SYMBOLS.pick_random()
+	elif rig_state == "MERCY":
+		# 40% chance to spawn a mid-tier symbol (✋) to prevent them from hitting exactly 0
+		chosen_symbol = "✋" if randf() < 0.4 else SYMBOLS.pick_random()
+	else:
+		# NORMAL PREDATORY RNG
+		chosen_symbol = SYMBOLS.pick_random()
+		
+		# The Near-Miss Scatter Tease
+		if chosen_symbol == "👸":
+			if scatter_count >= 2:
+				# 90% chance to actively deny the 3rd scatter if they already have 2
+				if randf() < 0.90:
+					var non_scatters = SYMBOLS.duplicate()
+					non_scatters.erase("👸")
+					chosen_symbol = non_scatters.pick_random()
+				else:
+					scatter_count += 1
+			else:
+				scatter_count += 1
+				
+	lbl.text = chosen_symbol
+	# -----------------------------
 	lbl.text = SYMBOLS.pick_random()
+	
+	
 	lbl.custom_minimum_size = Vector2(CELL_SIZE, CELL_SIZE)
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -200,8 +248,23 @@ func process_cascades() -> void:
 	else:
 		if spin_total_win > 0:
 			GameState.add_money(spin_total_win)
-			win_label.text = "TOTAL WIN: ₱" + str(spin_total_win)
-			win_label.add_theme_color_override("font_color", Color.GREEN)
+			
+			# --- NEW: LOSSES DISGUISED AS WINS ---
+			if spin_total_win < current_bet:
+				# They LOST money overall, but the machine celebrates anyway
+				win_label.text = "MEGA WIN! ₱" + str(spin_total_win)
+				win_label.add_theme_color_override("font_color", Color.YELLOW)
+				
+				# Add a manipulative pulse animation to the UI text
+				win_label.pivot_offset = win_label.size / 2.0
+				var pulse = create_tween().set_loops(4)
+				pulse.tween_property(win_label, "scale", Vector2(1.3, 1.3), 0.1)
+				pulse.tween_property(win_label, "scale", Vector2(1.0, 1.0), 0.1)
+			else:
+				# A true mathematical win
+				win_label.text = "TOTAL WIN: ₱" + str(spin_total_win)
+				win_label.add_theme_color_override("font_color", Color.GREEN)
+			# -------------------------------------
 		else:
 			win_label.text = "No win."
 			win_label.add_theme_color_override("font_color", Color.GRAY)
@@ -239,6 +302,7 @@ func apply_gravity() -> void:
 
 	if has_movement:
 		await gravity_tween.finished
+		_shake_board()
 		await get_tree().create_timer(0.2).timeout
 	
 
@@ -252,7 +316,13 @@ func _on_real_exit_pressed() -> void:
 	# NEW: Instant exit on the first visit
 	if required_exit_clicks <= 0:
 		GameState.sugal_session_active = false
-		queue_free()
+		
+		# THE FIX: Load the previous scene instead of deleting the current one
+		if GameState.last_scene_path != "":
+			get_tree().change_scene_to_file(GameState.last_scene_path)
+		else:
+			print("CRITICAL ERROR: last_scene_path was empty! Falling back to room.")
+			get_tree().change_scene_to_file("res://scenes/room.tscn")
 		return
 	
 	withdrawal_active = true
@@ -360,3 +430,17 @@ func _shake_screen() -> void:
 
 func _on_bet_selected(index: int) -> void:
 	current_bet = bet_amounts[index]
+	
+func _shake_board() -> void:
+	var target = $HBoxContainer
+	# Store the baseline position so it doesn't drift away
+	var original_pos = target.position 
+	var shake_tween = create_tween()
+	
+	# Jerk it around rapidly
+	for i in range(4):
+		var offset = Vector2(randf_range(-10, 10), randf_range(-10, 10))
+		shake_tween.tween_property(target, "position", original_pos + offset, 0.04)
+		
+	# Snap it exactly back to normal
+	shake_tween.tween_property(target, "position", original_pos, 0.04)
