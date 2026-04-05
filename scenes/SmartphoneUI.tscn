@@ -2,14 +2,21 @@
 
 [ext_resource type="Script" uid="uid://dgmmkf845mhhl" path="res://scripts/SmartphoneUI.gd" id="1_y5gdu"]
 
-[node name="SmartphoneUi" type="CanvasLayer" unique_id=1788022333]
+[node name="SmartphoneUi" type="CanvasLayer" unique_id=1770789187]
 script = ExtResource("1_y5gdu")
 
 [node name="PhoneBackground" type="Panel" parent="." unique_id=2071027913]
-offset_left = 341.0
-offset_top = 116.0
-offset_right = 784.0
-offset_bottom = 519.0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -249.0
+offset_top = -427.0
+offset_right = -48.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="HomeScreen" type="Control" parent="PhoneBackground" unique_id=1763390665]
 anchors_preset = 0
@@ -21,9 +28,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 170.0
+offset_left = 57.0
 offset_top = 98.0
-offset_right = 311.5
+offset_right = 198.5
 offset_bottom = 244.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -51,10 +58,10 @@ offset_bottom = 40.0
 
 [node name="BalanceLabel" type="Label" parent="PhoneBackground/AppEpera" unique_id=1889286128]
 layout_mode = 0
-offset_left = 275.0
-offset_top = 270.0
-offset_right = 400.0
-offset_bottom = 293.0
+offset_left = 38.0
+offset_top = 250.0
+offset_right = 163.0
+offset_bottom = 273.0
 text = "Current Balance"
 
 [node name="AppToDo" type="Control" parent="PhoneBackground" unique_id=243424488]
@@ -64,10 +71,10 @@ offset_bottom = 40.0
 
 [node name="ObjectiveLabel" type="Label" parent="PhoneBackground/AppToDo" unique_id=1982390412]
 layout_mode = 0
-offset_left = 298.0
-offset_top = 299.0
-offset_right = 379.0
-offset_bottom = 322.0
+offset_left = 56.0
+offset_top = 274.0
+offset_right = 137.0
+offset_bottom = 297.0
 text = "Objectives"
 
 [node name="AppMessages" type="Control" parent="PhoneBackground" unique_id=1255546218]
@@ -92,10 +99,10 @@ offset_bottom = 8.0
 
 [node name="BtnHome" type="Button" parent="PhoneBackground" unique_id=2145901454]
 layout_mode = 0
-offset_left = 192.0
-offset_top = 343.0
-offset_right = 249.0
-offset_bottom = 374.0
+offset_left = 76.0
+offset_top = 358.0
+offset_right = 133.0
+offset_bottom = 389.0
 text = "HOME"
 
 [connection signal="pressed" from="PhoneBackground/HomeScreen/AppGrid/BtnMessages" to="." method="_on_BtnMessages_pressed"]

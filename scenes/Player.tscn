@@ -50,4 +50,4 @@ limit_right = 7000000
 limit_bottom = 0
 position_smoothing_enabled = true
 
-[node name="SmartphoneUi" parent="." unique_id=1788022333 instance=ExtResource("5_qu4a1")]
+[node name="SmartphoneUi" parent="." unique_id=351376932 instance=ExtResource("5_qu4a1")]
