@@ -18,6 +18,7 @@ var day: int = 1
 var path: String = ""  # "honest" | "gambling"
 var shift_hour: int = 0
 var logbook_signed: int = 0
+var step_dialogue_finished: bool = false
 
 var current_part: int = 1
 var current_step_index: int = 0
@@ -126,11 +127,13 @@ func reset() -> void:
 	current_part = 1
 	current_step_index = 0
 	sugal_visits = 0
+	step_dialogue_finished = false
 
 # ─── SCENE PROGRESSION ────────────────────────────────
 func advance_scene() -> void:
 	var sequence = progression_flow[current_part]
 	current_step_index += 1
+	step_dialogue_finished = false
 	
 	# Move to the next part if we finished the current sequence
 	if current_step_index >= sequence.size():

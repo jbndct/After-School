@@ -27,6 +27,12 @@ func _ready() -> void:
 		3: objective_label.text = "Objective: Attend classes."
 		4: objective_label.text = "Objective: Go to the registrar."
 
+	# --- GLOBAL MEMORY CHECK ---
+	# If we already talked for this specific step (e.g., returning from SugalHub)
+	if GameState.step_dialogue_finished:
+		has_talked = true
+		objective_label.text = "Objective: Head back to the street."
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		if player_in_interact_zone and not has_talked:
@@ -38,7 +44,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				objective_label.text = "I need to finish what I came here for."
 				await get_tree().create_timer(2.0).timeout
-				_ready()
+				if is_inside_tree():
+					_ready() # Reset objective text safely
 
 func play_school_dialogue() -> void:
 	var dialogue_lines = []
@@ -67,9 +74,12 @@ func _on_dialogue_finished() -> void:
 	
 	# If this is the scholarship exam day, instantly trigger the minigame!
 	if GameState.current_part == 1 and GameState.current_step_index == 2:
+		# Do NOT save step_dialogue_finished here, because we are leaving the scene 
+		# for a required minigame progression step.
 		GameState.advance_scene()
 	else:
 		# Otherwise, just let them walk out the door normally
+		GameState.step_dialogue_finished = true # Mark it done for memory
 		objective_label.text = "Objective: Head back to the street."
 		if player_at_door:
 			door_prompt.visible = true

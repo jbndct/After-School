@@ -81,6 +81,12 @@ func setup_street_state() -> void:
 		objective_label.text = base_objective
 	else:
 		print("ERROR: objective_label is missing! Did you add it to the scene?")
+		
+		# If we already talked for this step, skip the dialogue box entirely
+	if GameState.step_dialogue_finished:
+		has_talked = true
+		_on_dialogue_finished() # Triggers the door UI if you're standing near one
+		return 
 				
 	if dialogue_lines.size() > 0:
 		if dialogue_box:
@@ -96,6 +102,8 @@ func setup_street_state() -> void:
 
 func _on_dialogue_finished() -> void:
 	has_talked = true
+	GameState.step_dialogue_finished = true
+	
 	# If they are already standing at a door when dialogue ends, show the prompt safely
 	if current_door == "home" and home_label: home_label.visible = true
 	elif current_door == "job" and job_label: job_label.visible = true

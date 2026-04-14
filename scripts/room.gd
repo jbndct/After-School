@@ -22,6 +22,11 @@ func _ready() -> void:
 			2: objective_label.text = "Objective: Prepare to look for a job."
 			3: objective_label.text = "Objective: Get ready for work."
 			4: objective_label.text = "Objective: Check your balance."
+	
+	if GameState.step_dialogue_finished:
+		has_talked = true
+		if GameState.current_step_index == 0:
+			objective_label.text = "Objective: Head out."
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
@@ -90,6 +95,7 @@ func play_room_dialogue() -> void:
 
 func _on_dialogue_finished() -> void:
 	has_talked = true
+	GameState.step_dialogue_finished = true
 	
 	# If it's night, instantly go to the next day!
 	if GameState.current_step_index != 0:

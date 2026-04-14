@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var scene_name: String = "Scene Name"
-@export var next_scene: String = ""
+@export var next_scene: String = "res://scenes/room.tscn"
 @export var auto_advance: bool = false
 @export var auto_advance_time: float = 2.0
 
@@ -20,7 +20,7 @@ func _ready() -> void:
 		button.pressed.connect(advance)
 
 func advance() -> void:
-	if next_scene != "":
+	if next_scene != "" and is_inside_tree():
 		get_tree().change_scene_to_file(next_scene)
 		
 func _on_play_button_pressed() -> void:
@@ -28,4 +28,5 @@ func _on_play_button_pressed() -> void:
 	GameState.reset() 
 	
 	# 2. LOAD THE FIRST SCENE
-	get_tree().change_scene_to_file("res://scenes/room.tscn")
+	if is_inside_tree():
+		get_tree().change_scene_to_file("res://scenes/room.tscn")
