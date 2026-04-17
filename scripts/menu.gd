@@ -22,10 +22,13 @@ func _ready() -> void:
 			play_button.pressed.connect(_on_play_button_pressed)
 
 func _on_play_button_pressed() -> void:
-	# Wipe progress and money (Checks if GameState exists first to prevent crashes)
 	if GameState and GameState.has_method("reset"):
 		GameState.reset() 
 	
 	# Load the next scene
 	if next_scene != "" and is_inside_tree():
 		get_tree().change_scene_to_file(next_scene)
+
+
+func _on_play_pressed() -> void:
+	pass # Replace with function body.

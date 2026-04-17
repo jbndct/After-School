@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bxy0ke1o1wa1p"]
+
+[ext_resource type="Script" path="res://scripts/falling_item.gd" id="1_ksd5q"]
+[ext_resource type="Texture2D" uid="uid://bt4nwcgucn4wa" path="res://assets/sprites/Player/Limbs/arm.png" id="2_eyw7q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5ibw"]
+size = Vector2(131, 205.5)
+
+[node name="FallingItem" type="Area2D" unique_id=758584239 groups=["falling_item"]]
+script = ExtResource("1_ksd5q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1344587619]
+position = Vector2(217.5, 144.25)
+shape = SubResource("RectangleShape2D_l5ibw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1735022654]
+position = Vector2(215, 145.5)
+scale = Vector2(7.647058, 6.090909)
+texture = ExtResource("2_eyw7q")

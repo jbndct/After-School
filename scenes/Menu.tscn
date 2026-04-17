@@ -6,9 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dwc8vcd4ejawb" path="res://assets/sprites/menu bg.png" id="4_aaywf"]
 [ext_resource type="Texture2D" uid="uid://c5xld5qry4np6" path="res://assets/sprites/title menu.png" id="5_1abgu"]
 
-[node name="PlaceholderUI" type="Node2D" unique_id=1338268759]
+[node name="Menu" type="Node2D" unique_id=1338268759]
 script = ExtResource("1_xdvgc")
-next_scene = "res://scenes/room_day1.tscn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=370396938]
 
@@ -35,7 +34,6 @@ icon = ExtResource("2_jmdev")
 flat = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer" unique_id=864718593]
-anchors_preset = -1
 offset_left = 770.0
 offset_top = 400.0
 offset_right = 1474.0
