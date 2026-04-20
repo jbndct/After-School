@@ -24,6 +24,11 @@ var current_part: int = 1
 var current_step_index: int = 0
 var last_scene_path: String = ""
 
+# --- NEW: NARRATIVE ENDING FLAGS ---
+var failed_minigame: bool = false
+var has_gambled: bool = false
+var gambling_profit: int = 0
+
 var progression_flow: Dictionary = {
 	1: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/MinigameScholarship.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
 	2: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/workplace.tscn", "res://scenes/MinigameInterview.tscn", "res://scenes/workplace.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
@@ -128,9 +133,28 @@ func reset() -> void:
 	current_step_index = 0
 	sugal_visits = 0
 	step_dialogue_finished = false
+	
+	# Reset new flags
+	failed_minigame = false
+	has_gambled = false
+	gambling_profit = 0
 
 # ─── SCENE PROGRESSION ────────────────────────────────
 func advance_scene() -> void:
+	# --- NEW: CRITICAL FAILURE OVERRIDE ---
+	# If the player failed a minigame, immediately force the ending.
+	if failed_minigame:
+		current_part = 4
+		current_step_index = 0
+		failed_minigame = false # Turn off the flag so it doesn't infinitely loop
+		
+		var skip_scene = progression_flow[current_part][current_step_index]
+		if ResourceLoader.exists(skip_scene):
+			get_tree().change_scene_to_file(skip_scene)
+		else:
+			print("CRITICAL ERROR: Could not skip to Day 4.")
+		return
+
 	var sequence = progression_flow[current_part]
 	current_step_index += 1
 	step_dialogue_finished = false
@@ -142,17 +166,14 @@ func advance_scene() -> void:
 		
 		# Check if the game is over
 		if current_part > 4:
-			resolve_path() # Your existing function
-			# We will handle the specific ending scene logic later
+			resolve_path() 
+			# Advance to ending naturally
+			get_tree().change_scene_to_file("res://scenes/ending.tscn")
 			return
 			
 	var next_scene_path = progression_flow[current_part][current_step_index]
 	
-	# --- ADD THIS CHECK ---
 	if ResourceLoader.exists(next_scene_path):
 		get_tree().change_scene_to_file(next_scene_path)
 	else:
 		print("CRITICAL ERROR: Tried to load a scene that doesn't exist! Path: ", next_scene_path)
-		# Optional: Force a crash so you notice it!
-		# assert(false, "Scene missing: " + next_scene_path)
-	# ----------------------

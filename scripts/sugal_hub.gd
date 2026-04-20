@@ -35,6 +35,8 @@ var spin_total_win: int = 0
 var scatter_count: int = 0
 var rig_state: String = "NORMAL"
 var spins_this_session: int = 0
+var starting_money: int = 0
+var is_exiting: bool = false
 
 func _ready() -> void:
 	for c in range(COLS):
@@ -60,6 +62,7 @@ func _ready() -> void:
 	GameState.sugal_opened = true
 	GameState.sugal_session_active = true
 	update_ui()
+	starting_money = GameState.hand
 	
 	withdrawal_overlay.hide()
 	
@@ -98,7 +101,9 @@ func _on_spin_pressed() -> void:
 	if GameState.hand < current_bet:
 		win_label.text = "Insufficient funds. Take a loan?"
 		return
-
+	
+	GameState.has_gambled = true
+	
 	GameState.deduct_money(current_bet)
 	GameState.sugal_total_lost += current_bet
 	win_label.text = "Spinning..."
@@ -315,6 +320,7 @@ func _on_real_exit_pressed() -> void:
 	
 	# NEW: Instant exit on the first visit
 	if required_exit_clicks <= 0:
+		execute_exit()
 		GameState.sugal_session_active = false
 		
 		# THE FIX: Load the previous scene instead of deleting the current one
@@ -358,6 +364,7 @@ func _on_moving_exit_pressed() -> void:
 	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: " + str(current_exit_clicks) + "/" + str(required_exit_clicks)
 	
 	if current_exit_clicks >= required_exit_clicks:
+		execute_exit()
 		move_timer.stop()
 		GameState.sugal_session_active = false
 		
@@ -372,13 +379,10 @@ func _on_moving_exit_pressed() -> void:
 		move_timer.start()
 
 func _on_trap_button_pressed() -> void:
-	# ... your existing penalty code ...
 	
-	# Reset their escape progress dynamically
+	# Reset their escape pros
 	current_exit_clicks = 0
 	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
-	
-	# ... the rest of your intrusive thoughts logic ...
 	
 	# ACTUALLY spin the board in the background to show the money burning
 	if not is_spinning:
@@ -398,8 +402,7 @@ func _on_trap_button_pressed() -> void:
 	thought_label.text = intrusive_thoughts.pick_random()
 	
 	if GameState.hand <= 0:
-		move_timer.stop()
-		get_tree().change_scene_to_file("res://scenes/room_day2.tscn")
+		execute_exit()
 	else:
 		_move_all_buttons()
 		move_timer.start()
@@ -444,3 +447,24 @@ func _shake_board() -> void:
 		
 	# Snap it exactly back to normal
 	shake_tween.tween_property(target, "position", original_pos, 0.04)
+
+
+# --- NEW: UNIFIED EXIT HANDLER ---
+func execute_exit() -> void:
+	if is_exiting:
+		return
+	is_exiting = true
+	
+	GameState.sugal_session_active = false
+	move_timer.stop()
+	
+	if GameState.has_gambled:
+		GameState.gambling_profit = GameState.hand - starting_money
+		print("Gambling locked. Net profit/loss: ", GameState.gambling_profit)
+	
+	# --- THE BULLETPROOF FIX ---
+	# We ask the global GameState to change the scene safely at the end of the frame.
+	if GameState.last_scene_path != "":
+		GameState.get_tree().call_deferred("change_scene_to_file", GameState.last_scene_path)
+	else:
+		GameState.get_tree().call_deferred("change_scene_to_file", "res://scenes/room.tscn")

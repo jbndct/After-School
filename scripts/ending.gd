@@ -1,35 +1,34 @@
-extends Node2D
+extends Control
 
 @onready var dialogue_box = $DialogueBox
 
 func _ready() -> void:
-	var dialogue_lines = []
+	# Add a tiny half-second delay so it doesn't instantly jump scare the player with text
+	await get_tree().create_timer(0.5).timeout
+	evaluate_ending()
+
+func evaluate_ending() -> void:
+	var final_story = ""
 	
-	if GameState.hand < 15000:
-		dialogue_lines = [
-			{ "speaker": "REGISTRAR", "text": "Next. Payment for Dominador? You're still short." },
-			{ "speaker": "Dominador", "text": "...I had it. I swear, I had the full amount last night." },
-			{ "speaker": "REGISTRAR", "text": "The system doesn't care about 'almost'. Without the balance, your slot is forfeited. Please step out of the line." },
-			{ "speaker": "Dominador", "text": "(My chest feels tight... I haven't slept in forty hours. My hands won't stop shaking. Was one more spin worth my degree?)" },
-			{ "speaker": "MAMA (Text)", "text": "Anak, did you pay the tuition? I'm so proud of you for working so hard. God bless." },
-			{ "speaker": "Dominador", "text": "(I can't even reply. I've become a ghost in my own home. I stole her peace of mind for a digital jackpot that never dropped.)" },
-			{ "speaker": "PEPITO", "text": "I checked the group chat. You blocked everyone because you couldn't pay us back, didn't you?" },
-			{ "speaker": "PEPITO", "text": "Ginamble mo ba yung pang-tuition mo? After everything we did to help you? You’re pathetic. Don't ever call me again." },
-			{ "speaker": "Dominador", "text": "(The screen blinks in my pocket. A new notification from SugalHub: 'We miss you! Here is ₱50 free bet.' It’s the only thing I have left.)" }
-		]
+	if GameState.failed_minigame:
+		final_story = "You succumbed to the pressure. Unable to balance the grueling demands of work and school, you failed to graduate on time."
+	elif GameState.has_gambled:
+		if GameState.gambling_profit > 0:
+			final_story = "You made the money and graduated. But the thrill of the win never left. You spent the rest of your life chasing that high, trapped in a relentless cycle of addiction..."
+		else:
+			final_story = "You lost it all at the Sugal Hub. Without tuition, graduation slipped away. Desperate to win it back, you spiraled into a deep addiction. The house always wins."
 	else:
-		dialogue_lines = [
-			{ "speaker": "REGISTRAR", "text": "Good morning. Tuition payment?" },
-			{ "speaker": "Dominador", "text": "Here po. ₱15,000." },
-			{ "speaker": "System", "text": "[ ₱15,000 sent ]" },
-			{ "speaker": "REGISTRAR", "text": "You're enrolled. Good luck this semester." }
-		]
-		
+		final_story = "You survived. It was exhausting, but you kept your head down, did the honest work, and graduated. Everyone is proud. You are finally free."
+
+	# Format the text for your existing dialogue system. 
+	# Leaving the speaker blank or naming it "System" or "Fate" works well here.
+	var dialogue_lines = [
+		{ "speaker": "", "text": final_story }
+	]
+	
+	# Play the dialogue, and call our function when they click through it
 	dialogue_box.play(dialogue_lines, _on_dialogue_finished)
 
 func _on_dialogue_finished() -> void:
-	if GameState.hand >= 15000:
-		GameState.deduct_money(15000)
-		
-	# Game is over, send them back to the menu
-	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+	GameState.reset() # Wipe the flags clean
+	get_tree().change_scene_to_file("res://scenes/Menu.tscn")

@@ -86,18 +86,21 @@ func finish_quiz():
 	if score >= required_score:
 		question_label.text += "\n\nScholarship Granted!"
 		
-		# 1. Wait 3 seconds FIRST so the player can read the text
+		# Wait 3 seconds so the player can read the text
 		await get_tree().create_timer(3.0).timeout
 		
-		# 2. Push the game progression forward (This automatically loads the school scene)
+		# Push the game progression forward normally
 		GameState.advance_scene() 
 		
 	else:
-		question_label.text += "\n\nYou failed to qualify. Better luck next semester."
+		question_label.text += "\n\nYou failed to qualify. Without this, tuition is impossible..."
 		
-		# 1. Wait 3 seconds FIRST
+		# Wait 3 seconds so the dread sets in
 		await get_tree().create_timer(3.0).timeout
 		
-		# 2. Physically return to the school WITHOUT advancing the state so they have to retry
-		if is_inside_tree():
-			get_tree().change_scene_to_file("res://scenes/school.tscn")
+		# --- NEW: Trigger the Global Failure State ---
+		GameState.failed_minigame = true
+		
+		# Since we updated GameState.gd earlier, calling advance_scene() 
+		# while failed_minigame is TRUE will instantly boot them to the ending scene.
+		GameState.advance_scene()

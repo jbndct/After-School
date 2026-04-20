@@ -80,5 +80,6 @@ func game_over(won: bool) -> void:
 		print("MINIGAME WON! Returning to Work.")
 	else:
 		print("MINIGAME LOST! Stress overwhelmed you.")
+		GameState.failed_minigame = true # Trigger the failure flag
 	
 	GameState.advance_scene()
