@@ -84,7 +84,9 @@ func finish_quiz():
 	options_container.hide() # Hide options
 	
 	if score >= required_score:
-		question_label.text += "\n\nScholarship Granted!"
+		question_label.text += "\n\nPartial Scholarship Granted!"
+		
+		GameState.add_money(2500)
 		
 		# Wait 3 seconds so the player can read the text
 		await get_tree().create_timer(3.0).timeout

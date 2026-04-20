@@ -8,10 +8,11 @@ signal buzzing_changed(is_buzzing: bool)
 signal paycheck_received
 
 # ─── MONEY ────────────────────────────────────────────
-var hand: int = 2000
+var hand: int = 750
 var debt: int = 0
 var paycheck_received_flag: bool = false
 var loan_from_pepito: int = 0
+var daily_expense: int = 350
 
 # ─── PROGRESS ─────────────────────────────────────────
 var day: int = 1
@@ -75,10 +76,11 @@ func deduct_money(amount: int) -> void:
 
 func receive_pepito_loan() -> void:
 	loan_from_pepito = 7500
+	debt += loan_from_pepito
 	add_money(7500)
 
 func receive_paycheck() -> void:
-	add_money(6500)
+	add_money(5500)
 	paycheck_received_flag = true
 	sugal_unlocked_flag = true
 	emit_signal("paycheck_received")
@@ -139,6 +141,14 @@ func reset() -> void:
 	has_gambled = false
 	gambling_profit = 0
 
+func process_daily_expenses() -> void:
+	# Deduct the daily survival cost (food, fare, etc.)
+	deduct_money(daily_expense)
+	print("Day ", current_part, " ended. Deducted daily expenses: ₱", daily_expense, ". Current balance: ₱", hand)
+	
+	# Optional Polish: We can trigger a phone notification here later
+	# add_notification("bank", "E-Pera", "₱350 deducted for daily expenses.", "23:00")
+
 # ─── SCENE PROGRESSION ────────────────────────────────
 func advance_scene() -> void:
 	# --- NEW: CRITICAL FAILURE OVERRIDE ---
@@ -161,6 +171,10 @@ func advance_scene() -> void:
 	
 	# Move to the next part if we finished the current sequence
 	if current_step_index >= sequence.size():
+		
+		if current_part < 4:
+			process_daily_expenses()
+		
 		current_part += 1
 		current_step_index = 0
 		
