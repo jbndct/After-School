@@ -8,7 +8,7 @@ signal buzzing_changed(is_buzzing: bool)
 signal paycheck_received
 
 # ─── MONEY ────────────────────────────────────────────
-var hand: int = 750
+var hand: int = 550
 var debt: int = 0
 var paycheck_received_flag: bool = false
 var loan_from_pepito: int = 0

@@ -53,39 +53,29 @@ func play_room_dialogue() -> void:
 	else:
 		# --- MORNING DIALOGUE ---
 		match GameState.current_part:
-			1: 
+			1:
 				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "Tuition is ₱15,000. Deadline is today." },
-					{ "speaker": "Dominador", "text": "Current balance: ₱2,000. Paycheck clearing tonight: ₱6,500." },
-					{ "speaker": "Dominador", "text": "That's ₱8,500. I'm still drastically short." },
-					{ "speaker": "Dominador", "text": "[ Text - Mama: Anak, pasensya na. Wala kaming maipadala para sa tuition mo ngayon. ]" },
-					{ "speaker": "Dominador", "text": "I know, Ma. I'll figure it out." },
-					{ "speaker": "Dominador", "text": "[ Text - Mark: Bro, check this link. SugalHub. Easiest money I ever made. ]" },
-					{ "speaker": "Dominador", "text": "Mark has been pushing that sketchy app all week. Claimed he doubled his pay in ten minutes." },
-					{ "speaker": "Dominador", "text": "It's a trap. I know it is." },
-					{ "speaker": "Dominador", "text": "I just need to keep my head down, finish this night shift, and not do anything stupid." }
+					{ "speaker": "Dominador", "text": "750 pesos left. Just looking at the number makes my stomach turn." },
+					{ "speaker": "Dominador", "text": "Tuition is 15,000. And just getting out of bed, paying fare, and eating costs me 350 a day." },
+					{ "speaker": "Dominador", "text": "I absolutely need to pass that scholarship exam today. The 2,500 stipend is the only way I survive the week." }
 				]
-			2: 
+			2:
 				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "Morning already... I feel like I got hit by a jeepney." },
-					{ "speaker": "Dominador", "text": "Still drastically short on the tuition." },
-					{ "speaker": "Dominador", "text": "I need to find a second job today. Any side gig will do." },
-					{ "speaker": "Dominador", "text": "[ Text - Mark: Bro, you're missing out. Just pulled 3k from SugalHub while brushing my teeth. ]" },
-					{ "speaker": "Dominador", "text": "He's going to lose it all eventually. I just need to ignore him and focus on finding real work." }
+					{ "speaker": "Dominador", "text": "Another day, another 350 pesos gone to fare and food. The math isn't mathing." },
+					{ "speaker": "Dominador", "text": "Even with the scholarship, I'm barely scraping by. I have to look for a job today." },
+					{ "speaker": "Dominador", "text": "If I skip lunch, maybe I can stretch this further... no, I need the energy for the interviews." }
 				]
-			3: 
+			3:
 				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "Three hours of sleep. A new personal record." },
-					{ "speaker": "Dominador", "text": "Night shift starts soon. My body is running entirely on cheap coffee and panic." },
-					{ "speaker": "Dominador", "text": "The deadline is closing in. The pressure is starting to mess with my head." },
-					{ "speaker": "Dominador", "text": "Just need to clock in, stare at the wall, and secure that paycheck." }
+					{ "speaker": "Dominador", "text": "My head is pounding. Pepito's 7,500 loan is sitting in my account, but it feels like a ball and chain." },
+					{ "speaker": "Dominador", "text": "Between classes and the night shift tonight, I don't know when I'll sleep. But I need that paycheck." },
+					{ "speaker": "Dominador", "text": "Just one night. I just have to survive one grueling shift." }
 				]
-			4: 
+			4:
 				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "This is it. The registrar's office opens in an hour." },
-					{ "speaker": "Dominador", "text": "Let me check the bank app one last time to see where my balance stands." },
-					{ "speaker": "Dominador", "text": "Whatever happens today... I made my choices." },
-					{ "speaker": "Dominador", "text": "Time to head out and face the music." }
+					{ "speaker": "Dominador", "text": "The shift is over. My body is completely numb." },
+					{ "speaker": "Dominador", "text": "The paycheck cleared, but after three days of bleeding 350 just to live... I need to check the math." },
+					{ "speaker": "Dominador", "text": "Whatever the bank app says right now... decides my entire future. Time to head to the registrar." }
 				]
 				
 	if dialogue_lines.size() > 0:

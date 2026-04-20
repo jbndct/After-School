@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cwkwyggp6m80y"]
 
-[ext_resource type="Script" uid="uid://b165n1owr5067" path="res://scenes/minigame_interview.gd" id="1_4vil5"]
+[ext_resource type="Script" uid="uid://b165n1owr5067" path="res://minigame_interview.gd" id="1_4vil5"]
 [ext_resource type="Texture2D" uid="uid://bdv2sc2oadp4x" path="res://assets/sprites/Player/Poses/player_stand.png" id="2_4vil5"]
-[ext_resource type="Script" uid="uid://ijigiubhmeo2" path="res://scenes/interview_player.gd" id="2_p5nod"]
+[ext_resource type="Script" uid="uid://ijigiubhmeo2" path="res://interview_player.gd" id="2_p5nod"]
 [ext_resource type="PackedScene" uid="uid://bxy0ke1o1wa1p" path="res://scenes/FallingItem.tscn" id="4_gbf0h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4vil5"]

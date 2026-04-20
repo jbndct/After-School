@@ -50,18 +50,29 @@ func _unhandled_input(event: InputEvent) -> void:
 func play_school_dialogue() -> void:
 	var dialogue_lines = []
 	match GameState.current_part:
-		1: dialogue_lines = [
-				{ "speaker": "Dominador", "text": "The scholarship exam is starting soon." },
-				{ "speaker": "Dominador", "text": "If I pass this, I might not have to worry about the rest of the tuition." }
+		1:
+			dialogue_lines = [
+				{ "speaker": "Dominador", "text": "The testing room. My entire semester hinges on a piece of paper." },
+				{ "speaker": "Dominador", "text": "2,500 pesos. That's the stipend. It's barely a dent in the 15,000 I need, but it's a lifeline." },
+				{ "speaker": "Dominador", "text": "Focus. Don't think about the empty wallet. Just answer the questions." }
 			]
-		2: dialogue_lines = [
-				{ "speaker": "Dominador", "text": "Just checking the bulletin board for job postings." },
-				{ "speaker": "Dominador", "text": "Nothing good today." }
+		2:
+			dialogue_lines = [
+				{ "speaker": "Dominador", "text": "Bulletin board. Let's see who's desperate enough to hire a student with zero free time." },
+				{ "speaker": "Dominador", "text": "'Night Shift. 5,500 base pay.' ...It's going to absolutely destroy my sleep schedule." },
+				{ "speaker": "Dominador", "text": "But 5,500 plus the scholarship, plus a loan from Pepito... it might just put me over the 15,000 line. I have to take it." }
 			]
-		3: dialogue_lines = [{ "speaker": "Dominador", "text": "Classes are a blur when you're running on two hours of sleep." }]
-		4: dialogue_lines = [
-				{ "speaker": "Dominador", "text": "The registrar's office is just ahead." },
-				{ "speaker": "Dominador", "text": "This is the moment of truth." }
+		3:
+			dialogue_lines = [
+				{ "speaker": "Dominador", "text": "I can barely keep my eyes open in this lecture. The professor's voice is just background noise." },
+				{ "speaker": "Dominador", "text": "My mind keeps recalculating the numbers. The loan, the upcoming paycheck, the daily 350 drain..." },
+				{ "speaker": "Dominador", "text": "If I mess up the shift tonight, it's over. I just need to keep my eyes open." }
+			]
+		4:
+			dialogue_lines = [
+				{ "speaker": "Dominador", "text": "The Registrar's Office. The end of the line." },
+				{ "speaker": "Dominador", "text": "Three days of starving, begging for loans, and working until my bones ached." },
+				{ "speaker": "Dominador", "text": "This is it. Let's find out if it was enough." }
 			]
 				
 	if dialogue_lines.size() > 0:
