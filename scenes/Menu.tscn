@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dhonq4d8ooico"]
 
 [ext_resource type="Script" uid="uid://dwt2fwn53txa7" path="res://scripts/menu.gd" id="1_xdvgc"]
-[ext_resource type="Texture2D" uid="uid://bkefw4r5jsqf4" path="res://assets/sprites/playbutton.png" id="2_jmdev"]
-[ext_resource type="Texture2D" uid="uid://botp5aportjrb" path="res://assets/sprites/settings.png" id="3_b6cxs"]
-[ext_resource type="Texture2D" uid="uid://dwc8vcd4ejawb" path="res://assets/sprites/menu bg.png" id="4_aaywf"]
-[ext_resource type="Texture2D" uid="uid://c5xld5qry4np6" path="res://assets/sprites/title menu.png" id="5_1abgu"]
+[ext_resource type="Texture2D" uid="uid://2eafws65ynyr" path="res://assets/sprites/start game.png" id="2_jmdev"]
+[ext_resource type="Texture2D" uid="uid://dx0qeup43qcsy" path="res://assets/sprites/settings button.png" id="3_b6cxs"]
+[ext_resource type="Texture2D" uid="uid://c0m87v1own4cs" path="res://assets/sprites/bg menu.png" id="4_aaywf"]
+[ext_resource type="Texture2D" uid="uid://c41hw7a6h15wd" path="res://assets/sprites/title menu (2).png" id="5_1abgu"]
 
 [node name="Menu" type="Node2D" unique_id=1338268759]
 script = ExtResource("1_xdvgc")
@@ -13,18 +13,17 @@ script = ExtResource("1_xdvgc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1562761661]
 anchors_preset = -1
-anchor_left = 0.74100006
-anchor_top = 0.563
-anchor_right = 0.74100006
-anchor_bottom = 0.563
-offset_left = -68.63208
-offset_top = -34.824005
-offset_right = 400.36792
-offset_bottom = 307.176
+anchor_left = 0.5
+anchor_top = 0.85700005
+anchor_right = 0.5
+anchor_bottom = 0.85700005
+offset_left = -93.0
+offset_top = -53.49106
+offset_right = 373.00012
+offset_bottom = 101.51013
 grow_horizontal = 2
 grow_vertical = 2
-rotation = -0.15882497
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.5, 0.5)
 alignment = 1
 
 [node name="Play" type="Button" parent="CanvasLayer/VBoxContainer" unique_id=1133554605]
@@ -34,14 +33,13 @@ icon = ExtResource("2_jmdev")
 flat = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer" unique_id=864718593]
-offset_left = 770.0
-offset_top = 400.0
-offset_right = 1474.0
-offset_bottom = 742.0
+offset_left = 1020.61
+offset_top = 20.0
+offset_right = 1184.61
+offset_bottom = 184.0
 grow_horizontal = 2
 grow_vertical = 2
-rotation = 0.05235988
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.7, 0.7)
 alignment = 1
 
 [node name="Settings" type="Button" parent="CanvasLayer/VBoxContainer2" unique_id=415317845]
@@ -56,7 +54,8 @@ scale = Vector2(0.60494787, 0.6046295)
 texture = ExtResource("4_aaywf")
 
 [node name="Title" type="Sprite2D" parent="." unique_id=2043950573]
-position = Vector2(881, 214)
+position = Vector2(580.00006, 289)
+scale = Vector2(0.669, 0.7)
 texture = ExtResource("5_1abgu")
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Play" to="." method="_on_play_button_pressed"]
