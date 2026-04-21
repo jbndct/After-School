@@ -7,12 +7,17 @@ signal sugal_unlocked
 signal buzzing_changed(is_buzzing: bool)
 signal paycheck_received
 
-# ─── MONEY ────────────────────────────────────────────
+# ─── MONEY (THE PERFECT ZERO ECONOMY) ─────────────────
 var hand: int = 550
 var debt: int = 0
 var paycheck_received_flag: bool = false
 var loan_from_pepito: int = 0
 var daily_expense: int = 350
+
+# ─── NARRATIVE ENDING FLAGS ───────────────────────────
+var failed_minigame: bool = false
+var has_gambled: bool = false
+var gambling_profit: int = 0
 
 # ─── PROGRESS ─────────────────────────────────────────
 var day: int = 1
@@ -24,11 +29,6 @@ var step_dialogue_finished: bool = false
 var current_part: int = 1
 var current_step_index: int = 0
 var last_scene_path: String = ""
-
-# --- NEW: NARRATIVE ENDING FLAGS ---
-var failed_minigame: bool = false
-var has_gambled: bool = false
-var gambling_profit: int = 0
 
 var progression_flow: Dictionary = {
 	1: ["res://scenes/room.tscn", "res://scenes/street.tscn", "res://scenes/school.tscn", "res://scenes/MinigameScholarship.tscn", "res://scenes/school.tscn", "res://scenes/street.tscn", "res://scenes/room.tscn"],
@@ -51,7 +51,6 @@ func get_current_objective() -> String:
 var sugal_unlocked_flag: bool = true
 var buzzing: bool = false
 var notifications: Array = []
-# notif shape: { id, app, text, time, read }
 
 # ─── GAMBLING ─────────────────────────────────────────
 var sugal_opened: bool = false
@@ -76,11 +75,11 @@ func deduct_money(amount: int) -> void:
 
 func receive_pepito_loan() -> void:
 	loan_from_pepito = 7500
-	debt += loan_from_pepito
+	debt += loan_from_pepito # Ensures he carries the debt
 	add_money(7500)
 
 func receive_paycheck() -> void:
-	add_money(5500)
+	add_money(5500) # Minimum wage reality
 	paycheck_received_flag = true
 	sugal_unlocked_flag = true
 	emit_signal("paycheck_received")
@@ -90,6 +89,10 @@ func accept_sugal_loan(amount: int) -> void:
 	debt += amount
 	sugal_loans_accepted += 1
 	add_money(amount)
+
+func process_daily_expenses() -> void:
+	deduct_money(daily_expense)
+	print("Day ", current_part, " ended. Deducted daily expenses: ₱", daily_expense, ". Current balance: ₱", hand)
 
 # ─── PHONE FUNCTIONS ──────────────────────────────────
 func add_notification(id: String, app: String, text: String, time: String) -> void:
@@ -113,7 +116,7 @@ func resolve_path() -> void:
 
 # ─── RESET ────────────────────────────────────────────
 func reset() -> void:
-	hand = 2000
+	hand = 550
 	debt = 0
 	paycheck_received_flag = false
 	loan_from_pepito = 0
@@ -141,22 +144,17 @@ func reset() -> void:
 	has_gambled = false
 	gambling_profit = 0
 
-func process_daily_expenses() -> void:
-	# Deduct the daily survival cost (food, fare, etc.)
-	deduct_money(daily_expense)
-	print("Day ", current_part, " ended. Deducted daily expenses: ₱", daily_expense, ". Current balance: ₱", hand)
-	
-	# Optional Polish: We can trigger a phone notification here later
-	# add_notification("bank", "E-Pera", "₱350 deducted for daily expenses.", "23:00")
-
 # ─── SCENE PROGRESSION ────────────────────────────────
 func advance_scene() -> void:
-	# --- NEW: CRITICAL FAILURE OVERRIDE ---
-	# If the player failed a minigame, immediately force the ending.
-	if failed_minigame:
+	# --- UPDATED: CRITICAL FAILURE OVERRIDE ---
+	# If they failed, skip to Day 4. We check 'current_part < 4' so it only skips once 
+	# and allows them to actually play out the final day's walk of shame.
+	if failed_minigame and current_part < 4:
 		current_part = 4
 		current_step_index = 0
-		failed_minigame = false # Turn off the flag so it doesn't infinitely loop
+		
+		# WE NO LONGER TURN THE FLAG OFF HERE. 
+		# It stays true so ending.tscn can read it later!
 		
 		var skip_scene = progression_flow[current_part][current_step_index]
 		if ResourceLoader.exists(skip_scene):
@@ -172,16 +170,16 @@ func advance_scene() -> void:
 	# Move to the next part if we finished the current sequence
 	if current_step_index >= sequence.size():
 		
+		# Trigger daily expenses before the day changes
 		if current_part < 4:
 			process_daily_expenses()
-		
+			
 		current_part += 1
 		current_step_index = 0
 		
 		# Check if the game is over
 		if current_part > 4:
 			resolve_path() 
-			# Advance to ending naturally
 			get_tree().change_scene_to_file("res://scenes/ending.tscn")
 			return
 			

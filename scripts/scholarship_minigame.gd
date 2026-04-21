@@ -101,6 +101,7 @@ func finish_quiz():
 		await get_tree().create_timer(3.0).timeout
 		
 		# --- NEW: Trigger the Global Failure State ---
+		print("DEBUG: Minigame lost! failed_minigame is now: ", GameState.failed_minigame)
 		GameState.failed_minigame = true
 		
 		# Since we updated GameState.gd earlier, calling advance_scene() 
