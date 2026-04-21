@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bt4yq8i3nhx0w"]
 
 [ext_resource type="Script" uid="uid://bfehg10pqdg8" path="res://scripts/scholarship_minigame.gd" id="1_l0ne0"]
+[ext_resource type="AudioStream" uid="uid://cvd8cbtq2q5k3" path="res://assets/audio/bga.mp3" id="2_sgh22"]
 
 [node name="ScholarshipMinigame" type="Control" unique_id=871926095]
 layout_mode = 3
@@ -72,3 +73,9 @@ theme_override_colors/font_color = Color(0.055450834, 0.11558556, 0.01241413, 1)
 theme_override_font_sizes/font_size = 50
 text = "x/xx"
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1681078193]
+stream = ExtResource("2_sgh22")
+volume_db = 10.242
+autoplay = true
+parameters/looping = true

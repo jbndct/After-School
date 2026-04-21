@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://1ubw8sna4way"]
 
-[ext_resource type="Script" path="res://scripts/street.gd" id="1_wjoh7"]
+[ext_resource type="Script" uid="uid://dltlyhgwg2l2b" path="res://scripts/street.gd" id="1_wjoh7"]
 [ext_resource type="Texture2D" uid="uid://do08rpnikfwu0" path="res://assets/sprites/street better.png" id="2_5m0si"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_7vr8w"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="5_yrasx"]

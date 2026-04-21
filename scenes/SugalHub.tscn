@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dg00b0csfq2wy" path="res://scripts/sugal_hub.gd" id="1_3kho2"]
 [ext_resource type="Texture2D" uid="uid://wx55froaqcbm" path="res://assets/sprites/sugal.png" id="2_rsi76"]
+[ext_resource type="AudioStream" uid="uid://cvd8cbtq2q5k3" path="res://assets/audio/bga.mp3" id="3_gfdq3"]
 
 [node name="SugalHub" type="Control" unique_id=862425061]
 layout_mode = 3
@@ -155,3 +156,9 @@ offset_bottom = 8.0
 theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
 theme_override_font_sizes/font_size = 25
 text = "DON'T EXIT!"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=487175578]
+stream = ExtResource("3_gfdq3")
+volume_db = 10.242
+autoplay = true
+parameters/looping = true

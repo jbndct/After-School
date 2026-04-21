@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dx0qeup43qcsy" path="res://assets/sprites/settings button.png" id="3_b6cxs"]
 [ext_resource type="Texture2D" uid="uid://c0m87v1own4cs" path="res://assets/sprites/bg menu.png" id="4_aaywf"]
 [ext_resource type="Texture2D" uid="uid://c41hw7a6h15wd" path="res://assets/sprites/title menu (2).png" id="5_1abgu"]
+[ext_resource type="AudioStream" uid="uid://cvd8cbtq2q5k3" path="res://assets/audio/bga.mp3" id="6_b6cxs"]
 
 [node name="Menu" type="Node2D" unique_id=1338268759]
 script = ExtResource("1_xdvgc")
@@ -57,5 +58,11 @@ texture = ExtResource("4_aaywf")
 position = Vector2(580.00006, 289)
 scale = Vector2(0.669, 0.7)
 texture = ExtResource("5_1abgu")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=2054147389]
+stream = ExtResource("6_b6cxs")
+volume_db = 10.242
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Play" to="." method="_on_play_button_pressed"]

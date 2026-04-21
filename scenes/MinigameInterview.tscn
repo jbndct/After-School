@@ -1,9 +1,10 @@
-[gd_scene format=3 uid="uid://cwkwyggp6m80y"]
+[gd_scene format=3 uid="uid://dumadrdhve0t5"]
 
 [ext_resource type="Script" uid="uid://b165n1owr5067" path="res://scripts/minigame_interview.gd" id="1_4vil5"]
 [ext_resource type="Texture2D" uid="uid://bdv2sc2oadp4x" path="res://assets/sprites/Player/Poses/player_stand.png" id="2_4vil5"]
 [ext_resource type="Script" uid="uid://ijigiubhmeo2" path="res://scripts/interview_player.gd" id="2_p5nod"]
-[ext_resource type="PackedScene" uid="uid://bxy0ke1o1wa1p" path="res://scenes/FallingItem.tscn" id="4_gbf0h"]
+[ext_resource type="PackedScene" uid="uid://b3vt7jkgsulng" path="res://scenes/FallingItem.tscn" id="4_gbf0h"]
+[ext_resource type="AudioStream" uid="uid://b2xhgamm6hyy0" path="res://assets/audio/bgc.mp3" id="5_syfwc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4vil5"]
 size = Vector2(60, 96.5)
@@ -63,5 +64,11 @@ layout_mode = 2
 [node name="StressBar" type="ProgressBar" parent="UI/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1509772353]
 custom_minimum_size = Vector2(200, 30)
 layout_mode = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=2060080925]
+stream = ExtResource("5_syfwc")
+volume_db = -0.763
+autoplay = true
+parameters/looping = true
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
