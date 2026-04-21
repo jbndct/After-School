@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://biif40fa0fqjc"]
 
-[ext_resource type="Script" path="res://scripts/SmartphoneUI.gd" id="1_y5gdu"]
+[ext_resource type="Script" uid="uid://dgmmkf845mhhl" path="res://scripts/SmartphoneUI.gd" id="1_y5gdu"]
 [ext_resource type="Texture2D" uid="uid://bcrae40s0fhmr" path="res://assets/sprites/phone_msg.png" id="2_q7gw8"]
 [ext_resource type="Texture2D" uid="uid://cnem2in27kl4f" path="res://assets/sprites/phone_unlocked.png" id="2_ydt3l"]
 [ext_resource type="Texture2D" uid="uid://jxv6qggyp11a" path="res://assets/sprites/phone_sugal.png" id="3_x63ly"]

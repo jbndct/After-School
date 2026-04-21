@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c6ys5oa81hglm"]
 
-[ext_resource type="Script" path="res://scripts/dummy_minigame.gd" id="1_oljvy"]
+[ext_resource type="Script" uid="uid://cjo7ydyqmptcn" path="res://scripts/dummy_minigame.gd" id="1_oljvy"]
 
 [node name="DummyMinigame" type="Control" unique_id=871926095]
 layout_mode = 3
