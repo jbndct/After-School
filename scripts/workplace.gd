@@ -44,16 +44,24 @@ func play_workplace_dialogue() -> void:
 	match GameState.current_part:
 		2: dialogue_lines = [
 				{ "speaker": "Dominador", "text": "I'm here for the night guard position." },
-				{ "speaker": "Dominador", "text": "I just need to get through this interview." }
+				{ "speaker": "Dominador", "text": "I don't care about the hours. I just desperately need the 5,500." }
 			]
 		3: dialogue_lines = [
-				{ "speaker": "Dominador", "text": "Another night shift of staring at the wall." },
-				{ "speaker": "System", "text": "[ Paycheck Received: ₱6,500 ]" },
-				{ "speaker": "Dominador", "text": "₱16,000 total. The tuition is safe." },
-				{ "speaker": "Dominador", "text": "The relief is making me crash. I can't fall asleep on shift." },
-				{ "speaker": "Dominador", "text": "I've got an extra ₱1,000 sitting there." },
-				{ "speaker": "Dominador", "text": "Just a few low bets to pass the time. Nothing crazy. I know when to stop." }
+				{ "speaker": "Dominador", "text": "I am literally falling asleep standing up. Just stare at the wall." },
+				{ "speaker": "System", "text": "[ Paycheck Received: ₱5,500 ]" },
+				{ "speaker": "Dominador", "text": "It cleared. Okay, let's run the final calculation..." },
+				{ "speaker": "Dominador", "text": "550 to start. Add the 2,500 stipend, the 7,500 loan, and this 5,500 paycheck." },
+				{ "speaker": "Dominador", "text": "Minus the 1,050 I bled over the last three days for food and fare..." },
+				{ "speaker": "Dominador", "text": "15,000. Exactly. Down to the very last peso." },
+				{ "speaker": "Dominador", "text": "The tuition is safe. I can graduate." },
+				{ "speaker": "Dominador", "text": "But my bank account is at zero, and I owe Pepito 7,500. I'm starting my life buried in debt." },
+				{ "speaker": "Dominador", "text": "The Sugal Hub is right there on my phone. One lucky spin and I could clear the debt entirely. Just one spin..." }
 			]
+				
+	if dialogue_lines.size() > 0:
+		dialogue_box.play(dialogue_lines, _on_dialogue_finished)
+	else:
+		_on_dialogue_finished()
 				
 	if dialogue_lines.size() > 0:
 		dialogue_box.play(dialogue_lines, _on_dialogue_finished)

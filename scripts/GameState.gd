@@ -7,11 +7,17 @@ signal sugal_unlocked
 signal buzzing_changed(is_buzzing: bool)
 signal paycheck_received
 
-# ─── MONEY ────────────────────────────────────────────
-var hand: int = 2000
+# ─── MONEY (THE PERFECT ZERO ECONOMY) ─────────────────
+var hand: int = 550
 var debt: int = 0
 var paycheck_received_flag: bool = false
 var loan_from_pepito: int = 0
+var daily_expense: int = 350
+
+# ─── NARRATIVE ENDING FLAGS ───────────────────────────
+var failed_minigame: bool = false
+var has_gambled: bool = false
+var gambling_profit: int = 0
 
 # ─── PROGRESS ─────────────────────────────────────────
 var day: int = 1
@@ -45,7 +51,6 @@ func get_current_objective() -> String:
 var sugal_unlocked_flag: bool = true
 var buzzing: bool = false
 var notifications: Array = []
-# notif shape: { id, app, text, time, read }
 
 # ─── GAMBLING ─────────────────────────────────────────
 var sugal_opened: bool = false
@@ -70,10 +75,11 @@ func deduct_money(amount: int) -> void:
 
 func receive_pepito_loan() -> void:
 	loan_from_pepito = 7500
+	debt += loan_from_pepito # Ensures he carries the debt
 	add_money(7500)
 
 func receive_paycheck() -> void:
-	add_money(6500)
+	add_money(5500) # Minimum wage reality
 	paycheck_received_flag = true
 	sugal_unlocked_flag = true
 	emit_signal("paycheck_received")
@@ -83,6 +89,10 @@ func accept_sugal_loan(amount: int) -> void:
 	debt += amount
 	sugal_loans_accepted += 1
 	add_money(amount)
+
+func process_daily_expenses() -> void:
+	deduct_money(daily_expense)
+	print("Day ", current_part, " ended. Deducted daily expenses: ₱", daily_expense, ". Current balance: ₱", hand)
 
 # ─── PHONE FUNCTIONS ──────────────────────────────────
 func add_notification(id: String, app: String, text: String, time: String) -> void:
@@ -106,7 +116,7 @@ func resolve_path() -> void:
 
 # ─── RESET ────────────────────────────────────────────
 func reset() -> void:
-	hand = 2000
+	hand = 550
 	debt = 0
 	paycheck_received_flag = false
 	loan_from_pepito = 0
@@ -128,31 +138,54 @@ func reset() -> void:
 	current_step_index = 0
 	sugal_visits = 0
 	step_dialogue_finished = false
+	
+	# Reset new flags
+	failed_minigame = false
+	has_gambled = false
+	gambling_profit = 0
 
 # ─── SCENE PROGRESSION ────────────────────────────────
 func advance_scene() -> void:
+	# --- UPDATED: CRITICAL FAILURE OVERRIDE ---
+	# If they failed, skip to Day 4. We check 'current_part < 4' so it only skips once 
+	# and allows them to actually play out the final day's walk of shame.
+	if failed_minigame and current_part < 4:
+		current_part = 4
+		current_step_index = 0
+		
+		# WE NO LONGER TURN THE FLAG OFF HERE. 
+		# It stays true so ending.tscn can read it later!
+		
+		var skip_scene = progression_flow[current_part][current_step_index]
+		if ResourceLoader.exists(skip_scene):
+			get_tree().change_scene_to_file(skip_scene)
+		else:
+			print("CRITICAL ERROR: Could not skip to Day 4.")
+		return
+
 	var sequence = progression_flow[current_part]
 	current_step_index += 1
 	step_dialogue_finished = false
 	
 	# Move to the next part if we finished the current sequence
 	if current_step_index >= sequence.size():
+		
+		# Trigger daily expenses before the day changes
+		if current_part < 4:
+			process_daily_expenses()
+			
 		current_part += 1
 		current_step_index = 0
 		
 		# Check if the game is over
 		if current_part > 4:
-			resolve_path() # Your existing function
-			# We will handle the specific ending scene logic later
+			resolve_path() 
+			get_tree().change_scene_to_file("res://scenes/ending.tscn")
 			return
 			
 	var next_scene_path = progression_flow[current_part][current_step_index]
 	
-	# --- ADD THIS CHECK ---
 	if ResourceLoader.exists(next_scene_path):
 		get_tree().change_scene_to_file(next_scene_path)
 	else:
 		print("CRITICAL ERROR: Tried to load a scene that doesn't exist! Path: ", next_scene_path)
-		# Optional: Force a crash so you notice it!
-		# assert(false, "Scene missing: " + next_scene_path)
-	# ----------------------

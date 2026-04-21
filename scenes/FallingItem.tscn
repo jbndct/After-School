@@ -5,6 +5,11 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l5ibw"]
 size = Vector2(131, 205.5)
+[ext_resource type="Script" uid="uid://crth3vonlh88y" path="res://falling_item.gd" id="1_ksd5q"]
+[ext_resource type="Texture2D" uid="uid://bt4nwcgucn4wa" path="res://assets/sprites/Player/Limbs/arm.png" id="2_eyw7q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5ibw"]
+size = Vector2(31, 70.5)
 
 [node name="FallingItem" type="Area2D" unique_id=758584239 groups=["falling_item"]]
 script = ExtResource("1_ksd5q")
@@ -17,3 +22,15 @@ shape = SubResource("RectangleShape2D_l5ibw")
 position = Vector2(215, 145.5)
 scale = Vector2(7.647058, 6.090909)
 texture = ExtResource("2_eyw7q")
+shape = SubResource("RectangleShape2D_l5ibw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1735022654]
+position = Vector2(0, 1)
+scale = Vector2(1.8235294, 1.9696966)
+texture = ExtResource("2_eyw7q")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2025640656]
+position = Vector2(28, 335)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
