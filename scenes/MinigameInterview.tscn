@@ -3,16 +3,14 @@
 [ext_resource type="Script" uid="uid://b165n1owr5067" path="res://scripts/minigame_interview.gd" id="1_4vil5"]
 [ext_resource type="Texture2D" uid="uid://bdv2sc2oadp4x" path="res://assets/sprites/Player/Poses/player_stand.png" id="2_4vil5"]
 [ext_resource type="Script" uid="uid://ijigiubhmeo2" path="res://scripts/interview_player.gd" id="2_p5nod"]
-
-[sub_resource type="Resource" id="Resource_p5nod"]
-metadata/__load_path__ = "res://scenes/FallingItem.tscn"
+[ext_resource type="PackedScene" uid="uid://bxy0ke1o1wa1p" path="res://scenes/FallingItem.tscn" id="4_gbf0h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4vil5"]
 size = Vector2(60, 96.5)
 
 [node name="MinigameInterview" type="Node2D" unique_id=95478785]
 script = ExtResource("1_4vil5")
-falling_item_scene = SubResource("Resource_p5nod")
+falling_item_scene = ExtResource("4_gbf0h")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1243730164]
 offset_right = 1159.0
