@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://fcyafuxqe2xc"]
 
-[ext_resource type="Script" uid="uid://dtciuq057su4l" path="res://scripts/school.gd" id="1_oaecj"]
-[ext_resource type="Texture2D" uid="uid://bgogh8c1rwsyn" path="res://assets/sprites/school.png" id="2_oaecj"]
+[ext_resource type="Script" path="res://scripts/school.gd" id="1_oaecj"]
+[ext_resource type="Texture2D" uid="uid://d0xf5efuns8mh" path="res://assets/sprites/school_inside.png" id="2_oaecj"]
 [ext_resource type="Texture2D" uid="uid://dg6jujiglq0br" path="res://assets/sprites/interact.png" id="3_r5pcs"]
 [ext_resource type="Texture2D" uid="uid://du2lfudoggyma" path="res://assets/sprites/door.png" id="4_w6r4r"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="5_x8rpw"]
@@ -11,7 +11,7 @@
 size = Vector2(54, 458)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_873ml"]
-size = Vector2(1091, 27.5)
+size = Vector2(1465, 27.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oaecj"]
 size = Vector2(26, 450)
@@ -20,35 +20,35 @@ size = Vector2(26, 450)
 size = Vector2(200, 172)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_baguw"]
-size = Vector2(76, 230)
+size = Vector2(130, 230)
 
 [node name="School" type="Node2D" unique_id=1102400464]
 script = ExtResource("1_oaecj")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=2134442191]
-position = Vector2(55.000015, 25.00003)
-scale = Vector2(2.557927, 1.9778599)
+position = Vector2(-6, -16)
+scale = Vector2(0.43122154, 0.5974537)
 texture = ExtResource("2_oaecj")
 
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=2089998836]
 position = Vector2(-150, 73)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1018751219]
-position = Vector2(-417, 19)
+position = Vector2(-602, 19)
 shape = SubResource("RectangleShape2D_k7vhd")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1224694711]
 position = Vector2(-150, 69)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=886977025]
-position = Vector2(148.5, 232.25)
+position = Vector2(84.5, 232.25)
 shape = SubResource("RectangleShape2D_873ml")
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1980543975]
 position = Vector2(150, 73)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=122710050]
-position = Vector2(398, 20)
+position = Vector2(485, 20)
 shape = SubResource("RectangleShape2D_oaecj")
 
 [node name="InteractableItem" type="Area2D" parent="." unique_id=595968712]
@@ -75,7 +75,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(134, 97)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor" unique_id=796445348]
-position = Vector2(359, 105)
+position = Vector2(332, 105)
 shape = SubResource("RectangleShape2D_baguw")
 
 [node name="TextureRect" type="TextureRect" parent="ExitDoor" unique_id=1503446335]

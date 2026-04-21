@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://biif40fa0fqjc"]
 
-[ext_resource type="Script" uid="uid://dgmmkf845mhhl" path="res://scripts/SmartphoneUI.gd" id="1_y5gdu"]
+[ext_resource type="Script" path="res://scripts/SmartphoneUI.gd" id="1_y5gdu"]
+[ext_resource type="Texture2D" uid="uid://bcrae40s0fhmr" path="res://assets/sprites/phone_msg.png" id="2_q7gw8"]
+[ext_resource type="Texture2D" uid="uid://cnem2in27kl4f" path="res://assets/sprites/phone_unlocked.png" id="2_ydt3l"]
+[ext_resource type="Texture2D" uid="uid://jxv6qggyp11a" path="res://assets/sprites/phone_sugal.png" id="3_x63ly"]
+[ext_resource type="Texture2D" uid="uid://cnh8vc7j75wig" path="res://assets/sprites/phone_todo.png" id="5_ypls2"]
+[ext_resource type="Texture2D" uid="uid://cii75shtvg6wl" path="res://assets/sprites/phone_gcash.png" id="6_jlwrs"]
+[ext_resource type="Texture2D" uid="uid://cvqmi03mrbpbt" path="res://assets/sprites/phone_home.png" id="7_2c3jo"]
 
 [node name="SmartphoneUi" type="CanvasLayer" unique_id=1770789187]
 script = ExtResource("1_y5gdu")
@@ -11,12 +17,17 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -249.0
-offset_top = -427.0
+offset_left = -184.0
+offset_top = -256.0
 offset_right = -48.0
 offset_bottom = -24.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="PhoneBackground" unique_id=2126136262]
+position = Vector2(74.999985, 119.500015)
+scale = Vector2(0.311891, 0.29525858)
+texture = ExtResource("2_ydt3l")
 
 [node name="HomeScreen" type="Control" parent="PhoneBackground" unique_id=1763390665]
 anchors_preset = 0
@@ -28,28 +39,36 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 57.0
-offset_top = 98.0
-offset_right = 198.5
-offset_bottom = 244.0
+offset_left = 22.0
+offset_top = 50.0
+offset_right = 264.5
+offset_bottom = 238.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.4, 0.4)
+columns = 2
 
 [node name="BtnMessages" type="Button" parent="PhoneBackground/HomeScreen/AppGrid" unique_id=1723253961]
 layout_mode = 2
-text = "MESSAGES"
+size_flags_stretch_ratio = 0.0
+icon = ExtResource("2_q7gw8")
+flat = true
 
 [node name="BtnSugal" type="Button" parent="PhoneBackground/HomeScreen/AppGrid" unique_id=1723549991]
 layout_mode = 2
-text = "SUGALHUB"
+icon = ExtResource("3_x63ly")
+flat = true
 
 [node name="BtnToDo" type="Button" parent="PhoneBackground/HomeScreen/AppGrid" unique_id=2025656214]
 layout_mode = 2
 text = "TODO"
+icon = ExtResource("5_ypls2")
+flat = true
 
 [node name="BtnEPera" type="Button" parent="PhoneBackground/HomeScreen/AppGrid" unique_id=129893832]
 layout_mode = 2
-text = "E-PERA"
+icon = ExtResource("6_jlwrs")
+flat = true
 
 [node name="AppEpera" type="Control" parent="PhoneBackground" unique_id=1191292805]
 anchors_preset = 0
@@ -58,10 +77,10 @@ offset_bottom = 40.0
 
 [node name="BalanceLabel" type="Label" parent="PhoneBackground/AppEpera" unique_id=1889286128]
 layout_mode = 0
-offset_left = 38.0
-offset_top = 250.0
-offset_right = 163.0
-offset_bottom = 273.0
+offset_left = 15.0
+offset_top = 107.0
+offset_right = 140.0
+offset_bottom = 130.0
 text = "Current Balance"
 
 [node name="AppToDo" type="Control" parent="PhoneBackground" unique_id=243424488]
@@ -71,10 +90,10 @@ offset_bottom = 40.0
 
 [node name="ObjectiveLabel" type="Label" parent="PhoneBackground/AppToDo" unique_id=1982390412]
 layout_mode = 0
-offset_left = 56.0
-offset_top = 274.0
-offset_right = 137.0
-offset_bottom = 297.0
+offset_left = 34.0
+offset_top = 105.0
+offset_right = 115.0
+offset_bottom = 128.0
 text = "Objectives"
 
 [node name="AppMessages" type="Control" parent="PhoneBackground" unique_id=1255546218]
@@ -99,11 +118,13 @@ offset_bottom = 8.0
 
 [node name="BtnHome" type="Button" parent="PhoneBackground" unique_id=2145901454]
 layout_mode = 0
-offset_left = 76.0
-offset_top = 358.0
-offset_right = 133.0
-offset_bottom = 389.0
-text = "HOME"
+offset_left = 29.000002
+offset_top = 224.00002
+offset_right = 219.0
+offset_bottom = 244.00002
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("7_2c3jo")
+flat = true
 
 [connection signal="pressed" from="PhoneBackground/HomeScreen/AppGrid/BtnMessages" to="." method="_on_BtnMessages_pressed"]
 [connection signal="pressed" from="PhoneBackground/HomeScreen/AppGrid/BtnSugal" to="." method="_on_BtnSugal_pressed"]
