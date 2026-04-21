@@ -1,3 +1,17 @@
 [gd_scene format=3 uid="uid://vfbe0hjt4ggx"]
 
-[node name="Ending" type="Node2D" unique_id=1634172436]
+[ext_resource type="Script" uid="uid://raq8gks5ma8r" path="res://scripts/ending.gd" id="1_2x1jc"]
+[ext_resource type="Texture2D" uid="uid://1el06g68cprx" path="res://assets/sprites/graduation.png" id="1_fyrdv"]
+[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="1_mqjok"]
+
+[node name="Ending" type="Control" unique_id=1183800870]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_2x1jc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=377373014]
+position = Vector2(583.25, 326.5)
+scale = Vector2(1.4631512, 0.8380829)
+texture = ExtResource("1_fyrdv")
+
+[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("1_mqjok")]

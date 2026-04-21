@@ -6,6 +6,8 @@
 script = ExtResource("1_xdvgc")
 scene_name = "After School"
 next_scene = "res://scenes/room_day1.tscn"
+auto_advance = null
+auto_advance_time = null
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=370396938]
 

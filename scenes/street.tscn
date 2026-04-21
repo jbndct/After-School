@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://1ubw8sna4way"]
 
 [ext_resource type="Script" uid="uid://dltlyhgwg2l2b" path="res://scripts/street.gd" id="1_wjoh7"]
-[ext_resource type="Texture2D" uid="uid://du2lfudoggyma" path="res://assets/sprites/door.png" id="2_yrasx"]
+[ext_resource type="Texture2D" uid="uid://bjc5da3vcnv70" path="res://assets/sprites/homebuilding.png" id="3_7vr8w"]
 [ext_resource type="Texture2D" uid="uid://hlu8iiv2el0" path="res://assets/sprites/city-background-variants-v0-dtqv566hx5zb1.png" id="3_wjoh7"]
+[ext_resource type="Texture2D" uid="uid://dx5ewuhebjhkg" path="res://assets/sprites/jobbuilding.png" id="4_5m0si"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_7vr8w"]
+[ext_resource type="Texture2D" uid="uid://i7um8mpshneq" path="res://assets/sprites/schoolbuilding.png" id="4_wjoh7"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="5_yrasx"]
+[ext_resource type="PackedScene" uid="uid://biif40fa0fqjc" path="res://scenes/SmartphoneUI.tscn" id="7_5m0si"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5m0si"]
 size = Vector2(280, 349.5)
@@ -28,23 +31,28 @@ size = Vector2(147, 1282)
 position = Vector2(-208, -243)
 script = ExtResource("1_wjoh7")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=558747766]
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1519203040]
+position = Vector2(-1383, 254.45636)
+scale = Vector2(1.2481567, 1.5310464)
+texture = ExtResource("3_wjoh7")
 
-[node name="ParallaxLayer (far)" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1161530505]
-position = Vector2(-208, -243)
-motion_mirroring = Vector2(2400, 0)
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1263540903]
+position = Vector2(2584.9995, 241.99995)
+scale = Vector2(1.1172093, 1.5496297)
+texture = ExtResource("3_wjoh7")
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer (far)" unique_id=2115970504]
-position = Vector2(49, -57)
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1366584537]
+position = Vector2(167.00002, 239.00002)
+scale = Vector2(1.0569812, 1.548642)
 texture = ExtResource("3_wjoh7")
 
 [node name="HomeEntrance" type="Area2D" parent="." unique_id=6531692]
 position = Vector2(-1882, -96)
 
 [node name="Sprite2D" type="Sprite2D" parent="HomeEntrance" unique_id=1878696425]
-position = Vector2(1006, 458)
+position = Vector2(1010, 418)
 scale = Vector2(1.5674157, 1.2508832)
-texture = ExtResource("2_yrasx")
+texture = ExtResource("3_7vr8w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HomeEntrance" unique_id=883101154]
 position = Vector2(1007, 463.25)
@@ -66,7 +74,7 @@ position = Vector2(891, -78)
 [node name="Sprite2D" type="Sprite2D" parent="JobEntrance" unique_id=52373354]
 position = Vector2(1006, 458)
 scale = Vector2(1.5674157, 1.2508832)
-texture = ExtResource("2_yrasx")
+texture = ExtResource("4_5m0si")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="JobEntrance" unique_id=766785676]
 position = Vector2(1007, 463.25)
@@ -86,9 +94,9 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-7, -87)
 
 [node name="Sprite2D" type="Sprite2D" parent="SchoolEntrance" unique_id=1262209321]
-position = Vector2(1006, 458)
-scale = Vector2(1.5674157, 1.2508832)
-texture = ExtResource("2_yrasx")
+position = Vector2(1038, 372.00003)
+scale = Vector2(0.28642702, 0.32527703)
+texture = ExtResource("4_wjoh7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SchoolEntrance" unique_id=157362761]
 position = Vector2(1007, 463.25)
@@ -112,7 +120,7 @@ position = Vector2(594.5, 1)
 shape = SubResource("RectangleShape2D_nokxu")
 
 [node name="ColorRect" type="ColorRect" parent="Floor" unique_id=1207216509]
-offset_left = -1278.0
+offset_left = -1976.0
 offset_top = -18.0
 offset_right = 3186.0
 offset_bottom = 13.0
@@ -121,19 +129,22 @@ color = Color(0.14622876, 0.14622876, 0.14622873, 1)
 [node name="Player" parent="." unique_id=1915667930 instance=ExtResource("4_7vr8w")]
 position = Vector2(216, 502)
 
+[node name="ObjectiveLabel" type="Label" parent="Player" unique_id=1445627522]
+offset_left = -446.0
+offset_top = -108.0
+offset_right = 441.0
+offset_bottom = -85.0
+text = "Objective: ..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SmartphoneUi2" parent="Player" unique_id=351376932 instance=ExtResource("7_5m0si")]
+
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=1945931944]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=836129400]
 position = Vector2(-1137, 273.5)
 shape = SubResource("RectangleShape2D_t23v0")
-
-[node name="ObjectiveLabel" type="Label" parent="." unique_id=1667977210]
-offset_left = 189.0
-offset_top = 407.0
-offset_right = 284.0
-offset_bottom = 430.0
-text = "Objective: ..."
-metadata/_edit_use_anchors_ = true
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1943427091]
 

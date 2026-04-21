@@ -7,6 +7,9 @@ const WIN_THRESHOLD = 8
 const CELL_SIZE = 64
 const GAP = 8
 
+@onready var bet_dropdown = $HBoxContainer/PanelContainer/VBoxContainer/BetDropdown
+var bet_amounts: Array[int] = [10, 100, 500, 1000, 5000]
+
 @onready var game_board = $HBoxContainer/GameBoard
 @onready var balance_label = $HBoxContainer/PanelContainer/VBoxContainer/BalanceLabel
 @onready var win_label = $HBoxContainer/PanelContainer/VBoxContainer/WinLabel
@@ -22,13 +25,18 @@ const GAP = 8
 
 var is_spinning: bool = false
 var withdrawal_active: bool = false
-var required_exit_clicks: int = 10
+var required_exit_clicks: int = 0
 var current_exit_clicks: int = 0
 var move_timer: Timer
 
 var current_bet: int = 1000
 var grid_nodes: Array = []
 var spin_total_win: int = 0
+var scatter_count: int = 0
+var rig_state: String = "NORMAL"
+var spins_this_session: int = 0
+var starting_money: int = 0
+var is_exiting: bool = false
 
 func _ready() -> void:
 	for c in range(COLS):
@@ -54,6 +62,7 @@ func _ready() -> void:
 	GameState.sugal_opened = true
 	GameState.sugal_session_active = true
 	update_ui()
+	starting_money = GameState.hand
 	
 	withdrawal_overlay.hide()
 	
@@ -67,6 +76,21 @@ func _ready() -> void:
 	for fake_btn in fake_buttons_container.get_children():
 		if fake_btn is Button:
 			fake_btn.pressed.connect(_on_trap_button_pressed)
+			
+	
+	# Setup the betting dropdown
+	for amount in bet_amounts:
+		bet_dropdown.add_item("₱" + str(amount))
+	
+	# Connect the dropdown selection to our custom function
+	bet_dropdown.item_selected.connect(_on_bet_selected)
+	
+	# Set the initial bet to the first tier (₱10) instead of the hardcoded 1000
+	current_bet = bet_amounts[0]
+	
+	# Fetch the current difficulty, then increment it for the next visit
+	required_exit_clicks = GameState.sugal_visits
+	GameState.sugal_visits += 1
 
 func get_cell_pos(col: int, row: int) -> Vector2:
 	return Vector2(col * (CELL_SIZE + GAP), row * (CELL_SIZE + GAP))
@@ -77,7 +101,9 @@ func _on_spin_pressed() -> void:
 	if GameState.hand < current_bet:
 		win_label.text = "Insufficient funds. Take a loan?"
 		return
-
+	
+	GameState.has_gambled = true
+	
 	GameState.deduct_money(current_bet)
 	GameState.sugal_total_lost += current_bet
 	win_label.text = "Spinning..."
@@ -91,6 +117,20 @@ func spin() -> void:
 	is_spinning = true
 	spin_total_win = 0
 	win_label.add_theme_color_override("font_color", Color.WHITE)
+	
+	# --- NEW: PREDATORY LOGIC SETUP ---
+	spins_this_session += 1
+	scatter_count = 0
+	
+	# The Honeymoon Hook: Force a massive win on their very first spin ever
+	if GameState.sugal_visits == 1 and spins_this_session == 1:
+		rig_state = "HONEYMOON"
+	# The Mercy Drop: They are about to go broke, give them a fake lifeline
+	elif GameState.hand <= current_bet and GameState.hand > 0:
+		rig_state = "MERCY"
+	else:
+		rig_state = "NORMAL"
+	# ----------------------------------
 	
 	var has_old_symbols = false
 	var clear_tween = create_tween().set_parallel(true)
@@ -123,11 +163,42 @@ func spin() -> void:
 			drop_tween.tween_property(lbl, "position", get_cell_pos(c, r), drop_speed)
 	
 	await drop_tween.finished
+	_shake_board()
 	await process_cascades()
 
 func spawn_symbol(col: int, row: int) -> Label:
 	var lbl = Label.new()
+	# --- NEW: RIGGED RNG LOGIC ---
+	var chosen_symbol = ""
+	
+	if rig_state == "HONEYMOON":
+		# 60% chance to spawn the jackpot symbol (👸) for a guaranteed massive cascade
+		chosen_symbol = "👸" if randf() < 0.6 else SYMBOLS.pick_random()
+	elif rig_state == "MERCY":
+		# 40% chance to spawn a mid-tier symbol (✋) to prevent them from hitting exactly 0
+		chosen_symbol = "✋" if randf() < 0.4 else SYMBOLS.pick_random()
+	else:
+		# NORMAL PREDATORY RNG
+		chosen_symbol = SYMBOLS.pick_random()
+		
+		# The Near-Miss Scatter Tease
+		if chosen_symbol == "👸":
+			if scatter_count >= 2:
+				# 90% chance to actively deny the 3rd scatter if they already have 2
+				if randf() < 0.90:
+					var non_scatters = SYMBOLS.duplicate()
+					non_scatters.erase("👸")
+					chosen_symbol = non_scatters.pick_random()
+				else:
+					scatter_count += 1
+			else:
+				scatter_count += 1
+				
+	lbl.text = chosen_symbol
+	# -----------------------------
 	lbl.text = SYMBOLS.pick_random()
+	
+	
 	lbl.custom_minimum_size = Vector2(CELL_SIZE, CELL_SIZE)
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -182,8 +253,23 @@ func process_cascades() -> void:
 	else:
 		if spin_total_win > 0:
 			GameState.add_money(spin_total_win)
-			win_label.text = "TOTAL WIN: ₱" + str(spin_total_win)
-			win_label.add_theme_color_override("font_color", Color.GREEN)
+			
+			# --- NEW: LOSSES DISGUISED AS WINS ---
+			if spin_total_win < current_bet:
+				# They LOST money overall, but the machine celebrates anyway
+				win_label.text = "MEGA WIN! ₱" + str(spin_total_win)
+				win_label.add_theme_color_override("font_color", Color.YELLOW)
+				
+				# Add a manipulative pulse animation to the UI text
+				win_label.pivot_offset = win_label.size / 2.0
+				var pulse = create_tween().set_loops(4)
+				pulse.tween_property(win_label, "scale", Vector2(1.3, 1.3), 0.1)
+				pulse.tween_property(win_label, "scale", Vector2(1.0, 1.0), 0.1)
+			else:
+				# A true mathematical win
+				win_label.text = "TOTAL WIN: ₱" + str(spin_total_win)
+				win_label.add_theme_color_override("font_color", Color.GREEN)
+			# -------------------------------------
 		else:
 			win_label.text = "No win."
 			win_label.add_theme_color_override("font_color", Color.GRAY)
@@ -221,7 +307,9 @@ func apply_gravity() -> void:
 
 	if has_movement:
 		await gravity_tween.finished
+		_shake_board()
 		await get_tree().create_timer(0.2).timeout
+	
 
 func update_ui() -> void:
 	balance_label.text = "E-Pera: ₱" + str(GameState.hand)
@@ -230,16 +318,30 @@ func update_ui() -> void:
 func _on_real_exit_pressed() -> void:
 	if withdrawal_active: return
 	
+	# NEW: Instant exit on the first visit
+	if required_exit_clicks <= 0:
+		execute_exit()
+		GameState.sugal_session_active = false
+		
+		# THE FIX: Load the previous scene instead of deleting the current one
+		if GameState.last_scene_path != "":
+			get_tree().change_scene_to_file(GameState.last_scene_path)
+		else:
+			print("CRITICAL ERROR: last_scene_path was empty! Falling back to room.")
+			get_tree().change_scene_to_file("res://scenes/room.tscn")
+		return
+	
 	withdrawal_active = true
 	current_exit_clicks = 0
 	thought_label.text = ""
 	
 	spin_button.disabled = true
 	real_exit_button.disabled = true
-	real_exit_button.disabled = true
 	
 	withdrawal_overlay.show()
-	panic_label.text = "CLICK 'CONFIRM EXIT' 10 TIMES TO LEAVE\nPROGRESS: 0/10"
+	
+	# Make the text dynamic instead of hardcoded to 10
+	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
 	
 	_move_all_buttons()
 	move_timer.start()
@@ -259,24 +361,28 @@ func _move_all_buttons() -> void:
 	
 func _on_moving_exit_pressed() -> void:
 	current_exit_clicks += 1
-	panic_label.text = "CLICK 'CONFIRM EXIT' 10 TIMES TO LEAVE\nPROGRESS: " + str(current_exit_clicks) + "/10"
+	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: " + str(current_exit_clicks) + "/" + str(required_exit_clicks)
 	
 	if current_exit_clicks >= required_exit_clicks:
+		execute_exit()
 		move_timer.stop()
 		GameState.sugal_session_active = false
-		get_tree().change_scene_to_file("res://scenes/street_night.tscn")
+		
+		# THE FIX: Add error handling
+		if GameState.last_scene_path != "":
+			get_tree().change_scene_to_file(GameState.last_scene_path)
+		else:
+			print("CRITICAL ERROR: last_scene_path was empty! Falling back to room.")
+			get_tree().change_scene_to_file("res://scenes/room.tscn")
 	else:
 		_move_all_buttons()
 		move_timer.start()
 
 func _on_trap_button_pressed() -> void:
-	# Use their current bet size as the punishment!
-	var penalty = current_bet 
-	GameState.deduct_money(penalty)
-	GameState.sugal_total_lost += penalty
-	update_ui()
 	
-	_shake_screen()
+	# Reset their escape pros
+	current_exit_clicks = 0
+	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
 	
 	# ACTUALLY spin the board in the background to show the money burning
 	if not is_spinning:
@@ -296,8 +402,7 @@ func _on_trap_button_pressed() -> void:
 	thought_label.text = intrusive_thoughts.pick_random()
 	
 	if GameState.hand <= 0:
-		move_timer.stop()
-		get_tree().change_scene_to_file("res://scenes/room_day2.tscn")
+		execute_exit()
 	else:
 		_move_all_buttons()
 		move_timer.start()
@@ -325,3 +430,41 @@ func _shake_screen() -> void:
 		
 	# Return to normal
 	shake_tween.tween_property(withdrawal_overlay, "position", original_pos, 0.05)
+
+func _on_bet_selected(index: int) -> void:
+	current_bet = bet_amounts[index]
+	
+func _shake_board() -> void:
+	var target = $HBoxContainer
+	# Store the baseline position so it doesn't drift away
+	var original_pos = target.position 
+	var shake_tween = create_tween()
+	
+	# Jerk it around rapidly
+	for i in range(4):
+		var offset = Vector2(randf_range(-10, 10), randf_range(-10, 10))
+		shake_tween.tween_property(target, "position", original_pos + offset, 0.04)
+		
+	# Snap it exactly back to normal
+	shake_tween.tween_property(target, "position", original_pos, 0.04)
+
+
+# --- NEW: UNIFIED EXIT HANDLER ---
+func execute_exit() -> void:
+	if is_exiting:
+		return
+	is_exiting = true
+	
+	GameState.sugal_session_active = false
+	move_timer.stop()
+	
+	if GameState.has_gambled:
+		GameState.gambling_profit = GameState.hand - starting_money
+		print("Gambling locked. Net profit/loss: ", GameState.gambling_profit)
+	
+	# --- THE BULLETPROOF FIX ---
+	# We ask the global GameState to change the scene safely at the end of the frame.
+	if GameState.last_scene_path != "":
+		GameState.get_tree().call_deferred("change_scene_to_file", GameState.last_scene_path)
+	else:
+		GameState.get_tree().call_deferred("change_scene_to_file", "res://scenes/room.tscn")

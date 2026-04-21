@@ -1,45 +1,67 @@
-[gd_scene format=3 uid="uid://bt4yq8i3nhx0w"]
+[gd_scene format=3 uid="uid://cwkwyggp6m80y"]
 
-[ext_resource type="Script" uid="uid://cjo7ydyqmptcn" path="res://scripts/dummy_minigame.gd" id="1_y58ri"]
+[ext_resource type="Script" uid="uid://b165n1owr5067" path="res://minigame_interview.gd" id="1_4vil5"]
+[ext_resource type="Texture2D" uid="uid://bdv2sc2oadp4x" path="res://assets/sprites/Player/Poses/player_stand.png" id="2_4vil5"]
+[ext_resource type="Script" uid="uid://ijigiubhmeo2" path="res://interview_player.gd" id="2_p5nod"]
+[ext_resource type="PackedScene" uid="uid://bxy0ke1o1wa1p" path="res://scenes/FallingItem.tscn" id="4_gbf0h"]
 
-[node name="DummyMinigame" type="Control" unique_id=871926095]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_y58ri")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4vil5"]
+size = Vector2(60, 96.5)
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=937183813]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 7.0
-offset_top = -10.0
-offset_right = 7.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 0.8352941, 1, 1)
+[node name="MinigameInterview" type="Node2D" unique_id=95478785]
+script = ExtResource("1_4vil5")
+falling_item_scene = ExtResource("4_gbf0h")
 
-[node name="Label" type="Label" parent="." unique_id=1145953391]
-layout_mode = 0
-offset_left = 301.0
-offset_top = 218.0
-offset_right = 799.0
-offset_bottom = 273.0
-theme_override_colors/font_color = Color(0.5187819, 0, 0.19595285, 1)
-theme_override_colors/font_outline_color = Color(0, 0.5764706, 0.8, 1)
-theme_override_font_sizes/font_size = 40
-text = "SCHOLARSHIP MINIGAME"
+[node name="Background" type="ColorRect" parent="." unique_id=1243730164]
+offset_right = 1159.0
+offset_bottom = 645.0
+color = Color(0.29803923, 0.53333336, 0.8235294, 1)
 
-[node name="Button" type="Button" parent="." unique_id=1031172439]
-layout_mode = 0
-offset_left = 405.0
-offset_top = 285.0
-offset_right = 710.0
-offset_bottom = 335.0
-theme_override_font_sizes/font_size = 30
-text = "WIN AND CONTINUE"
+[node name="InterviewPlayer" type="CharacterBody2D" parent="." unique_id=1607018106]
+position = Vector2(494, 497)
+script = ExtResource("2_p5nod")
+
+[node name="Sprite2D" type="Sprite2D" parent="InterviewPlayer" unique_id=1515186116]
+position = Vector2(55, 88)
+texture = ExtResource("2_4vil5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InterviewPlayer" unique_id=2051205329]
+position = Vector2(55, 95)
+shape = SubResource("RectangleShape2D_4vil5")
+
+[node name="ItemsContainer" type="Node2D" parent="." unique_id=679047958]
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=304445411]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1642732022]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=60878931]
+offset_left = 57.0
+offset_right = 1127.0
+offset_bottom = 253.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer" unique_id=316303919]
+layout_mode = 2
+alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="UI/MarginContainer/HBoxContainer" unique_id=985935192]
+layout_mode = 2
+text = "saassasasasa"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="UI/MarginContainer/HBoxContainer" unique_id=1382360339]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer/HBoxContainer" unique_id=1288240812]
+layout_mode = 2
+
+[node name="StressLabel" type="Label" parent="UI/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1617530357]
+layout_mode = 2
+
+[node name="StressBar" type="ProgressBar" parent="UI/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1509772353]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

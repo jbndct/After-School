@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var dialogue_box = $DialogueBox
-@onready var objective_label = $ObjectiveLabel
+@onready var objective_label = $Player/ObjectiveLabel
 
 # Grab the labels safely right when the scene loads
 @onready var home_label = $HomeEntrance/Label
@@ -40,47 +40,78 @@ func setup_street_state() -> void:
 			if GameState.current_step_index == 1:
 				expected_destination = "school"
 				base_objective = "Objective: Get to school for the exam."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "If I don't pass this scholarship exam, I'm getting dropped." }]
-			elif GameState.current_step_index == 5: # CHANGED from 4 to 5
+				dialogue_lines = [
+					{ "speaker": "Dominador", "text": "If I don't pass this scholarship exam, the 15,000 tuition is impossible." }
+				]
+			elif GameState.current_step_index == 5:
 				expected_destination = "home"
 				base_objective = "Objective: Head home."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "Finally done. Need to head home." }]
+				dialogue_lines = [
+					{ "speaker": "Dominador", "text": "Stipend secured, but my wallet is still bleeding 350 a day for food and fare." }
+				]
 		2:
 			if GameState.current_step_index == 1:
 				expected_destination = "school" 
 				base_objective = "Objective: Find a job."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "Another day. Need to find work." }]
+				dialogue_lines = [
+					{ "speaker": "Dominador", "text": "The 2,500 stipend isn't enough. I have to find work today." }
+				]
 			elif GameState.current_step_index == 3:
 				expected_destination = "job"
 				base_objective = "Objective: Go to the interview."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "Time for the interview. Hope I don't mess this up." }]
-			elif GameState.current_step_index == 7: # CHANGED from 6 to 7
+				dialogue_lines = [
+					{ "speaker": "Dominador", "text": "A night guard shift paying 5,500. I cannot afford to mess this up." }
+				]
+			elif GameState.current_step_index == 7: 
 				expected_destination = "home"
 				base_objective = "Objective: Head home."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "Exhausted. Let's just go home." }]
+				dialogue_lines = [
+					{ "speaker": "Dominador", "text": "I got the job, but doing the math... I'm still going to be short." },
+					{ "speaker": "Dominador", "text": "I'm going to have to swallow my pride and message Pepito for a loan tonight." }
+				]
 		3:
 			if GameState.current_step_index == 1:
 				expected_destination = "school"
 				base_objective = "Objective: Go to class."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "Can't be late today." }]
+				
+				# --- NEW: TRIGGER THE LOAN HERE ---
+				if GameState.loan_from_pepito == 0:
+					GameState.receive_pepito_loan()
+					
+				dialogue_lines = [
+					{ "speaker": "System", "text": "[ E-Pera Transfer Received: ₱7,500 from Pepito ]" },
+					{ "speaker": "Dominador", "text": "The loan hit my account. I'm drowning in debt, but it keeps me in school." }
+				]
 			elif GameState.current_step_index == 3:
 				expected_destination = "job"
 				base_objective = "Objective: Head to the night shift."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "Time to clock in." }]
-			elif GameState.current_step_index == 7: # CHANGED from 6 to 7
+				dialogue_lines = [
+					{ "speaker": "Dominador", "text": "If I survive tonight's shift, the 5,500 paycheck clears. It has to be enough." }
+				]
+			elif GameState.current_step_index == 7: 
 				expected_destination = "home"
 				base_objective = "Objective: Go home and rest."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "I can barely keep my eyes open." }]
+				dialogue_lines = [
+					{ "speaker": "Dominador", "text": "I can't feel my legs. Just get to the bed." }
+				]
 		4:
 			if GameState.current_step_index == 1:
 				expected_destination = "school"
 				base_objective = "Objective: Head to the registrar."
-				dialogue_lines = [{ "speaker": "Dominador", "text": "The moment of truth." }]
+				dialogue_lines = [
+					{ "speaker": "Dominador", "text": "The final walk. Time to see if the math worked out." }
+				]
 				
 	if objective_label:
 		objective_label.text = base_objective
 	else:
 		print("ERROR: objective_label is missing! Did you add it to the scene?")
+		
+		# If we already talked for this step, skip the dialogue box entirely
+	if GameState.step_dialogue_finished:
+		has_talked = true
+		_on_dialogue_finished() # Triggers the door UI if you're standing near one
+		return 
 				
 	if dialogue_lines.size() > 0:
 		if dialogue_box:
@@ -96,6 +127,8 @@ func setup_street_state() -> void:
 
 func _on_dialogue_finished() -> void:
 	has_talked = true
+	GameState.step_dialogue_finished = true
+	
 	# If they are already standing at a door when dialogue ends, show the prompt safely
 	if current_door == "home" and home_label: home_label.visible = true
 	elif current_door == "job" and job_label: job_label.visible = true
