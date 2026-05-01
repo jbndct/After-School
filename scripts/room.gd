@@ -1,6 +1,5 @@
 extends Node2D
 
-@onready var dialogue_box = $DialogueBox
 @onready var objective_label = $Player/ObjectiveLabel
 @onready var interact_prompt = $InteractableItem/InteractPrompt
 @onready var door_prompt = $ExitDoor/DoorPrompt
@@ -13,7 +12,6 @@ func _ready() -> void:
 	interact_prompt.visible = false
 	door_prompt.visible = false
 	
-	# --- TIME OF DAY CHECK ---
 	if GameState.current_step_index != 0:
 		objective_label.text = "Objective: Go to sleep."
 	else:
@@ -31,7 +29,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		if player_in_interact_zone and not has_talked:
-			interact_prompt.visible = false 
+			interact_prompt.visible = false
 			play_room_dialogue()
 		elif player_at_door:
 			if has_talked:
@@ -42,44 +40,46 @@ func _unhandled_input(event: InputEvent) -> void:
 				_ready()
 
 func play_room_dialogue() -> void:
-	var dialogue_lines = []
+	var lines: Array[String] = []
 	
 	# --- NIGHT TIME DIALOGUE ---
 	if GameState.current_step_index != 0:
-		dialogue_lines = [
-			{ "speaker": "Dominador", "text": "Finally home. I'm completely drained." },
-			{ "speaker": "Dominador", "text": "I just need to crash. Tomorrow is another day." }
+		lines = [
+			"Finally home. I'm completely drained.",
+			"I just need to crash. Tomorrow is another day."
 		]
 	else:
 		# --- MORNING DIALOGUE ---
 		match GameState.current_part:
 			1:
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "750 pesos left. Just looking at the number makes my stomach turn." },
-					{ "speaker": "Dominador", "text": "Tuition is 15,000. And just getting out of bed, paying fare, and eating costs me 350 a day." },
-					{ "speaker": "Dominador", "text": "I absolutely need to pass that scholarship exam today. The 2,500 stipend is the only way I survive the week." }
+				lines = [
+					"750 pesos left. Just looking at the number makes my stomach turn.",
+					"Tuition is 15,000. And just getting out of bed, paying fare, and eating costs me 350 a day.",
+					"I absolutely need to pass that scholarship exam today. The 2,500 stipend is the only way I survive the week."
 				]
 			2:
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "Another day, another 350 pesos gone to fare and food. The math isn't mathing." },
-					{ "speaker": "Dominador", "text": "Even with the scholarship, I'm barely scraping by. I have to look for a job today." },
-					{ "speaker": "Dominador", "text": "If I skip lunch, maybe I can stretch this further... no, I need the energy for the interviews." }
+				lines = [
+					"Another day, another 350 pesos gone to fare and food. The math isn't mathing.",
+					"Even with the scholarship, I'm barely scraping by. I have to look for a job today.",
+					"If I skip lunch, maybe I can stretch this further... no, I need the energy for the interviews."
 				]
 			3:
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "My head is pounding. Pepito's 7,500 loan is sitting in my account, but it feels like a ball and chain." },
-					{ "speaker": "Dominador", "text": "Between classes and the night shift tonight, I don't know when I'll sleep. But I need that paycheck." },
-					{ "speaker": "Dominador", "text": "Just one night. I just have to survive one grueling shift." }
+				lines = [
+					"My head is pounding. Pepito's 7,500 loan is sitting in my account, but it feels like a ball and chain.",
+					"Between classes and the night shift tonight, I don't know when I'll sleep. But I need that paycheck.",
+					"Just one night. I just have to survive one grueling shift."
 				]
 			4:
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "The shift is over. My body is completely numb." },
-					{ "speaker": "Dominador", "text": "The paycheck cleared, but after three days of bleeding 350 just to live... I need to check the math." },
-					{ "speaker": "Dominador", "text": "Whatever the bank app says right now... decides my entire future. Time to head to the registrar." }
+				lines = [
+					"The shift is over. My body is completely numb.",
+					"The paycheck cleared, but after three days of bleeding 350 just to live... I need to check the math.",
+					"Whatever the bank app says right now... decides my entire future. Time to head to the registrar."
 				]
-				
-	if dialogue_lines.size() > 0:
-		dialogue_box.play(dialogue_lines, _on_dialogue_finished)
+	
+	if lines.size() > 0:
+		DialogManager.start_dialog(global_position, lines)
+		await DialogManager.dialog_finished
+		_on_dialogue_finished()
 	else:
 		_on_dialogue_finished()
 
@@ -87,7 +87,6 @@ func _on_dialogue_finished() -> void:
 	has_talked = true
 	GameState.step_dialogue_finished = true
 	
-	# If it's night, instantly go to the next day!
 	if GameState.current_step_index != 0:
 		GameState.advance_scene()
 	else:

@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://3dwn624edjwi"]
+
+[ext_resource type="Script" uid="uid://civrnw2rin7u8" path="res://ui/text_box.gd" id="1_jrwbe"]
+[ext_resource type="Texture2D" uid="uid://dqd0larl7js2g" path="res://assets/ui/Dialogue_box.png" id="2_edito"]
+[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/ui/IosevkaCharon-Regular.ttf" id="3_hh5wg"]
+
+[node name="TextBox" type="MarginContainer" unique_id=809015429]
+offset_right = 86.0
+offset_bottom = 33.0
+script = ExtResource("1_jrwbe")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=220327235]
+layout_mode = 2
+texture = ExtResource("2_edito")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 32
+patch_margin_top = 16
+patch_margin_right = 32
+patch_margin_bottom = 17
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1683362000]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=383289863]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95686275, 0.8901961, 1)
+theme_override_fonts/font = ExtResource("3_hh5wg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LetterDisplayTimer" type="Timer" parent="." unique_id=1236674476]
+one_shot = true
+
+[connection signal="timeout" from="LetterDisplayTimer" to="." method="_on_letter_display_timer_timeout"]
