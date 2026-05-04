@@ -11,6 +11,7 @@ var has_talked: bool = false
 func _ready() -> void:
 	interact_prompt.visible = false
 	door_prompt.visible = false
+	DialogManager.dialog_finished.connect(_on_dialogue_finished)
 	
 	if GameState.current_step_index != 0:
 		objective_label.text = "Objective: Go to sleep."
@@ -27,6 +28,8 @@ func _ready() -> void:
 			objective_label.text = "Objective: Head out."
 
 func _unhandled_input(event: InputEvent) -> void:
+	if DialogManager.is_dialog_active:
+		return
 	if event.is_action_pressed("interact"):
 		if player_in_interact_zone and not has_talked:
 			interact_prompt.visible = false
@@ -42,14 +45,12 @@ func _unhandled_input(event: InputEvent) -> void:
 func play_room_dialogue() -> void:
 	var lines: Array[String] = []
 	
-	# --- NIGHT TIME DIALOGUE ---
 	if GameState.current_step_index != 0:
 		lines = [
 			"Finally home. I'm completely drained.",
 			"I just need to crash. Tomorrow is another day."
 		]
 	else:
-		# --- MORNING DIALOGUE ---
 		match GameState.current_part:
 			1:
 				lines = [
@@ -77,9 +78,7 @@ func play_room_dialogue() -> void:
 				]
 	
 	if lines.size() > 0:
-		DialogManager.start_dialog(global_position, lines)
-		await DialogManager.dialog_finished
-		_on_dialogue_finished()
+		DialogManager.start_dialog($Player.global_position, lines)
 	else:
 		_on_dialogue_finished()
 
@@ -94,7 +93,6 @@ func _on_dialogue_finished() -> void:
 		if player_at_door:
 			door_prompt.visible = true
 
-# --- SIGNAL CALLBACKS ---
 func _on_interactable_item_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player") and not has_talked:
 		player_in_interact_zone = true
