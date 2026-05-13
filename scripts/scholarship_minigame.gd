@@ -1,4 +1,4 @@
-extends Control
+extends MinigameBase
 
 @onready var question_label = $QuestionLabel
 @onready var score_label = $ScoreLabel
@@ -14,6 +14,7 @@ func _ready():
 	load_questions()
 	setup_buttons()
 	start_quiz()
+	start_game()
 
 func load_questions():
 	var file = FileAccess.open("res://data/scholarship_questions.json", FileAccess.READ)
@@ -92,7 +93,8 @@ func finish_quiz():
 		await get_tree().create_timer(3.0).timeout
 		
 		# Push the game progression forward normally
-		GameState.advance_scene() 
+		finish_game(true)
+		GameState.advance_scene()
 		
 	else:
 		question_label.text += "\n\nYou failed to qualify. Without this, tuition is impossible..."
@@ -103,7 +105,5 @@ func finish_quiz():
 		# --- NEW: Trigger the Global Failure State ---
 		print("DEBUG: Minigame lost! failed_minigame is now: ", GameState.failed_minigame)
 		GameState.failed_minigame = true
-		
-		# Since we updated GameState.gd earlier, calling advance_scene() 
-		# while failed_minigame is TRUE will instantly boot them to the ending scene.
+		finish_game(false)
 		GameState.advance_scene()

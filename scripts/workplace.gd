@@ -33,7 +33,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			play_workplace_dialogue()
 		elif player_at_door:
 			if has_talked:
-				GameState.advance_scene()
+				SceneManager.advance_story("workplace")
 			else:
 				objective_label.text = "I need to clock in first."
 				await get_tree().create_timer(2.0).timeout

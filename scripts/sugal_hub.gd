@@ -39,6 +39,7 @@ var starting_money: int = 0
 var is_exiting: bool = false
 
 func _ready() -> void:
+	EventBus.sugalhub_opened.emit()
 	for c in range(COLS):
 		grid_nodes.append([])
 		for r in range(ROWS):
@@ -468,3 +469,5 @@ func execute_exit() -> void:
 		GameState.get_tree().call_deferred("change_scene_to_file", GameState.last_scene_path)
 	else:
 		GameState.get_tree().call_deferred("change_scene_to_file", "res://scenes/room.tscn")
+		
+	EventBus.sugalhub_closed.emit()

@@ -19,6 +19,9 @@ config/icon="res://icon.svg"
 
 GameState="*uid://dq6h8fhliiol7"
 DialogManager="*uid://dru46e11n2xqn"
+EventBus="*uid://buv372xdvsrhw"
+RunState="*uid://cvda2bjbofut1"
+SceneManager="*uid://drjd1h8ywrv6r"
 
 [input]
 
