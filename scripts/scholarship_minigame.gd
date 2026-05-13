@@ -86,24 +86,16 @@ func finish_quiz():
 	
 	if score >= required_score:
 		question_label.text += "\n\nPartial Scholarship Granted!"
-		
-		GameState.add_money(2500)
-		
+				
 		# Wait 3 seconds so the player can read the text
 		await get_tree().create_timer(3.0).timeout
 		
 		# Push the game progression forward normally
 		finish_game(true)
-		GameState.advance_scene()
 		
 	else:
 		question_label.text += "\n\nYou failed to qualify. Without this, tuition is impossible..."
 		
 		# Wait 3 seconds so the dread sets in
 		await get_tree().create_timer(3.0).timeout
-		
-		# --- NEW: Trigger the Global Failure State ---
-		print("DEBUG: Minigame lost! failed_minigame is now: ", GameState.failed_minigame)
-		GameState.failed_minigame = true
 		finish_game(false)
-		GameState.advance_scene()
