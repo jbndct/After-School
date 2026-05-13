@@ -7,6 +7,7 @@ extends Node
 # ==============================================================================
 
 const SCENES = {
+	"menu": "res://scenes/Menu.tscn",
 	"room": "res://scenes/room.tscn",
 	"street": "res://scenes/street.tscn",
 	"school": "res://scenes/school.tscn",

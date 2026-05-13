@@ -1,34 +1,20 @@
 extends Node2D
 
-@export var next_scene: String = "res://scenes/room.tscn"
-@export var auto_advance: bool = false
-@export var auto_advance_time: float = 2.0
-
-@onready var play_button = $CanvasLayer/VBoxContainer/Play
-@onready var settings_button = $CanvasLayer/VBoxContainer2/Settings
-@onready var title = $CanvasLayer/Title
-@onready var background = $CanvasLayer/Background
+@onready var play_button = $PlayButton # Change path based on your scene tree
+@onready var quit_button = $QuitButton 
 
 func _ready() -> void:
-	if auto_advance:
-		play_button.visible = false
-		await get_tree().create_timer(auto_advance_time).timeout
-		_on_play_button_pressed() 
-	else:
-		play_button.visible = true
-		
-		# FORCES the button to connect to the function below, guaranteeing it works
-		if not play_button.pressed.is_connected(_on_play_button_pressed):
-			play_button.pressed.connect(_on_play_button_pressed)
-
-func _on_play_button_pressed() -> void:
-	if GameState and GameState.has_method("reset"):
-		GameState.reset() 
-	
-	# Load the next scene
-	if next_scene != "" and is_inside_tree():
-		get_tree().change_scene_to_file(next_scene)
-
+	if play_button:
+		play_button.pressed.connect(_on_play_pressed)
+	if quit_button:
+		quit_button.pressed.connect(_on_quit_pressed)
 
 func _on_play_pressed() -> void:
-	pass # Replace with function body.
+	# THIS IS CRITICAL. Wipes all ending flags, sets phase to morning, sets money to 550.
+	RunState.reset_run() 
+	
+	# Start the game
+	SceneManager.load_scene("room")
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

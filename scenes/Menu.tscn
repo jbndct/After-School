@@ -58,4 +58,4 @@ position = Vector2(580.00006, 289)
 scale = Vector2(0.669, 0.7)
 texture = ExtResource("5_1abgu")
 
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/Play" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Play" to="." method="_on_play_pressed"]
