@@ -1,145 +1,102 @@
 extends Node2D
 
-@onready var dialogue_box = $DialogueBox
+@onready var player = $Player
 @onready var objective_label = $Player/ObjectiveLabel
 
-# Grab the labels safely right when the scene loads
 @onready var home_label = $HomeEntrance/Label
 @onready var job_label = $JobEntrance/Label
 @onready var school_label = $SchoolEntrance/Label
 
 var current_door: String = ""
 var expected_destination: String = ""
-var base_objective: String = ""
-var has_talked: bool = false
+
+# ==============================================================================
+# PHASE-BASED DIALOGUE
+# ==============================================================================
+var street_dialogue = {
+	"morning": [
+		"If I don't pass this scholarship exam, the 15,000 tuition is impossible.",
+		"I need to get to school."
+	],
+	"afternoon": [
+		"Exam is over. But my wallet is still bleeding 350 a day.",
+		"These SugalHub ads are everywhere... I just need to get home."
+	]
+}
 
 func _ready() -> void:
-	# Hide all labels safely on startup
+	# 1. SPATIAL ROUTING
+	if RunState.interruption_return_x != 0.0:
+		player.global_position.x = RunState.interruption_return_x
+		RunState.interruption_return_x = 0.0 
+	else:
+		if RunState.previous_location == "room":
+			player.global_position.x = 100
+		elif RunState.previous_location == "school" or RunState.previous_location == "work":
+			player.global_position.x = 1100
+			
+	# 2. HIDE DOOR LABELS
 	if home_label: home_label.visible = false
 	if job_label: job_label.visible = false
 	if school_label: school_label.visible = false
+	
+	# 3. CONNECT DIALOG MANAGER
+	if not DialogManager.dialog_finished.is_connected(_on_dialogue_finished):
+		DialogManager.dialog_finished.connect(_on_dialogue_finished)
+		
 	setup_street_state()
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and current_door != "" and has_talked:
-		if current_door == expected_destination:
-			# They picked the right door! Let GameState load the next scene.
-			GameState.advance_scene()
-		else:
-			# Wrong door
-			if objective_label:
-				objective_label.text = "I don't need to go there right now."
-				await get_tree().create_timer(2.0).timeout
-				objective_label.text = base_objective
-
 func setup_street_state() -> void:
-	var dialogue_lines = []
+	var phase = RunState.current_phase
 	
-	match GameState.current_part:
-		1:
-			if GameState.current_step_index == 1:
-				expected_destination = "school"
-				base_objective = "Objective: Get to school for the exam."
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "If I don't pass this scholarship exam, the 15,000 tuition is impossible." }
-				]
-			elif GameState.current_step_index == 5:
-				expected_destination = "home"
-				base_objective = "Objective: Head home."
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "Stipend secured, but my wallet is still bleeding 350 a day for food and fare." }
-				]
-		2:
-			if GameState.current_step_index == 1:
-				expected_destination = "school" 
-				base_objective = "Objective: Find a job."
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "The 2,500 stipend isn't enough. I have to find work today." }
-				]
-			elif GameState.current_step_index == 3:
-				expected_destination = "job"
-				base_objective = "Objective: Go to the interview."
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "A night guard shift paying 5,500. I cannot afford to mess this up." }
-				]
-			elif GameState.current_step_index == 7: 
-				expected_destination = "home"
-				base_objective = "Objective: Head home."
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "I got the job, but doing the math... I'm still going to be short." },
-					{ "speaker": "Dominador", "text": "I'm going to have to swallow my pride and message Pepito for a loan tonight." }
-				]
-		3:
-			if GameState.current_step_index == 1:
-				expected_destination = "school"
-				base_objective = "Objective: Go to class."
-				
-				# --- NEW: TRIGGER THE LOAN HERE ---
-				if GameState.loan_from_pepito == 0:
-					GameState.receive_pepito_loan()
-					
-				dialogue_lines = [
-					{ "speaker": "System", "text": "[ E-Pera Transfer Received: ₱7,500 from Pepito ]" },
-					{ "speaker": "Dominador", "text": "The loan hit my account. I'm drowning in debt, but it keeps me in school." }
-				]
-			elif GameState.current_step_index == 3:
-				expected_destination = "job"
-				base_objective = "Objective: Head to the night shift."
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "If I survive tonight's shift, the 5,500 paycheck clears. It has to be enough." }
-				]
-			elif GameState.current_step_index == 7: 
-				expected_destination = "home"
-				base_objective = "Objective: Go home and rest."
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "I can't feel my legs. Just get to the bed." }
-				]
-		4:
-			if GameState.current_step_index == 1:
-				expected_destination = "school"
-				base_objective = "Objective: Head to the registrar."
-				dialogue_lines = [
-					{ "speaker": "Dominador", "text": "The final walk. Time to see if the math worked out." }
-				]
-				
-	if objective_label:
-		objective_label.text = base_objective
-	else:
-		print("ERROR: objective_label is missing! Did you add it to the scene?")
+	# Set Target Door
+	if phase == "morning":
+		expected_destination = "school"
+		objective_label.text = "Objective: Head to school."
+	elif phase == "afternoon":
+		expected_destination = "home"
+		objective_label.text = "Objective: Head back to the dorm."
 		
-		# If we already talked for this step, skip the dialogue box entirely
-	if GameState.step_dialogue_finished:
-		has_talked = true
-		_on_dialogue_finished() # Triggers the door UI if you're standing near one
-		return 
-				
-	if dialogue_lines.size() > 0:
-		if dialogue_box:
-			print("SUCCESS: DialogueBox found. Playing dialogue now!")
-			dialogue_box.play(dialogue_lines, _on_dialogue_finished)
-		else:
-			print("ERROR: dialogue_box is missing! You forgot to instantiate the DialogueBox scene!")
-			_on_dialogue_finished()
+	var dialogue_id = "street_" + phase
+	
+	# Play Intro Dialogue
+	if not RunState.completed_dialogues.has(dialogue_id) and street_dialogue.has(phase):
+		player.current_state = player.State.LOCKED
+		var lines: Array[String] = []
+		lines.assign(street_dialogue[phase])
+		DialogManager.start_dialog(player.global_position, lines)
 	else:
-		print("WARNING: No dialogue lines matched this part/step combo.")
 		_on_dialogue_finished()
-	print("------------------")
 
 func _on_dialogue_finished() -> void:
-	has_talked = true
-	GameState.step_dialogue_finished = true
+	var dialogue_id = "street_" + RunState.current_phase
+	RunState.completed_dialogues[dialogue_id] = true
+	player.current_state = player.State.FREE
 	
-	# If they are already standing at a door when dialogue ends, show the prompt safely
+	# Refresh door prompt if they are standing next to one
 	if current_door == "home" and home_label: home_label.visible = true
 	elif current_door == "job" and job_label: job_label.visible = true
 	elif current_door == "school" and school_label: school_label.visible = true
 
-# --- SIGNAL CALLBACKS ---
+func _unhandled_input(event: InputEvent) -> void:
+	if DialogManager.is_dialog_active: return
+	
+	if event.is_action_pressed("interact") and current_door != "":
+		if current_door == expected_destination:
+			SceneManager.advance_story("street")
+		else:
+			objective_label.text = "I don't need to go there right now."
+			await get_tree().create_timer(2.0).timeout
+			setup_street_state()
+
+# ==============================================================================
+# TRIGGER ZONES
+# ==============================================================================
 
 func _on_home_entrance_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = "home"
-		if has_talked and home_label: home_label.visible = true
+		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and home_label: home_label.visible = true
 
 func _on_home_entrance_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
@@ -149,7 +106,7 @@ func _on_home_entrance_body_exited(body: Node2D) -> void:
 func _on_job_entrance_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = "job"
-		if has_talked and job_label: job_label.visible = true
+		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and job_label: job_label.visible = true
 
 func _on_job_entrance_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
@@ -159,7 +116,7 @@ func _on_job_entrance_body_exited(body: Node2D) -> void:
 func _on_school_entrance_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = "school"
-		if has_talked and school_label: school_label.visible = true
+		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and school_label: school_label.visible = true
 
 func _on_school_entrance_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):

@@ -28,7 +28,7 @@ func _show_text_box():
 	
 	var canvas = CanvasLayer.new()
 	canvas.layer = 10
-	get_tree().root.add_child(canvas)
+	call_deferred("add_child", canvas)
 	canvas.add_child(text_box)
 	
 	var target_pos = cached_screen_pos + Vector2(-100, -200)

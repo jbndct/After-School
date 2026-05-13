@@ -13,6 +13,10 @@ var punctuation_time = 0.2
 signal finished_displaying()
 
 func display_text(text_to_display: String):
+	
+	if not is_node_ready():
+		await ready
+		
 	text = text_to_display
 	letter_index = 0
 	custom_minimum_size = Vector2.ZERO  # reset fully

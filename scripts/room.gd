@@ -1,100 +1,118 @@
 extends Node2D
 
+@onready var player = $Player
 @onready var objective_label = $Player/ObjectiveLabel
 @onready var interact_prompt = $InteractableItem/InteractPrompt
 @onready var door_prompt = $ExitDoor/DoorPrompt
 
 var player_in_interact_zone: bool = false
 var player_at_door: bool = false
-var has_talked: bool = false
+
+# ==============================================================================
+# PHASE-BASED DIALOGUE DATA (Speech Bubbles)
+# ==============================================================================
+var room_dialogue = {
+	"morning": [
+		"750 pesos left. Just looking at the number makes my stomach turn.",
+		"Tuition is 15,000. And just getting out of bed, paying fare, and eating costs me 350 a day.",
+		"I absolutely need to pass that scholarship exam today. The stipend is my only lifeline."
+	],
+	"night": [
+		"Finally home. My body is completely numb.",
+		"I just need to finish this call center shift and crash."
+	]
+}
 
 func _ready() -> void:
+	# 1. SPATIAL ROUTING
+	if RunState.previous_location == "street":
+		player.global_position.x = 100 # Near the door
+		
+	# 2. HIDE UI PROMPTS
 	interact_prompt.visible = false
 	door_prompt.visible = false
-	DialogManager.dialog_finished.connect(_on_dialogue_finished)
 	
-	if GameState.current_step_index != 0:
-		objective_label.text = "Objective: Go to sleep."
+	# 3. CONNECT DIALOG MANAGER
+	if not DialogManager.dialog_finished.is_connected(_on_dialogue_finished):
+		DialogManager.dialog_finished.connect(_on_dialogue_finished)
+	
+	update_objectives()
+
+func update_objectives() -> void:
+	var phase = RunState.current_phase
+	var dialogue_id = "room_" + phase
+	
+	if not RunState.completed_dialogues.has(dialogue_id):
+		objective_label.text = "Objective: Clear my head first (Interact with desk/bed)."
 	else:
-		match GameState.current_part:
-			1: objective_label.text = "Objective: Figure out what to do about tuition."
-			2: objective_label.text = "Objective: Prepare to look for a job."
-			3: objective_label.text = "Objective: Get ready for work."
-			4: objective_label.text = "Objective: Check your balance."
-	
-	if GameState.step_dialogue_finished:
-		has_talked = true
-		if GameState.current_step_index == 0:
-			objective_label.text = "Objective: Head out."
+		if phase == "morning":
+			objective_label.text = "Objective: Head to school for the exam."
+		elif phase == "night":
+			objective_label.text = "Objective: Open laptop to start work shift."
+
+# ==============================================================================
+# INPUT HANDLING
+# ==============================================================================
 
 func _unhandled_input(event: InputEvent) -> void:
 	if DialogManager.is_dialog_active:
 		return
+		
 	if event.is_action_pressed("interact"):
-		if player_in_interact_zone and not has_talked:
+		if player_in_interact_zone:
 			interact_prompt.visible = false
-			play_room_dialogue()
+			trigger_interaction()
 		elif player_at_door:
-			if has_talked:
-				GameState.advance_scene()
+			var phase = RunState.current_phase
+			var dialogue_id = "room_" + phase
+			
+			# Gatekeeper: Cannot leave until dialogue is read
+			if RunState.completed_dialogues.has(dialogue_id):
+				SceneManager.advance_story("room")
 			else:
 				objective_label.text = "I shouldn't leave until I clear my head."
 				await get_tree().create_timer(2.0).timeout
-				_ready()
+				update_objectives()
 
-func play_room_dialogue() -> void:
-	var lines: Array[String] = []
+func trigger_interaction() -> void:
+	var phase = RunState.current_phase
+	var dialogue_id = "room_" + phase
 	
-	if GameState.current_step_index != 0:
-		lines = [
-			"Finally home. I'm completely drained.",
-			"I just need to crash. Tomorrow is another day."
-		]
+	if not RunState.completed_dialogues.has(dialogue_id) and room_dialogue.has(phase):
+		# Lock player movement and start talking
+		player.current_state = player.State.LOCKED 
+		var lines: Array[String] = []
+		lines.assign(room_dialogue[phase])
+		DialogManager.start_dialog(player.global_position, lines)
 	else:
-		match GameState.current_part:
-			1:
-				lines = [
-					"750 pesos left. Just looking at the number makes my stomach turn.",
-					"Tuition is 15,000. And just getting out of bed, paying fare, and eating costs me 350 a day.",
-					"I absolutely need to pass that scholarship exam today. The 2,500 stipend is the only way I survive the week."
-				]
-			2:
-				lines = [
-					"Another day, another 350 pesos gone to fare and food. The math isn't mathing.",
-					"Even with the scholarship, I'm barely scraping by. I have to look for a job today.",
-					"If I skip lunch, maybe I can stretch this further... no, I need the energy for the interviews."
-				]
-			3:
-				lines = [
-					"My head is pounding. Pepito's 7,500 loan is sitting in my account, but it feels like a ball and chain.",
-					"Between classes and the night shift tonight, I don't know when I'll sleep. But I need that paycheck.",
-					"Just one night. I just have to survive one grueling shift."
-				]
-			4:
-				lines = [
-					"The shift is over. My body is completely numb.",
-					"The paycheck cleared, but after three days of bleeding 350 just to live... I need to check the math.",
-					"Whatever the bank app says right now... decides my entire future. Time to head to the registrar."
-				]
-	
-	if lines.size() > 0:
-		DialogManager.start_dialog($Player.global_position, lines)
-	else:
-		_on_dialogue_finished()
+		# If dialogue is already finished, trigger secondary interactions
+		if phase == "night":
+			# Laptop interaction routes to the minigame
+			SceneManager.load_scene("work")
+		elif phase == "morning":
+			objective_label.text = "I already thought about this. I should head out."
+			await get_tree().create_timer(2.0).timeout
+			update_objectives()
 
 func _on_dialogue_finished() -> void:
-	has_talked = true
-	GameState.step_dialogue_finished = true
+	var phase = RunState.current_phase
+	var dialogue_id = "room_" + phase
 	
-	if GameState.current_step_index != 0:
-		GameState.advance_scene()
-	else:
-		objective_label.text = "Objective: Head out."
-		if player_at_door:
-			door_prompt.visible = true
+	RunState.completed_dialogues[dialogue_id] = true
+	player.current_state = player.State.FREE
+	update_objectives()
+	
+	if player_at_door:
+		door_prompt.visible = true
+	if player_in_interact_zone:
+		interact_prompt.visible = true
+
+# ==============================================================================
+# TRIGGER ZONES
+# ==============================================================================
 
 func _on_interactable_item_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player") and not has_talked:
+	if body.is_in_group("Player"):
 		player_in_interact_zone = true
 		interact_prompt.visible = true
 
@@ -106,7 +124,7 @@ func _on_interactable_item_body_exited(body: Node2D) -> void:
 func _on_exit_door_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_at_door = true
-		if has_talked and GameState.current_step_index == 0:
+		if RunState.completed_dialogues.has("room_" + RunState.current_phase):
 			door_prompt.visible = true
 
 func _on_exit_door_body_exited(body: Node2D) -> void:

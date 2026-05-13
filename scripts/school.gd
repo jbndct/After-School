@@ -1,105 +1,116 @@
 extends Node2D
 
-@onready var dialogue_box = $DialogueBox
+@onready var player = $Player
 @onready var objective_label = $Player/ObjectiveLabel
 @onready var interact_prompt = $InteractableItem/InteractPrompt
 @onready var door_prompt = $ExitDoor/DoorPrompt
 
 var player_in_interact_zone: bool = false
 var player_at_door: bool = false
-var has_talked: bool = false
+
+# ==============================================================================
+# MINIGAME BRIDGE DIALOGUE
+# ==============================================================================
+var school_dialogue = {
+	"arrival": [
+		"The testing room. My entire semester hinges on a piece of paper.",
+		"I need to check the bulletin board and start the exam."
+	],
+	"passed": [
+		"I passed... The stipend is secured.",
+		"It's a relief, but I still have my shift tonight. Time to head home."
+	],
+	"failed": [
+		"I failed. No stipend.",
+		"I don't know how I'm going to survive. Let's just go home."
+	]
+}
 
 func _ready() -> void:
+	# 1. SPATIAL ROUTING
+	if RunState.previous_location == "scholarship":
+		player.global_position.x = 500 # Adjust to put him near the bulletin board
+	else:
+		player.global_position.x = 100 # Adjust to put him near the entrance door
+
 	interact_prompt.visible = false
 	door_prompt.visible = false
 	
-	# --- POST-MINIGAME CHECK ---
-	# If we are in Part 1 and at Index 4, we just beat the Scholarship Minigame!
-	if GameState.current_part == 1 and GameState.current_step_index == 4:
-		has_talked = true
-		objective_label.text = "Objective: Head back to the street."
-		return # Stop reading here so it doesn't reset the objective
+	# 2. CONNECT DIALOG MANAGER
+	if not DialogManager.dialog_finished.is_connected(_on_dialogue_finished):
+		DialogManager.dialog_finished.connect(_on_dialogue_finished)
+		
+	update_state()
 
-	# Normal first-visit setup
-	match GameState.current_part:
-		1: objective_label.text = "Objective: Take the scholarship exam."
-		2: objective_label.text = "Objective: Check the bulletin board."
-		3: objective_label.text = "Objective: Attend classes."
-		4: objective_label.text = "Objective: Go to the registrar."
-
-	# --- GLOBAL MEMORY CHECK ---
-	# If we already talked for this specific step (e.g., returning from SugalHub)
-	if GameState.step_dialogue_finished:
-		has_talked = true
+func update_state() -> void:
+	if RunState.previous_location == "scholarship":
+		# We just finished the minigame
 		objective_label.text = "Objective: Head back to the street."
+		var result_key = "school_result"
+		
+		if not RunState.completed_dialogues.has(result_key):
+			player.current_state = player.State.LOCKED
+			var lines: Array[String] = []
+			if RunState.scholarship_passed:
+				lines.assign(school_dialogue["passed"])
+			else:
+				lines.assign(school_dialogue["failed"])
+			DialogManager.start_dialog(player.global_position, lines)
+			RunState.completed_dialogues[result_key] = true
+		else:
+			_on_dialogue_finished()
+			
+	else:
+		# We just arrived from the street
+		objective_label.text = "Objective: Take the scholarship exam at the board."
+		var arrival_key = "school_arrival"
+		
+		if not RunState.completed_dialogues.has(arrival_key):
+			player.current_state = player.State.LOCKED
+			var lines: Array[String] = []
+			lines.assign(school_dialogue["arrival"])
+			DialogManager.start_dialog(player.global_position, lines)
+			RunState.completed_dialogues[arrival_key] = true
+		else:
+			_on_dialogue_finished()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if DialogManager.is_dialog_active: return
+	
 	if event.is_action_pressed("interact"):
-		if player_in_interact_zone and not has_talked:
-			interact_prompt.visible = false 
-			play_school_dialogue()
-		elif player_at_door:
-			if has_talked:
-				GameState.advance_scene()
+		if player_in_interact_zone:
+			if RunState.previous_location != "scholarship":
+				# Start the exam!
+				SceneManager.load_scene("scholarship")
 			else:
-				objective_label.text = "I need to finish what I came here for."
+				objective_label.text = "I already took the exam. Time to leave."
 				await get_tree().create_timer(2.0).timeout
-				if is_inside_tree():
-					_ready() # Reset objective text safely
-
-func play_school_dialogue() -> void:
-	var dialogue_lines = []
-	match GameState.current_part:
-		1:
-			dialogue_lines = [
-				{ "speaker": "Dominador", "text": "The testing room. My entire semester hinges on a piece of paper." },
-				{ "speaker": "Dominador", "text": "2,500 pesos. That's the stipend. It's barely a dent in the 15,000 I need, but it's a lifeline." },
-				{ "speaker": "Dominador", "text": "Focus. Don't think about the empty wallet. Just answer the questions." }
-			]
-		2:
-			dialogue_lines = [
-				{ "speaker": "Dominador", "text": "Bulletin board. Let's see who's desperate enough to hire a student with zero free time." },
-				{ "speaker": "Dominador", "text": "'Night Shift. 5,500 base pay.' ...It's going to absolutely destroy my sleep schedule." },
-				{ "speaker": "Dominador", "text": "But 5,500 plus the scholarship, plus a loan from Pepito... it might just put me over the 15,000 line. I have to take it." }
-			]
-		3:
-			dialogue_lines = [
-				{ "speaker": "Dominador", "text": "I can barely keep my eyes open in this lecture. The professor's voice is just background noise." },
-				{ "speaker": "Dominador", "text": "My mind keeps recalculating the numbers. The loan, the upcoming paycheck, the daily 350 drain..." },
-				{ "speaker": "Dominador", "text": "If I mess up the shift tonight, it's over. I just need to keep my eyes open." }
-			]
-		4:
-			dialogue_lines = [
-				{ "speaker": "Dominador", "text": "The Registrar's Office. The end of the line." },
-				{ "speaker": "Dominador", "text": "Three days of starving, begging for loans, and working until my bones ached." },
-				{ "speaker": "Dominador", "text": "This is it. Let's find out if it was enough." }
-			]
+				update_state()
 				
-	if dialogue_lines.size() > 0:
-		dialogue_box.play(dialogue_lines, _on_dialogue_finished)
-	else:
-		_on_dialogue_finished()
+		elif player_at_door:
+			if RunState.previous_location == "scholarship":
+				SceneManager.advance_story("school")
+			else:
+				objective_label.text = "I can't leave without taking the exam."
+				await get_tree().create_timer(2.0).timeout
+				update_state()
 
 func _on_dialogue_finished() -> void:
-	has_talked = true
-	
-	# If this is the scholarship exam day, instantly trigger the minigame!
-	if GameState.current_part == 1 and GameState.current_step_index == 2:
-		# Do NOT save step_dialogue_finished here, because we are leaving the scene 
-		# for a required minigame progression step.
-		GameState.advance_scene()
-	else:
-		# Otherwise, just let them walk out the door normally
-		GameState.step_dialogue_finished = true # Mark it done for memory
-		objective_label.text = "Objective: Head back to the street."
-		if player_at_door:
-			door_prompt.visible = true
-
-# --- SIGNAL CALLBACKS ---
-func _on_interactable_item_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player") and not has_talked:
-		player_in_interact_zone = true
+	player.current_state = player.State.FREE
+	if player_at_door and RunState.previous_location == "scholarship":
+		door_prompt.visible = true
+	if player_in_interact_zone and RunState.previous_location != "scholarship":
 		interact_prompt.visible = true
+
+# ==============================================================================
+# TRIGGER ZONES
+# ==============================================================================
+
+func _on_interactable_item_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		player_in_interact_zone = true
+		if RunState.previous_location != "scholarship":
+			interact_prompt.visible = true
 
 func _on_interactable_item_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
@@ -109,7 +120,7 @@ func _on_interactable_item_body_exited(body: Node2D) -> void:
 func _on_exit_door_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_at_door = true
-		if has_talked:
+		if RunState.previous_location == "scholarship":
 			door_prompt.visible = true
 
 func _on_exit_door_body_exited(body: Node2D) -> void:
