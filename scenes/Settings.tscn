@@ -14,7 +14,7 @@ process_mode = 3
 script = ExtResource("1_rbmmp")
 
 [node name="Overlay" type="Control" parent="." unique_id=1528647471]
-visible = false
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -74,22 +74,26 @@ text = "Master Volume"
 horizontal_alignment = 1
 
 [node name="MasterSlider" type="HSlider" parent="Overlay/PopupPanel/Padding/VBox/AudioBox" unique_id=2110821600]
+unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 1.0
 
 [node name="ResumeButton" type="Button" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1148394103]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Resume Game"
 
 [node name="MenuButton" type="Button" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1198396049]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Quit to Main Menu"
 
 [node name="ExitButton" type="Button" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1839400226]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Exit Desktop"
