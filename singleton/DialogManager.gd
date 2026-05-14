@@ -1,3 +1,4 @@
+# res://singleton/DialogManager.gd
 extends Node
 
 @onready var text_box_scene = preload("res://ui/text_box.tscn")
@@ -18,7 +19,11 @@ func start_dialog(position: Vector2, lines: Array[String]):
 	text_box_position = position
 	
 	var camera = get_viewport().get_camera_2d()
-	cached_screen_pos = position - camera.get_screen_center_position() + get_viewport().get_visible_rect().size / 2
+	if camera:
+		cached_screen_pos = position - camera.get_screen_center_position() + get_viewport().get_visible_rect().size / 2
+	else:
+		cached_screen_pos = position
+		
 	_show_text_box()
 	is_dialog_active = true
 
@@ -28,7 +33,7 @@ func _show_text_box():
 	
 	var canvas = CanvasLayer.new()
 	canvas.layer = 10
-	call_deferred("add_child", canvas)
+	add_child(canvas) # Avoid call_deferred to prevent async desyncs
 	canvas.add_child(text_box)
 	
 	var target_pos = cached_screen_pos + Vector2(-100, -200)
@@ -37,26 +42,30 @@ func _show_text_box():
 	
 	text_box.display_text(dialog_lines[current_line_index])
 	can_advance_line = false
-	
-	
-
-
 
 func _on_text_box_finished_displaying():
 	can_advance_line = true
 
-func _unhandled_input(event):
-	if (
-		event.is_action_pressed("interact") &&
-		is_dialog_active &&
-		can_advance_line
-	):
-		text_box.queue_free()
-		text_box.get_parent().queue_free()
-		current_line_index += 1
-		if current_line_index >= dialog_lines.size():
-			is_dialog_active = false
-			current_line_index = 0
-			emit_signal("dialog_finished")
-			return
-		_show_text_box()
+func _process(delta: float) -> void:
+	# Raw polling completely bypasses Godot's UI focus layer
+	if is_dialog_active and Input.is_action_just_pressed("interact"):
+		if can_advance_line:
+			# Advance to the next line
+			if is_instance_valid(text_box):
+				var canvas = text_box.get_parent()
+				text_box.queue_free()
+				if canvas and canvas is CanvasLayer:
+					canvas.queue_free()
+					
+			current_line_index += 1
+			
+			if current_line_index >= dialog_lines.size():
+				is_dialog_active = false
+				current_line_index = 0
+				dialog_finished.emit()
+			else:
+				_show_text_box()
+		else:
+			# Fast-forward typing animation if clicked early
+			if is_instance_valid(text_box) and text_box.has_method("finish_typing_instantly"):
+				text_box.finish_typing_instantly()
