@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://1ubw8sna4way"]
 
-[ext_resource type="Script" path="res://scripts/street.gd" id="1_wjoh7"]
+[ext_resource type="Script" uid="uid://dltlyhgwg2l2b" path="res://scripts/street.gd" id="1_wjoh7"]
 [ext_resource type="Texture2D" uid="uid://do08rpnikfwu0" path="res://assets/sprites/street better.png" id="2_5m0si"]
+[ext_resource type="PackedScene" uid="uid://da62va4g22alq" path="res://scenes/Poster.tscn" id="2_wjoh7"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_7vr8w"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="5_yrasx"]
+[ext_resource type="Script" uid="uid://crj8i57tmlio2" path="res://scripts/poster.gd" id="6_7vr8w"]
 [ext_resource type="PackedScene" uid="uid://biif40fa0fqjc" path="res://scenes/SmartphoneUI.tscn" id="7_5m0si"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5m0si"]
@@ -123,6 +125,11 @@ position = Vector2(-146, -67)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=836129400]
 position = Vector2(-1518.75, 283)
 shape = SubResource("RectangleShape2D_t23v0")
+
+[node name="Poster" parent="." unique_id=336992369 instance=ExtResource("2_wjoh7")]
+visible = false
+position = Vector2(389, 109)
+script = ExtResource("6_7vr8w")
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1943427091]
 position = Vector2(-264, -18)
