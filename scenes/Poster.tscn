@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://da62va4g22alq"]
+
+[ext_resource type="Script" uid="uid://crj8i57tmlio2" path="res://scripts/poster.gd" id="1_1bwu2"]
+[ext_resource type="Texture2D" uid="uid://b04f1xer0qlm7" path="res://assets/sprites/Player/player_tilesheet.png" id="2_fs0pc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rnqot"]
+size = Vector2(184, 171)
+
+[node name="Poster" type="Area2D" unique_id=1414501502]
+script = ExtResource("1_1bwu2")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1797006343]
+position = Vector2(191.38074, 189.5199)
+scale = Vector2(0.4982798, 1.0819387)
+texture = ExtResource("2_fs0pc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1442669979]
+position = Vector2(193.9234, 187.38818)
+scale = Vector2(2.096974, 2.1159601)
+shape = SubResource("RectangleShape2D_rnqot")
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=44079985]
+
+[node name="ChoiceUI" type="Control" parent="UILayer" unique_id=1535404192]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -229.0
+offset_right = -1.0
+offset_bottom = -229.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BottomMargin" type="MarginContainer" parent="UILayer/ChoiceUI" unique_id=1488258075]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 20
+
+[node name="BackgroundPanel" type="PanelContainer" parent="UILayer/ChoiceUI/BottomMargin" unique_id=751051095]
+layout_mode = 2
+
+[node name="Padding" type="MarginContainer" parent="UILayer/ChoiceUI/BottomMargin/BackgroundPanel" unique_id=1782045445]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBox" type="VBoxContainer" parent="UILayer/ChoiceUI/BottomMargin/BackgroundPanel/Padding" unique_id=1904541874]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="PromptLabel" type="Label" parent="UILayer/ChoiceUI/BottomMargin/BackgroundPanel/Padding/VBox" unique_id=1847106727]
+layout_mode = 2
+text = "Mark's face when he showed me that winning screenshot...\""
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="UILayer/ChoiceUI/BottomMargin/BackgroundPanel/Padding/VBox" unique_id=1502264960]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="YesButton" type="Button" parent="UILayer/ChoiceUI/BottomMargin/BackgroundPanel/Padding/VBox/HBox" unique_id=646898468]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Open SugalHub"
+
+[node name="NoButton" type="Button" parent="UILayer/ChoiceUI/BottomMargin/BackgroundPanel/Padding/VBox/HBox" unique_id=358147979]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Keep Walking"

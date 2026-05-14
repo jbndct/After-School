@@ -1,10 +1,5 @@
+# res://scripts/SceneManager.gd
 extends Node
-
-# ==============================================================================
-# THE SCENE DIRECTOR
-# Maps explicit keys to your existing file paths. If you move a file, 
-# you only update it here, nowhere else.
-# ==============================================================================
 
 const SCENES = {
 	"menu": "res://scenes/Menu.tscn",
@@ -12,8 +7,9 @@ const SCENES = {
 	"street": "res://scenes/street.tscn",
 	"school": "res://scenes/school.tscn",
 	"scholarship": "res://scenes/MinigameScholarship.tscn",
-	"work": "res://scenes/MinigameWork.tscn",
-	"ending": "res://scenes/ending.tscn"
+	"work": "res://scenes/workplace.tscn",
+	"ending": "res://scenes/ending.tscn",
+	"sugal": "res://scenes/SugalHub.tscn"
 }
 
 func load_scene(scene_key: String) -> void:
@@ -27,11 +23,6 @@ func load_scene(scene_key: String) -> void:
 	else:
 		push_error("SCENE MANAGER FATAL: File missing at -> " + path)
 
-# ==============================================================================
-# EXPLICIT NARRATIVE ROUTING
-# Replaces GameState.advance_scene()
-# ==============================================================================
-
 func advance_story(current_location: String) -> void:
 	var phase = RunState.current_phase
 	RunState.previous_location = current_location
@@ -41,7 +32,6 @@ func advance_story(current_location: String) -> void:
 			if phase == "morning":
 				load_scene("street")
 			elif phase == "night":
-				# After the night shift/dream minigame
 				load_scene("ending")
 				
 		"street":
@@ -52,15 +42,14 @@ func advance_story(current_location: String) -> void:
 				load_scene("room")
 				
 		"school":
-			# Scholarship sequence is done, time to go home
 			RunState.current_phase = "afternoon"
 			load_scene("street")
 			
 		"scholarship":
-			load_scene("school") # Return to VN logic for the result
+			load_scene("school") 
 			
 		"work":
-			load_scene("room") # Return to room for late night VN
+			load_scene("room")
 			
 		_:
 			push_error("SCENE MANAGER: Unhandled story advancement from -> " + current_location)

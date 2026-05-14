@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://c63bdg0dakirq"]
+
+[ext_resource type="Script" uid="uid://cwq6537dkcbgi" path="res://scripts/settings.gd" id="1_rbmmp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4ih8"]
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="SettingsMenu" type="CanvasLayer" unique_id=1876814777]
+process_mode = 3
+script = ExtResource("1_rbmmp")
+
+[node name="Overlay" type="Control" parent="." unique_id=1528647471]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="Overlay" unique_id=1372761384]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.4862745)
+
+[node name="PopupPanel" type="PanelContainer" parent="Overlay" unique_id=432025409]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v4ih8")
+
+[node name="Padding" type="MarginContainer" parent="Overlay/PopupPanel" unique_id=858582189]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Overlay/PopupPanel/Padding" unique_id=447342002]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Overlay/PopupPanel/Padding/VBox" unique_id=266788179]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="AudioBox" type="VBoxContainer" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1304864145]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MasterLabel" type="Label" parent="Overlay/PopupPanel/Padding/VBox/AudioBox" unique_id=616720532]
+layout_mode = 2
+text = "Master Volume"
+horizontal_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="Overlay/PopupPanel/Padding/VBox/AudioBox" unique_id=2110821600]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="ResumeButton" type="Button" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1148394103]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Resume Game"
+
+[node name="MenuButton" type="Button" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1198396049]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Quit to Main Menu"
+
+[node name="ExitButton" type="Button" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1839400226]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Exit Desktop"
