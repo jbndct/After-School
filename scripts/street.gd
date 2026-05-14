@@ -31,7 +31,7 @@ func _ready() -> void:
 		RunState.interruption_return_x = 0.0 
 	else:
 		if RunState.previous_location == "room":
-			player.global_position.x = 100
+			player.global_position.x = -1500
 		elif RunState.previous_location == "school" or RunState.previous_location == "work":
 			player.global_position.x = 1100
 			

@@ -7,7 +7,7 @@ const SCENES = {
 	"street": "res://scenes/street.tscn",
 	"school": "res://scenes/school.tscn",
 	"scholarship": "res://scenes/MinigameScholarship.tscn",
-	"work": "res://scenes/MinigameWork.tscn",
+	"work": "res://scenes/workplace.tscn",
 	"ending": "res://scenes/ending.tscn",
 	"sugal": "res://scenes/SugalHub.tscn"
 }

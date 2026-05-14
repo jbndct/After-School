@@ -1,3 +1,4 @@
+# res://scripts/room.gd
 extends Node2D
 
 @onready var player = $Player
@@ -8,35 +9,45 @@ extends Node2D
 var player_in_interact_zone: bool = false
 var player_at_door: bool = false
 
-# ==============================================================================
-# PHASE-BASED DIALOGUE DATA (Speech Bubbles)
-# ==============================================================================
 var room_dialogue = {
 	"morning": [
 		"750 pesos left. Just looking at the number makes my stomach turn.",
 		"Tuition is 15,000. And just getting out of bed, paying fare, and eating costs me 350 a day.",
 		"I absolutely need to pass that scholarship exam today. The stipend is my only lifeline."
 	],
-	"night": [
-		"Finally home. My body is completely numb.",
-		"I just need to finish this call center shift and crash."
-	]
+	"night": [] # Populated dynamically in _ready()
 }
 
 func _ready() -> void:
-	# 1. SPATIAL ROUTING
+	_setup_night_dialogue()
+	
 	if RunState.previous_location == "street":
-		player.global_position.x = 100 # Near the door
+		player.global_position.x = 100 
 		
-	# 2. HIDE UI PROMPTS
 	interact_prompt.visible = false
 	door_prompt.visible = false
 	
-	# 3. CONNECT DIALOG MANAGER
 	if not DialogManager.dialog_finished.is_connected(_on_dialogue_finished):
 		DialogManager.dialog_finished.connect(_on_dialogue_finished)
 	
 	update_objectives()
+
+func _setup_night_dialogue() -> void:
+	var night_lines: Array[String] = []
+	
+	night_lines.append("*Phone buzzes*")
+	
+	if RunState.scholarship_passed:
+		night_lines.append("SMS: Congratulations, your scholarship application is approved. You have officially been granted ₱2,500.")
+		night_lines.append("Thank God. That covers some of it.")
+	else:
+		night_lines.append("SMS: Unfortunately, you did not pass the scholarship exam.")
+		night_lines.append("Damn it... This is going to be so much harder now.")
+		
+	night_lines.append("Finally home. My body is completely numb.")
+	night_lines.append("I just need to finish this call center shift and crash.")
+	
+	room_dialogue["night"] = night_lines
 
 func update_objectives() -> void:
 	var phase = RunState.current_phase
@@ -49,10 +60,6 @@ func update_objectives() -> void:
 			objective_label.text = "Objective: Head to school for the exam."
 		elif phase == "night":
 			objective_label.text = "Objective: Open laptop to start work shift."
-
-# ==============================================================================
-# INPUT HANDLING
-# ==============================================================================
 
 func _unhandled_input(event: InputEvent) -> void:
 	if DialogManager.is_dialog_active:
@@ -80,7 +87,7 @@ func trigger_interaction() -> void:
 	
 	if not RunState.completed_dialogues.has(dialogue_id) and room_dialogue.has(phase):
 		# Lock player movement and start talking
-		player.current_state = player.State.LOCKED 
+		player.current_state = player.State.LOCKED
 		var lines: Array[String] = []
 		lines.assign(room_dialogue[phase])
 		DialogManager.start_dialog(player.global_position, lines)
@@ -106,10 +113,6 @@ func _on_dialogue_finished() -> void:
 		door_prompt.visible = true
 	if player_in_interact_zone:
 		interact_prompt.visible = true
-
-# ==============================================================================
-# TRIGGER ZONES
-# ==============================================================================
 
 func _on_interactable_item_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
