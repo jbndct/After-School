@@ -155,3 +155,19 @@ offset_bottom = 8.0
 theme_override_colors/font_color = Color(0.14581567, 0.48722637, 0.22930568, 1)
 theme_override_font_sizes/font_size = 25
 text = "DON'T EXIT!"
+
+[node name="LobbyUI" type="Panel" parent="." unique_id=399619280]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SportsUI" type="Panel" parent="." unique_id=2109938285]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
