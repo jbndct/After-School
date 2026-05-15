@@ -11,9 +11,11 @@ var player_at_door: bool = false
 
 var room_dialogue = {
 	"morning": [
-		"750 pesos left. Just looking at the number makes my stomach turn.",
-		"Tuition is 15,000. And just getting out of bed, paying fare, and eating costs me 350 a day.",
-		"I absolutely need to pass that scholarship exam today. The stipend is my only lifeline."
+		"3,000 pesos. Ito na lang ang laman ng wallet ko.",
+		"15,000 ang tuition. Kung papasa ako sa scholarship exam mamaya, may 5,000 ako.",
+		"Tapos makukuha ko mamayang gabi yung 7,000 na sweldo ko para sa dalawang linggong shift.",
+		"Saktong 15,000. Pambayad lang talaga. Saktong zero ang maiiwan para makakain ako bukas.",
+		"Napanood ko sa vlog ni idol kagabi, nanalo daw siya ng 10k sa SugalHub habang naka-tambay lang. Nakaka-tempt subukan para lang magkaroon ng breathing room."
 	],
 	"night": [] # Populated dynamically in _ready()
 }
@@ -38,14 +40,15 @@ func _setup_night_dialogue() -> void:
 	night_lines.append("*Phone buzzes*")
 	
 	if RunState.scholarship_passed:
-		night_lines.append("SMS: Congratulations, your scholarship application is approved. You have officially been granted ₱2,500.")
-		night_lines.append("Thank God. That covers some of it.")
+		night_lines.append("SMS: Congratulations, your scholarship application is approved. You have officially been granted ₱5,000.")
+		night_lines.append("Salamat. May 5k na 'ko. Idagdag ko yung 7k na sweldo mamaya, saktong 15k na.")
+		night_lines.append("Mababayaran ko yung tuition... pero paano ako bukas? Nakakapagod na 'tong saktong-sakto lagi.")
 	else:
-		night_lines.append("SMS: Unfortunately, you did not pass the scholarship exam.")
-		night_lines.append("Damn it... This is going to be so much harder now.")
+		night_lines.append("SMS: We regret to inform you that you did not pass the scholarship exam.")
+		night_lines.append("...Wala na. Kahit makuha ko pa yung 7k na sweldo ko mamaya, kulang na kulang ang pera ko.")
+		night_lines.append("...Kailangan ko ba sumugal para sa kinabukasan ko?")
 		
-	night_lines.append("Finally home. My body is completely numb.")
-	night_lines.append("I just need to finish this call center shift and crash.")
+	night_lines.append("Kailangan ko nang mag-log in sa shift. Sobrang nakaka-bore yung routine na 'to, pero kailangan.")
 	
 	room_dialogue["night"] = night_lines
 

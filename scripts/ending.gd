@@ -32,21 +32,21 @@ func _evaluate_run() -> void:
 	var ending_title = ""
 	var ending_body = ""
 	
-	if not RunState.scholarship_passed or not RunState.job_completed:
-		ending_title = "[center]ENDING D: Hindi Siya Kasali[/center]"
-		ending_body = "[center]The venue gates are locked. From the outside, Ador listens to the muffled sound of applause and names being called. His name isn't one of them. He didn't fail because he lacked intelligence, or because he didn't work himself to the bone. He failed because the math of survival was rigged against him from the start. The night shifts, the exhaustion, the empty stomach—it wasn't enough to buy his way across that stage. As the final notes of the graduation march play, Ador turns away. There is no anger left, only a quiet, heavy exhaustion. A silent acknowledgement that in this system, some students fight just as hard as the rest, only to be left behind in the dark.[/center]"
+	if (not RunState.scholarship_passed or not RunState.job_completed) and not RunState.gambling_attempted:
+		ending_title = "[center]ENDING D: Mahirap maging mahirap.[/center]"
+		ending_body = "[center]Naka-kandado na ang gate. Wala ang pangalan ni Ador sa listahan ng mga ga-graduate. Kinapos siya. Ang 3,000 niya, pinagsama sa kakarampot na kinita, ay hindi umabot sa hinihinging 15,000. Hindi dahil tamad siya, kundi dahil kahit anong kayod niya, sadyang hindi sapat ang ibinibigay ng sistema. Tumalikod si Ador. Wala nang galit, tanging mabigat na pagod na lang. Isang tahimik na pagtanggap na mayroon talagang mga naiiwan sa dilim.[/center]"
 		
 	elif RunState.scholarship_passed and RunState.job_completed and not RunState.gambling_attempted:
-		ending_title = "[center]ENDING A: Sipag at Tiyaga[/center]"
-		ending_body = "[center]The lights on the stage are blinding. As Ador's name is called, the weight of the past few years suddenly hits him all at once. Every skipped meal, every grueling night shift at the call center, every time he walked past those flashing SugalHub posters and forced himself to look away. He scans the crowd and sees his mother, tears streaming down her face, clutching a worn-out handkerchief. He chose the hardest possible road. He made it out clean. As his fingers grasp the diploma, it feels impossibly heavy. It's not just a piece of paper; it's proof that he survived the meat grinder.[/center]"
+		ending_title = "[center]ENDING A: Matuwid na daan. [/center]"
+		ending_body = "[center]Nasisilaw si Ador sa ilaw ng entablado. Naalala niya kung paanong ang 3,000 niya, ang 5,000 sa scholarship, at ang 7,000 sa dalawang linggong shift ay saktong umabot sa 15,000. Kinailangan niyang tiisin ang gutom at labanan ang tukso ng mga influencers na nangangako ng mabilis na pera para sa 'breathing room'. Nakatawid siya nang malinis, hindi nagpadala sa peer pressure, at nilabanan ang boredom ng paulit-ulit na hirap. Hawak niya ang diploma. Siya ang nanalo.[/center]"
 		
 	elif RunState.gambling_attempted:
 		if RunState.gambling_net_result >= 0:
-			ending_title = "[center]ENDING B: Nanalo, Pero...[/center]"
-			ending_body = "[center]The applause washes over him, but Ador barely hears it. He holds his diploma in one hand, smiling for the cameras. He looks like a success story. A working student who beat the odds. But as he returns to his seat and the ceremony drags on, his hand slips into his pocket. Underneath the folding chair, out of sight from his proud mother, the screen illuminates his face. SugalHub is open. He places a bet. The app didn't ruin him today. It didn't stop him from graduating. But as the wheel spins on the screen, the truth sets in: he won the battle, but he has already lost the war. The trap has snapped shut.[/center]"
+			ending_title = "[center]ENDING B: Paldo, Pero...[/center]"
+			ending_body = "[center]Umaapaw ang palakpakan. Mukha siyang success story. Nung gabing kailangan niya ng breathing room at nalamon siya ng boredom, nakinig siya sa paborito niyang vlogger at isinugal ang pera niya. Nanalo siya. Nabayaran ang 15,000 na tuition, at nakakain siya kinabukasan. Pero pagbalik niya sa upuan mula sa entablado, pasimpleng umiilaw ang screen ng phone niya sa ilalim ng toga. Bukas ang SugalHub. Hindi siya sinira ng app noon... pero alam niyang habambuhay na siyang nakakulong sa bitag ng pag-i-spin.[/center]"
 		else:
-			ending_title = "[center]ENDING C: Kinuha Na Niya[/center]"
-			ending_body = "[center]Ador walks across the stage, but his legs feel like lead. The applause sounds like static. He made it, but the victory is entirely hollow. To get here, he had to beg, borrow, and humiliate himself. The gambling losses had drained his tuition money, plunging him into a cycle of desperate loans and suffocating debt. As he looks out into the crowd, he doesn't see his family first. He sees Mark. Mark, who showed him the app. Mark, who promised an easy way out. The look they share says everything. Ador holds his diploma, but all he can think about is how much he owes, and how many years it will take to dig himself out of the grave he dug for himself.[/center]"
+			ending_title = "[center]ENDING C: Saan nga ba ako patungo? [/center]"
+			ending_body = "[center]Naglakad si Ador sa entablado, pero parang tingga ang mga binti niya. Dahil sa inip, peer pressure, at paniniwala sa mga pekeng success stories ng mga influencers, isinugal niya ang perang nakalaan sana sa tuition. Natalo siya. Nasira ang saktong 15,000. Para makarating sa graduation, kinailangan niyang mangutang sa mga loan sharks. Pagtingin niya sa baba, nakita niya ang mga kaklase niyang nag-uudyok sa kanya noon. Hawak ni Ador ang diploma, pero ang tanging nasa isip niya ay kung paano niya babayaran ang libo-libong utang na sisira sa kinabukasan niya.[/center]"
 
 	title_label.text = ending_title
 	story_text.text = ending_body

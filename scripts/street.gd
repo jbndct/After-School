@@ -15,12 +15,12 @@ var expected_destination: String = ""
 # ==============================================================================
 var street_dialogue = {
 	"morning": [
-		"If I don't pass this scholarship exam, the 15,000 tuition is impossible.",
-		"I need to get to school."
+		"Kailangan kong pumasa sa exam. Walang palya dapat.",
+		"Lahat ng nakakasabay ko sa jeep, sugal ang nasa screen. Nakaka-pressure na pakiramdam ko ako na lang ang nahuhuli sa ganitong diskarte."
 	],
 	"afternoon": [
-		"Exam is over. But my wallet is still bleeding 350 a day.",
-		"These SugalHub ads are everywhere... I just need to get home."
+		"Tapos na yung exam. Hihintayin ko na lang yung 7,000 ko mamaya sa trabaho.",
+		"Wala akong magawa ngayon. Bored na bored ako. Siguro kung i-download ko yung app, may pampalipas oras ako..."
 	]
 }
 

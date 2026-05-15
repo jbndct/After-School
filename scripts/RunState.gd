@@ -1,7 +1,7 @@
 extends Node
 
 # --- HYBRID ECONOMY ---
-var money: int = 550 :
+var money: int = 3000:
 	set(value):
 		money = value
 		EventBus.money_updated.emit(money)
@@ -25,7 +25,7 @@ var interruption_return_x: float = 0.0
 var completed_dialogues: Dictionary = {}
 
 func reset_run() -> void:
-	money = 550
+	money = 3000
 	debt = 0
 	scholarship_passed = false
 	job_completed = false
