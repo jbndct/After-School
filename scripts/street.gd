@@ -1,3 +1,4 @@
+# res://scripts/street.gd
 extends Node2D
 
 @onready var player = $Player
@@ -6,6 +7,11 @@ extends Node2D
 @onready var home_label = $HomeEntrance/Label
 @onready var job_label = $JobEntrance/Label
 @onready var school_label = $SchoolEntrance/Label
+
+# Use get_node_or_null so the game doesn't crash if you forget to place an arrow
+@onready var home_arrow = $HomeEntrance.get_node_or_null("TutorialArrow")
+@onready var job_arrow = $JobEntrance.get_node_or_null("TutorialArrow")
+@onready var school_arrow = $SchoolEntrance.get_node_or_null("TutorialArrow")
 
 var current_door: String = ""
 var expected_destination: String = ""
@@ -49,14 +55,22 @@ func _ready() -> void:
 func setup_street_state() -> void:
 	var phase = RunState.current_phase
 	
-	# Set Target Door
+	# Hide all arrows initially to reset state
+	if home_arrow: home_arrow.hide()
+	if job_arrow: job_arrow.hide()
+	if school_arrow: school_arrow.hide()
+	
+	# Set Target Door & Show the correct arrow
 	if phase == "morning":
 		expected_destination = "school"
 		objective_label.text = "Objective: Head to school."
+		if school_arrow: school_arrow.show()
+			
 	elif phase == "afternoon":
 		expected_destination = "home"
 		objective_label.text = "Objective: Head back to the dorm."
-		
+		if home_arrow: home_arrow.show()
+
 	var dialogue_id = "street_" + phase
 	
 	# Play Intro Dialogue
@@ -71,7 +85,8 @@ func setup_street_state() -> void:
 func _on_dialogue_finished() -> void:
 	var dialogue_id = "street_" + RunState.current_phase
 	RunState.completed_dialogues[dialogue_id] = true
-	player.current_state = player.State.FREE
+	if player and "current_state" in player:
+		player.current_state = player.State.FREE
 	
 	# Refresh door prompt if they are standing next to one
 	if current_door == "home" and home_label: home_label.visible = true
@@ -87,38 +102,50 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			objective_label.text = "I don't need to go there right now."
 			await get_tree().create_timer(2.0).timeout
-			setup_street_state()
+			setup_street_state() # Resets the label back to the correct objective
 
 # ==============================================================================
-# TRIGGER ZONES
+# TRIGGER ZONES (Hiding arrows on entry)
 # ==============================================================================
 
 func _on_home_entrance_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = "home"
-		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and home_label: home_label.visible = true
+		if home_arrow: home_arrow.hide() # Disappear when touching the door
+		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and home_label: 
+			home_label.visible = true
 
 func _on_home_entrance_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = ""
 		if home_label: home_label.visible = false
+		if expected_destination == "home" and home_arrow: 
+			home_arrow.show() # Reappear if they walk away without entering
 
 func _on_job_entrance_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = "job"
-		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and job_label: job_label.visible = true
+		if job_arrow: job_arrow.hide()
+		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and job_label: 
+			job_label.visible = true
 
 func _on_job_entrance_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = ""
 		if job_label: job_label.visible = false
+		if expected_destination == "job" and job_arrow: 
+			job_arrow.show()
 
 func _on_school_entrance_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = "school"
-		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and school_label: school_label.visible = true
+		if school_arrow: school_arrow.hide()
+		if RunState.completed_dialogues.has("street_" + RunState.current_phase) and school_label: 
+			school_label.visible = true
 
 func _on_school_entrance_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		current_door = ""
 		if school_label: school_label.visible = false
+		if expected_destination == "school" and school_arrow: 
+			school_arrow.show()
