@@ -24,6 +24,11 @@ RunState="*uid://cvda2bjbofut1"
 SceneManager="*uid://drjd1h8ywrv6r"
 SettingsMenu="*uid://c63bdg0dakirq"
 
+[display]
+
+window/size/resizable=false
+window/stretch/mode="viewport"
+
 [input]
 
 move_left={
