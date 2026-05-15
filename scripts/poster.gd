@@ -6,8 +6,8 @@ extends Area2D
 @onready var btn_no = $ChoiceUI/Panel/Margin/VBox/HBox/BtnNo
 @onready var interact_prompt = $InteractPrompt
 
-var player_in_zone: bool = false
 var player_ref: Node2D = null
+var has_read_poster: bool = false # Tracks if the player already read the long intro
 
 enum State { IDLE, READING_INTRO, WAITING_FOR_CHOICE, READING_OUTRO }
 var current_state: State = State.IDLE
@@ -20,14 +20,22 @@ var intro_lines: Array[String] = [
 	"Pero paano kung matalo? Masisira yung sakto kong budget. Hindi ako makaka-enroll."
 ]
 
+var repeat_lines: Array[String] = [
+	"Yung SugalHub ad nanaman. Nakaka-tempt subukan para lumaki 'tong pera ko."
+]
+
 var outro_lines: Array[String] = [
-	"Hindi. Hindi ngayon.",
-	"Kaya ko itong itawid nang hindi nagpapalamon sa sistema ng sugal.",
-	"Kailangan kong mag-focus."
+	"Hindi. Kailangan kong mag-focus sa ngayon."
 ]
 
 func _ready() -> void:
 	choice_ui.hide()
+	
+	if is_instance_valid(interact_prompt):
+		interact_prompt.hide()
+	
+	btn_yes.focus_mode = Control.FOCUS_NONE
+	btn_no.focus_mode = Control.FOCUS_NONE
 	
 	btn_yes.pressed.connect(_on_yes_pressed)
 	btn_no.pressed.connect(_on_no_pressed)
@@ -36,34 +44,26 @@ func _ready() -> void:
 		DialogManager.dialog_finished.connect(_on_dialog_finished)
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		player_in_zone = true
+	if body.is_in_group("Player") and current_state == State.IDLE:
 		player_ref = body
-		if current_state == State.IDLE:
-			interact_prompt.show()
+		start_interaction()
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
-		player_in_zone = false
 		player_ref = null
-		interact_prompt.hide()
-
-func _unhandled_input(event: InputEvent) -> void:
-	if current_state != State.IDLE:
-		return
-		
-	if player_in_zone and event.is_action_pressed("interact"):
-		get_viewport().set_input_as_handled()
-		start_interaction()
 
 func start_interaction() -> void:
 	current_state = State.READING_INTRO
-	interact_prompt.hide()
 	
-	if player_ref:
+	if player_ref and "current_state" in player_ref:
 		player_ref.current_state = player_ref.State.LOCKED
 		
-	DialogManager.start_dialog(global_position, intro_lines)
+	# Check if we should play the long intro or the short repeat line
+	if has_read_poster:
+		DialogManager.start_dialog(player_ref.global_position, repeat_lines)
+	else:
+		DialogManager.start_dialog(player_ref.global_position, intro_lines)
+		has_read_poster = true
 
 func _on_dialog_finished() -> void:
 	if current_state == State.READING_INTRO:
@@ -72,18 +72,20 @@ func _on_dialog_finished() -> void:
 		
 	elif current_state == State.READING_OUTRO:
 		current_state = State.IDLE
-		if player_ref:
+		if player_ref and "current_state" in player_ref:
 			player_ref.current_state = player_ref.State.FREE
 
 func _on_yes_pressed() -> void:
 	choice_ui.hide()
 	current_state = State.IDLE
 	
-	# Save the exact position on the street to return to later
 	RunState.interruption_return_x = global_position.x
 	SceneManager.load_scene("sugal")
 
 func _on_no_pressed() -> void:
 	choice_ui.hide()
 	current_state = State.READING_OUTRO
-	DialogManager.start_dialog(global_position, outro_lines)
+	if is_instance_valid(player_ref):
+		DialogManager.start_dialog(player_ref.global_position, outro_lines)
+	else:
+		DialogManager.start_dialog(global_position, outro_lines)
