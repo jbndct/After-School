@@ -14,6 +14,14 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72r4b"]
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 1, 0.2, 1)
+
 [node name="WorkplaceMinigame" type="Control" unique_id=353390390]
 layout_mode = 3
 anchors_preset = 15
@@ -100,3 +108,55 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 0, 0, 1)
+
+[node name="TutorialPopup" type="Panel" parent="." unique_id=255585927]
+custom_minimum_size = Vector2(500, 350)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_72r4b")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialPopup" unique_id=286203445]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -129.0
+offset_right = 192.0
+offset_bottom = 129.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=1367744654]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 1, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "SYS_LOGIN: CUSTOMER SUPPORT"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=1293340148]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+text = "Quota: Resolve 5 Tickets. "
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=766224690]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+text = "Time Limit: 60 Seconds."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="TutorialPopup/VBoxContainer" unique_id=879181666]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.2, 1, 0.2, 1)
+text = "INITIATE_SHIFT()"
