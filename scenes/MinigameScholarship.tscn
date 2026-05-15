@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l0ne0")
 minigame_id = "scholarship"
-reward_amount = 2500
+reward_amount = 5000
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=937183813]
 layout_mode = 1
