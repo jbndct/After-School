@@ -1,3 +1,4 @@
+# res://scripts/school.gd
 extends Node2D
 
 @onready var player = $Player
@@ -9,47 +10,48 @@ var player_in_interact_zone: bool = false
 var player_at_door: bool = false
 
 # ==============================================================================
-# MINIGAME BRIDGE DIALOGUE
+# MINIGAME BRIDGE DIALOGUE (Tagalog)
 # ==============================================================================
 var school_dialogue = {
 	"arrival": [
-		"The testing room. My entire semester hinges on a piece of paper.",
-		"I need to check the bulletin board and start the exam."
+		"Ito na yun. Yung registrar... Huling chance ko na 'to para sa stipend.",
+		"Kailangan kong i-check yung bulletin board at mag-exam. Focus, Ador."
 	],
 	"passed": [
-		"I passed... The stipend is secured.",
-		"It's a relief, but I still have my shift tonight. Time to head home."
+		"Pasa ako... Salamat sa Diyos. Secured na yung stipend.",
+		"Malaking tulong 'to, pero may shift pa 'ko mamaya. Makauwi na nga."
 	],
 	"failed": [
-		"I failed. No stipend.",
-		"I don't know how I'm going to survive. Let's just go home."
+		"Bagsak... Walang stipend.",
+		"Hindi ko alam paano ko tatawirin 'to. Makauwi na nga lang."
 	]
 }
 
 func _ready() -> void:
-	# 1. SPATIAL ROUTING
 	if RunState.previous_location == "scholarship":
-		player.global_position.x = 500 # Adjust to put him near the bulletin board
+		player.global_position.x = 500 
 	else:
-		player.global_position.x = 100 # Adjust to put him near the entrance door
+		player.global_position.x = 100 
 
 	interact_prompt.visible = false
 	door_prompt.visible = false
 	
-	# 2. CONNECT DIALOG MANAGER
 	if not DialogManager.dialog_finished.is_connected(_on_dialogue_finished):
 		DialogManager.dialog_finished.connect(_on_dialogue_finished)
 		
 	update_state()
 
 func update_state() -> void:
+	var arrow = player.get_node_or_null("TutorialArrow")
+	
 	if RunState.previous_location == "scholarship":
-		# We just finished the minigame
 		objective_label.text = "Objective: Head back to the street."
-		var result_key = "school_result"
+		if arrow: arrow.set_target($ExitDoor)
 		
+		var result_key = "school_result"
 		if not RunState.completed_dialogues.has(result_key):
-			player.current_state = player.State.LOCKED
+			if player and "current_state" in player:
+				player.current_state = player.State.LOCKED
 			var lines: Array[String] = []
 			if RunState.scholarship_passed:
 				lines.assign(school_dialogue["passed"])
@@ -61,12 +63,13 @@ func update_state() -> void:
 			_on_dialogue_finished()
 			
 	else:
-		# We just arrived from the street
 		objective_label.text = "Objective: Take the scholarship exam at the board."
-		var arrival_key = "school_arrival"
+		if arrow: arrow.set_target($InteractableItem)
 		
+		var arrival_key = "school_arrival"
 		if not RunState.completed_dialogues.has(arrival_key):
-			player.current_state = player.State.LOCKED
+			if player and "current_state" in player:
+				player.current_state = player.State.LOCKED
 			var lines: Array[String] = []
 			lines.assign(school_dialogue["arrival"])
 			DialogManager.start_dialog(player.global_position, lines)
@@ -80,7 +83,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		if player_in_interact_zone:
 			if RunState.previous_location != "scholarship":
-				# Start the exam!
+				var arrow = player.get_node_or_null("TutorialArrow")
+				if arrow: arrow.set_target(null)
 				SceneManager.load_scene("scholarship")
 			else:
 				objective_label.text = "I already took the exam. Time to leave."
@@ -89,6 +93,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				
 		elif player_at_door:
 			if RunState.previous_location == "scholarship":
+				var arrow = player.get_node_or_null("TutorialArrow")
+				if arrow: arrow.set_target(null)
 				SceneManager.advance_story("school")
 			else:
 				objective_label.text = "I can't leave without taking the exam."
@@ -96,15 +102,12 @@ func _unhandled_input(event: InputEvent) -> void:
 				update_state()
 
 func _on_dialogue_finished() -> void:
-	player.current_state = player.State.FREE
+	if player and "current_state" in player:
+		player.current_state = player.State.FREE
 	if player_at_door and RunState.previous_location == "scholarship":
 		door_prompt.visible = true
 	if player_in_interact_zone and RunState.previous_location != "scholarship":
 		interact_prompt.visible = true
-
-# ==============================================================================
-# TRIGGER ZONES
-# ==============================================================================
 
 func _on_interactable_item_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):

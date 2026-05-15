@@ -1,3 +1,4 @@
+# res://scripts/street.gd
 extends Node2D
 
 @onready var player = $Player
@@ -15,17 +16,16 @@ var expected_destination: String = ""
 # ==============================================================================
 var street_dialogue = {
 	"morning": [
-		"If I don't pass this scholarship exam, the 15,000 tuition is impossible.",
-		"I need to get to school."
+		"Kailangan kong pumasa sa exam. Walang palya dapat.",
+		"Lahat ng nakakasabay ko sa jeep, sugal ang nasa screen. Nakaka-pressure na pakiramdam ko ako na lang ang nahuhuli sa ganitong diskarte."
 	],
 	"afternoon": [
-		"Exam is over. But my wallet is still bleeding 350 a day.",
-		"These SugalHub ads are everywhere... I just need to get home."
+		"Tapos na yung exam. Hihintayin ko na lang yung 7,000 ko mamaya sa trabaho.",
+		"Wala akong magawa ngayon. Bored na bored ako. Siguro kung i-download ko yung app, may pampalipas oras ako..."
 	]
 }
 
 func _ready() -> void:
-	# 1. SPATIAL ROUTING
 	if RunState.interruption_return_x != 0.0:
 		player.global_position.x = RunState.interruption_return_x
 		RunState.interruption_return_x = 0.0 
@@ -35,12 +35,10 @@ func _ready() -> void:
 		elif RunState.previous_location == "school" or RunState.previous_location == "work":
 			player.global_position.x = 1100
 			
-	# 2. HIDE DOOR LABELS
 	if home_label: home_label.visible = false
 	if job_label: job_label.visible = false
 	if school_label: school_label.visible = false
 	
-	# 3. CONNECT DIALOG MANAGER
 	if not DialogManager.dialog_finished.is_connected(_on_dialogue_finished):
 		DialogManager.dialog_finished.connect(_on_dialogue_finished)
 		
@@ -48,18 +46,21 @@ func _ready() -> void:
 
 func setup_street_state() -> void:
 	var phase = RunState.current_phase
+	var arrow = player.get_node_or_null("TutorialArrow") # Get the player's arrow
 	
-	# Set Target Door
+	# Set Target Door and assign it to the arrow
 	if phase == "morning":
 		expected_destination = "school"
 		objective_label.text = "Objective: Head to school."
+		if arrow: arrow.set_target($SchoolEntrance)
+			
 	elif phase == "afternoon":
 		expected_destination = "home"
 		objective_label.text = "Objective: Head back to the dorm."
-		
+		if arrow: arrow.set_target($HomeEntrance)
+
 	var dialogue_id = "street_" + phase
 	
-	# Play Intro Dialogue
 	if not RunState.completed_dialogues.has(dialogue_id) and street_dialogue.has(phase):
 		player.current_state = player.State.LOCKED
 		var lines: Array[String] = []
@@ -71,9 +72,9 @@ func setup_street_state() -> void:
 func _on_dialogue_finished() -> void:
 	var dialogue_id = "street_" + RunState.current_phase
 	RunState.completed_dialogues[dialogue_id] = true
-	player.current_state = player.State.FREE
+	if player and "current_state" in player:
+		player.current_state = player.State.FREE
 	
-	# Refresh door prompt if they are standing next to one
 	if current_door == "home" and home_label: home_label.visible = true
 	elif current_door == "job" and job_label: job_label.visible = true
 	elif current_door == "school" and school_label: school_label.visible = true
@@ -83,15 +84,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("interact") and current_door != "":
 		if current_door == expected_destination:
+			# Clear the arrow before leaving the scene
+			var arrow = player.get_node_or_null("TutorialArrow")
+			if arrow: arrow.set_target(null)
+			
 			SceneManager.advance_story("street")
 		else:
 			objective_label.text = "I don't need to go there right now."
 			await get_tree().create_timer(2.0).timeout
 			setup_street_state()
-
-# ==============================================================================
-# TRIGGER ZONES
-# ==============================================================================
 
 func _on_home_entrance_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):

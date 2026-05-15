@@ -67,8 +67,14 @@ func exit_to_narrative() -> void:
 	
 	# Route back based on what game this was
 	if minigame_id == "sugal":
-		# Sugal is an interruption, reload the street
-		SceneManager.load_scene("street")
+		# Kung may naka-save na scene bago nag-SugalHub, doon tayo babalik
+		if GameState.last_scene_path != "":
+			var path = GameState.last_scene_path
+			GameState.last_scene_path = "" # I-reset para sa susunod
+			get_tree().change_scene_to_file(path)
+		else:
+			# Fallback kung sakaling walang nai-save
+			SceneManager.load_scene("street")
 	else:
 		# Standard narrative progression
 		SceneManager.advance_story(minigame_id)

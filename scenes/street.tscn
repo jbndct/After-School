@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_7vr8w"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="5_yrasx"]
 [ext_resource type="PackedScene" uid="uid://biif40fa0fqjc" path="res://scenes/SmartphoneUI.tscn" id="7_5m0si"]
+[ext_resource type="PackedScene" uid="uid://63m76ttgstor" path="res://scenes/TutorialArrow.tscn" id="7_7vr8w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5m0si"]
 size = Vector2(649, 349.5)
@@ -139,6 +140,9 @@ position = Vector2(-428, -59)
 
 [node name="Poster" parent="." unique_id=1414501502 instance=ExtResource("2_wjoh7")]
 position = Vector2(-853, 104)
+
+[node name="TutorialArrow" parent="." unique_id=1240372964 instance=ExtResource("7_7vr8w")]
+position = Vector2(-2, 1)
 
 [connection signal="body_entered" from="HomeEntrance" to="." method="_on_home_entrance_body_entered"]
 [connection signal="body_exited" from="HomeEntrance" to="." method="_on_home_entrance_body_exited"]
