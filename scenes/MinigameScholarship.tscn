@@ -2,6 +2,22 @@
 
 [ext_resource type="Script" uid="uid://bfehg10pqdg8" path="res://scripts/scholarship_minigame.gd" id="1_l0ne0"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l0ne0"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgh22"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_geg8s"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blgh6"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 1
+
 [node name="ScholarshipMinigame" type="Control" unique_id=871926095]
 layout_mode = 3
 anchors_preset = 15
@@ -74,3 +90,122 @@ theme_override_colors/font_color = Color(0.055450834, 0.11558556, 0.01241413, 1)
 theme_override_font_sizes/font_size = 50
 text = "x/xx"
 horizontal_alignment = 1
+
+[node name="DeskBackground" type="ColorRect" parent="." unique_id=991056857]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.23921569, 0.15686275, 0.09019608, 1)
+
+[node name="Paper" type="ColorRect" parent="." unique_id=167691359]
+custom_minimum_size = Vector2(800, 550)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -275.0
+offset_right = 400.0
+offset_bottom = 275.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.95686275, 0.94509804, 0.91764706, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Paper" unique_id=1240441993]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="QuizLayout" type="VBoxContainer" parent="Paper/MarginContainer" unique_id=1507302555]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ScoreLabel" type="Label" parent="Paper/MarginContainer/QuizLayout" unique_id=1418314078]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+text = "Score: 0/10"
+
+[node name="QuestionLabel" type="Label" parent="Paper/MarginContainer/QuizLayout" unique_id=1015770705]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+text = "Question goes here..."
+autowrap_mode = 2
+
+[node name="OptionsContainer" type="VBoxContainer" parent="Paper/MarginContainer/QuizLayout" unique_id=765274270]
+layout_mode = 2
+
+[node name="Option" type="Button" parent="Paper/MarginContainer/QuizLayout/OptionsContainer" unique_id=297535567]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_l0ne0")
+
+[node name="Option2" type="Button" parent="Paper/MarginContainer/QuizLayout/OptionsContainer" unique_id=1243308534]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_sgh22")
+
+[node name="Option3" type="Button" parent="Paper/MarginContainer/QuizLayout/OptionsContainer" unique_id=2145611154]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_geg8s")
+
+[node name="Option4" type="Button" parent="Paper/MarginContainer/QuizLayout/OptionsContainer" unique_id=785805840]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_blgh6")
+
+[node name="TutorialPopup" type="Panel" parent="." unique_id=1313386393]
+custom_minimum_size = Vector2(500, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialPopup" unique_id=842616458]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=1836912250]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "SCHOLARSHIP EXAM"
+
+[node name="Label2" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=25717864]
+layout_mode = 2
+text = "You must answer exactly 10 questions. Pass the exam by getting 7 right to secure your stipend. Take a deep breath."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="TutorialPopup/VBoxContainer" unique_id=2107980110]
+layout_mode = 2
+text = "Take the exam."
