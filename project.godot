@@ -29,14 +29,6 @@ SettingsMenu="*uid://c63bdg0dakirq"
 window/size/resizable=false
 window/stretch/mode="viewport"
 
-[display]
-
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/mode=3
-window/stretch/mode="canvas_items"
-window/stretch/scale_mode="integer"
-
 [input]
 
 move_left={

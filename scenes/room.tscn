@@ -27,8 +27,8 @@ position = Vector2(3, 2)
 script = ExtResource("1_85yof")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=857301467]
-position = Vector2(67.9998, 19.49997)
-scale = Vector2(4.3893795, 2.8528736)
+position = Vector2(-8.999993, 0.9999776)
+scale = Vector2(1.4664981, 1.5126436)
 texture = ExtResource("1_ffxv4")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1914316027]
@@ -56,10 +56,10 @@ position = Vector2(-206, 133)
 shape = SubResource("RectangleShape2D_ffxv4")
 
 [node name="InteractPrompt" type="Label" parent="InteractableItem" unique_id=1004316630]
-offset_left = -251.0
-offset_top = 183.0
-offset_right = -164.0
-offset_bottom = 206.0
+offset_left = -244.0
+offset_top = 12.0
+offset_right = -157.0
+offset_bottom = 35.0
 text = "[E] to Think"
 metadata/_edit_use_anchors_ = true
 
@@ -80,10 +80,10 @@ expand_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="DoorPrompt" type="Label" parent="ExitDoor" unique_id=797385000]
-offset_left = 306.0
-offset_top = 172.0
-offset_right = 395.0
-offset_bottom = 195.0
+offset_left = 288.0
+offset_top = -43.0
+offset_right = 377.0
+offset_bottom = -20.0
 text = "[E] to Leave"
 metadata/_edit_use_anchors_ = true
 

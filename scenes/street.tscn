@@ -11,9 +11,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5m0si"]
 size = Vector2(649, 349.5)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dxpu0"]
-size = Vector2(474, 349.5)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cotsb"]
 size = Vector2(280, 349.5)
 
@@ -57,23 +54,6 @@ text = "Press 'E' to go back home."
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="JobEntrance" type="Area2D" parent="." unique_id=161928504]
-position = Vector2(2000, -32)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JobEntrance" unique_id=766785676]
-position = Vector2(450, 317)
-shape = SubResource("RectangleShape2D_dxpu0")
-debug_color = Color(0.79899365, 0.35301647, 0.41452032, 0.7254902)
-
-[node name="Label" type="Label" parent="JobEntrance" unique_id=264802480]
-offset_left = 243.0
-offset_top = 287.0
-offset_right = 454.0
-offset_bottom = 310.0
-text = "Press 'E' to enter guard job."
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
-
 [node name="SchoolEntrance" type="Area2D" parent="." unique_id=1046210740]
 position = Vector2(-7, -30)
 
@@ -83,10 +63,10 @@ shape = SubResource("RectangleShape2D_cotsb")
 debug_color = Color(0.79899365, 0.35301647, 0.41452032, 0.7254902)
 
 [node name="Label" type="Label" parent="SchoolEntrance" unique_id=613180088]
-offset_left = 1458.0
-offset_top = 347.0
-offset_right = 1646.0
-offset_bottom = 370.0
+offset_left = 1460.0
+offset_top = 225.0
+offset_right = 1648.0
+offset_bottom = 248.0
 text = "Press 'E' to enter school."
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -139,14 +119,12 @@ position = Vector2(-428, -59)
 [node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("5_yrasx")]
 
 [node name="Poster" parent="." unique_id=1414501502 instance=ExtResource("2_wjoh7")]
-position = Vector2(-853, 104)
+position = Vector2(371, 71)
 
 [node name="TutorialArrow" parent="." unique_id=1240372964 instance=ExtResource("7_7vr8w")]
 position = Vector2(-2, 1)
 
 [connection signal="body_entered" from="HomeEntrance" to="." method="_on_home_entrance_body_entered"]
 [connection signal="body_exited" from="HomeEntrance" to="." method="_on_home_entrance_body_exited"]
-[connection signal="body_entered" from="JobEntrance" to="." method="_on_job_entrance_body_entered"]
-[connection signal="body_exited" from="JobEntrance" to="." method="_on_job_entrance_body_exited"]
 [connection signal="body_entered" from="SchoolEntrance" to="." method="_on_school_entrance_body_entered"]
 [connection signal="body_exited" from="SchoolEntrance" to="." method="_on_school_entrance_body_exited"]
