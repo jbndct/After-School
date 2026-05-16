@@ -11,7 +11,7 @@ var current_state: State = State.FREE
 func _ready() -> void:
 	up_direction = Vector2.UP
 	
-	# We listen to the EventBus. When the minigame opens, we lock input.
+	# Listen to EventBus for state shifting
 	EventBus.sugalhub_opened.connect(_on_sugalhub_opened)
 	EventBus.sugalhub_closed.connect(_on_sugalhub_closed)
 
@@ -35,16 +35,28 @@ func handle_movement() -> void:
 	
 	if direction != 0:
 		velocity.x = direction * SPEED
-		animated_sprite.play("walk")
-		animated_sprite.flip_h = direction < 0 
+		
+		# Play the correct side-view walk cycle depending on input direction
+		if direction > 0:
+			if animated_sprite.animation != "walk_right":
+				animated_sprite.play("walk_right")
+		elif direction < 0:
+			if animated_sprite.animation != "walk_left":
+				animated_sprite.play("walk_left")
+				
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		animated_sprite.play("idle")
+		
+		# Play the front-facing idle animation when standing still
+		if animated_sprite.animation != "idle":
+			animated_sprite.play("idle")
 
 func handle_locked() -> void:
 	# If the player was running when the app opened, bring them to a clean halt.
 	velocity.x = move_toward(velocity.x, 0, SPEED)
-	animated_sprite.play("idle")
+	
+	if animated_sprite.animation != "idle":
+		animated_sprite.play("idle")
 
 # ─── EVENT RECEIVERS ───────────────────────────────────
 
