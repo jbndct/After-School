@@ -11,20 +11,6 @@ extends Node2D
 var current_door: String = ""
 var expected_destination: String = ""
 
-# ==============================================================================
-# PHASE-BASED DIALOGUE
-# ==============================================================================
-var street_dialogue = {
-	"morning": [
-		"Kailangan kong pumasa sa exam. Walang palya dapat.",
-		"Lahat ng nakakasabay ko sa jeep, sugal ang nasa screen. Nakaka-pressure na pakiramdam ko ako na lang ang nahuhuli sa ganitong diskarte."
-	],
-	"afternoon": [
-		"Tapos na yung exam. Hihintayin ko na lang yung 7,000 ko mamaya sa trabaho.",
-		"Wala akong magawa ngayon. Bored na bored ako. Siguro kung i-download ko yung app, may pampalipas oras ako..."
-	]
-}
-
 func _ready() -> void:
 	if RunState.interruption_return_x != 0.0:
 		player.global_position.x = RunState.interruption_return_x
@@ -46,26 +32,23 @@ func _ready() -> void:
 
 func setup_street_state() -> void:
 	var phase = RunState.current_phase
-	var arrow = player.get_node_or_null("TutorialArrow") # Get the player's arrow
+	var arrow = player.get_node_or_null("TutorialArrow") 
 	
-	# Set Target Door and assign it to the arrow
 	if phase == "morning":
 		expected_destination = "school"
-		objective_label.text = "Objective: Head to school."
+		objective_label.text = DialogManager.get_text("obj_street_school")
 		if arrow: arrow.set_target($SchoolEntrance)
 			
 	elif phase == "afternoon":
 		expected_destination = "home"
-		objective_label.text = "Objective: Head back to the dorm."
+		objective_label.text = DialogManager.get_text("obj_street_dorm")
 		if arrow: arrow.set_target($HomeEntrance)
 
 	var dialogue_id = "street_" + phase
 	
-	if not RunState.completed_dialogues.has(dialogue_id) and street_dialogue.has(phase):
+	if not RunState.completed_dialogues.has(dialogue_id) and phase in ["morning", "afternoon"]:
 		player.current_state = player.State.LOCKED
-		var lines: Array[String] = []
-		lines.assign(street_dialogue[phase])
-		DialogManager.start_dialog(player.global_position, lines)
+		DialogManager.start_world_dialog(dialogue_id, player.global_position)
 	else:
 		_on_dialogue_finished()
 
@@ -84,13 +67,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("interact") and current_door != "":
 		if current_door == expected_destination:
-			# Clear the arrow before leaving the scene
 			var arrow = player.get_node_or_null("TutorialArrow")
 			if arrow: arrow.set_target(null)
 			
 			SceneManager.advance_story("street")
 		else:
-			objective_label.text = "I don't need to go there right now."
+			objective_label.text = DialogManager.get_text("warn_street_wrong_way")
 			await get_tree().create_timer(2.0).timeout
 			setup_street_state()
 

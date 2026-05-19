@@ -1,0 +1,84 @@
+{
+  "poster_intro_morning": [
+	"SugalHub: Gawing milyon ang barya mo! Play now, approved by your favorite vloggers!",
+	"Aga-aga, ito agad bubungad. Pati yung mga nakasabay ko sa jeep kanina, spin nang spin sa phone nila.",
+	"Kung palaguin ko kaya 'tong 3,000 ko bago ako pumasok? Baka sakaling magkaroon ako ng 'breathing room'.",
+	"Mababayaran ko yung 15,000 na tuition bukas nang hindi namamatay sa gutom kinabukasan...",
+    "Pero paano kung matalo? Masisira yung sakto kong budget. Hindi ako makaka-take ng exam."
+  ],
+  "poster_intro_afternoon": [
+	"SugalHub: Doblehin ang pera mo habang naghihintay! Wala nang talo!",
+	"Tapos na yung exam. Habang nag-aantay pumasok sa shift mamayang gabi, sobrang nakaka-bore.",
+	"Baka kung i-download ko yung app, may pampalipas oras ako. Malay mo, swertehin.",
+	"Kahit paano madagdagan yung budget ko. Hirap ng puro saktong-sakto lang palagi.",
+    "Pero delikado. Baka maubos yung naipon ko. Hindi ko mapapatawad sarili ko."
+  ],
+  "poster_repeat_morning": [
+    "Yung SugalHub ad. Nakaka-tempt subukan, pero kailangan ko munang pumasa sa exam."
+  ],
+  "poster_repeat_afternoon": [
+    "SugalHub nanaman. Magandang pampalipas oras sana... pero baka kung saan pa mapunta."
+  ],
+  "poster_outro": [
+    "Hindi. Kailangan kong mag-focus sa ngayon."
+  ],
+  "room_morning": [
+	"3,000 pesos. Ito na lang ang laman ng wallet ko.",
+	"15,000 ang tuition. Kung papasa ako sa scholarship exam mamaya, may 5,000 ako.",
+	"Tapos makukuha ko mamayang gabi yung 7,000 na sweldo ko para sa dalawang linggong shift.",
+	"Saktong 15,000. Pambayad lang talaga. Saktong zero ang maiiwan para makakain ako bukas.",
+    "Napanood ko sa vlog ni idol kagabi, nanalo daw siya ng 10k sa SugalHub habang naka-tambay lang. Nakaka-tempt subukan para lang magkaroon ng breathing room."
+  ],
+  "room_night_passed": [
+	"*Phone buzzes*",
+	"SMS: Congratulations, your scholarship application is approved. You have officially been granted ₱5,000.",
+	"Salamat. May 5k na 'ko. Idagdag ko yung 7k na sweldo mamaya, saktong 15k na.",
+	"Mababayaran ko yung tuition... pero paano ako bukas? Nakakapagod na 'tong saktong-sakto lagi.",
+    "Kailangan ko nang mag-log in sa shift. Sobrang nakaka-bore yung routine na 'to, pero kailangan."
+  ],
+  "room_night_failed": [
+	"*Phone buzzes*",
+	"SMS: We regret to inform you that you did not pass the scholarship exam.",
+	"...Wala na. Kahit makuha ko pa yung 7k na sweldo ko mamaya, kulang na kulang ang pera ko.",
+	"...Kailangan ko ba sumugal para sa kinabukasan ko?",
+    "Kailangan ko nang mag-log in sa shift. Sobrang nakaka-bore yung routine na 'to, pero kailangan."
+  ],
+  "school_arrival": [
+	"Ito na yun. Yung registrar... Huling chance ko na 'to para sa stipend.",
+    "Kailangan kong i-check yung bulletin board at mag-exam. Focus, Ador."
+  ],
+  "school_passed": [
+	"Pasa ako... Salamat sa Diyos. Secured na yung stipend.",
+    "Malaking tulong 'to, pero may shift pa 'ko mamaya. Makauwi na nga."
+  ],
+  "school_failed": [
+	"Bagsak... Walang stipend.",
+    "Hindi ko alam paano ko tatawirin 'to. Makauwi na nga lang."
+  ],
+  "street_morning": [
+	"Kailangan kong pumasa sa exam. Walang palya dapat.",
+    "Lahat ng nakakasabay ko sa jeep, sugal ang nasa screen. Nakaka-pressure na pakiramdam ko ako na lang ang nahuhuli sa ganitong diskarte."
+  ],
+  "street_afternoon": [
+	"Tapos na yung exam. Hihintayin ko na lang yung 7,000 ko mamaya sa trabaho.",
+    "Wala akong magawa ngayon. Bored na bored ako. Siguro kung i-download ko yung app, may pampalipas oras ako..."
+  ],
+  
+  "obj_room_clear_head": "Layunin: Mag-isip-isip muna (Pumunta sa desk/kama).",
+  "obj_room_to_school": "Layunin: Pumunta sa eskwelahan para sa exam.",
+  "obj_room_start_work": "Layunin: Buksan ang laptop para magsimula sa trabaho.",
+  "obj_room_end_day": "Layunin: Tapos na ang shift. Pumunta sa pinto para tapusin ang araw.",
+  "warn_room_clear_head": "Hindi muna ako aalis hangga't hindi pa malinaw ang isip ko.",
+  "warn_room_already_thought": "Naisip ko na 'to. Kailangan ko nang umalis.",
+  "warn_room_finish_shift": "Kailangan ko munang tapusin ang shift ko.",
+  "warn_room_done_working": "Tapos na ang trabaho ko ngayon. Oras na para magpahinga/umalis.",
+  
+  "obj_school_exam": "Layunin: Kunin ang scholarship exam sa bulletin board.",
+  "obj_school_leave": "Layunin: Bumalik sa kalsada.",
+  "warn_school_no_exam": "Hindi ako pwedeng umalis nang hindi nag-eexam.",
+  "warn_school_exam_done": "Tapos na 'kong mag-exam. Oras na para umalis.",
+  
+  "obj_street_school": "Layunin: Pumunta sa eskwelahan.",
+  "obj_street_dorm": "Layunin: Bumalik sa dorm.",
+  "warn_street_wrong_way": "Hindi ko kailangang pumunta diyan ngayon."
+}

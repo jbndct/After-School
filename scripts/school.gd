@@ -9,24 +9,6 @@ extends Node2D
 var player_in_interact_zone: bool = false
 var player_at_door: bool = false
 
-# ==============================================================================
-# MINIGAME BRIDGE DIALOGUE (Tagalog)
-# ==============================================================================
-var school_dialogue = {
-	"arrival": [
-		"Ito na yun. Yung registrar... Huling chance ko na 'to para sa stipend.",
-		"Kailangan kong i-check yung bulletin board at mag-exam. Focus, Ador."
-	],
-	"passed": [
-		"Pasa ako... Salamat sa Diyos. Secured na yung stipend.",
-		"Malaking tulong 'to, pero may shift pa 'ko mamaya. Makauwi na nga."
-	],
-	"failed": [
-		"Bagsak... Walang stipend.",
-		"Hindi ko alam paano ko tatawirin 'to. Makauwi na nga lang."
-	]
-}
-
 func _ready() -> void:
 	if RunState.previous_location == "scholarship":
 		player.global_position.x = 500 
@@ -45,34 +27,30 @@ func update_state() -> void:
 	var arrow = player.get_node_or_null("TutorialArrow")
 	
 	if RunState.previous_location == "scholarship":
-		objective_label.text = "Objective: Head back to the street."
+		objective_label.text = DialogManager.get_text("obj_school_leave")
 		if arrow: arrow.set_target($ExitDoor)
 		
 		var result_key = "school_result"
 		if not RunState.completed_dialogues.has(result_key):
 			if player and "current_state" in player:
 				player.current_state = player.State.LOCKED
-			var lines: Array[String] = []
-			if RunState.scholarship_passed:
-				lines.assign(school_dialogue["passed"])
-			else:
-				lines.assign(school_dialogue["failed"])
-			DialogManager.start_dialog(player.global_position, lines)
+				
+			var dialog_id = "school_passed" if RunState.scholarship_passed else "school_failed"
+			DialogManager.start_world_dialog(dialog_id, player.global_position)
 			RunState.completed_dialogues[result_key] = true
 		else:
 			_on_dialogue_finished()
 			
 	else:
-		objective_label.text = "Objective: Take the scholarship exam at the board."
+		objective_label.text = DialogManager.get_text("obj_school_exam")
 		if arrow: arrow.set_target($InteractableItem)
 		
 		var arrival_key = "school_arrival"
 		if not RunState.completed_dialogues.has(arrival_key):
 			if player and "current_state" in player:
 				player.current_state = player.State.LOCKED
-			var lines: Array[String] = []
-			lines.assign(school_dialogue["arrival"])
-			DialogManager.start_dialog(player.global_position, lines)
+			
+			DialogManager.start_world_dialog("school_arrival", player.global_position)
 			RunState.completed_dialogues[arrival_key] = true
 		else:
 			_on_dialogue_finished()
@@ -87,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if arrow: arrow.set_target(null)
 				SceneManager.load_scene("scholarship")
 			else:
-				objective_label.text = "I already took the exam. Time to leave."
+				objective_label.text = DialogManager.get_text("warn_school_exam_done")
 				await get_tree().create_timer(2.0).timeout
 				update_state()
 				
@@ -97,7 +75,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if arrow: arrow.set_target(null)
 				SceneManager.advance_story("school")
 			else:
-				objective_label.text = "I can't leave without taking the exam."
+				objective_label.text = DialogManager.get_text("warn_school_no_exam")
 				await get_tree().create_timer(2.0).timeout
 				update_state()
 
