@@ -27,8 +27,6 @@ func _ready() -> void:
 	_setup_ui()
 	_update_balance_display()
 	
-	_drop_new_symbols()
-
 func _setup_grid() -> void:
 	for c in range(COLS):
 		grid_nodes.append([])

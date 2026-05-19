@@ -8,7 +8,6 @@ extends MinigameBase
 @onready var btn_slots = $MenuUI/VBox/Grid/BtnSlots
 @onready var btn_parlay = $MenuUI/VBox/Grid/BtnParlay
 @onready var btn_roulette = $MenuUI/VBox/Grid/BtnRoulette
-@onready var btn_bingo = $MenuUI/VBox/Grid/BtnBingo
 @onready var btn_exit = $MenuUI/VBox/BtnExit
 
 @onready var withdrawal_overlay = $WithdrawalOverlay
@@ -28,6 +27,7 @@ var active_game_instance: Node = null
 func _ready() -> void:
 	minigame_id = "sugal"
 	reward_amount = 0
+	is_active = true 
 	
 	if "is_dialog_active" in DialogManager:
 		DialogManager.is_dialog_active = false
@@ -45,12 +45,11 @@ func _setup_button_connections() -> void:
 	btn_slots.pressed.connect(_on_game_selected.bind("res://scenes/sugal_slots.tscn"))
 	btn_parlay.pressed.connect(_on_game_selected.bind("res://scenes/sugal_parlay.tscn"))
 	btn_roulette.pressed.connect(_on_game_selected.bind("res://scenes/sugal_roulette.tscn"))
-	btn_bingo.pressed.connect(_on_game_selected.bind("res://scenes/sugal_bingo.tscn"))
 	
 	btn_exit.pressed.connect(_on_cash_out_pressed)
 	
-	# Extravagant UI: Add dynamic text color changes on press for all buttons
-	var all_btns = [btn_slots, btn_parlay, btn_roulette, btn_bingo, btn_exit]
+	# Extravagant UI: Dynamic text color changes on press
+	var all_btns = [btn_slots, btn_parlay, btn_roulette, btn_exit]
 	for btn in all_btns:
 		btn.button_down.connect(func(): btn.add_theme_color_override("font_color", Color.BLACK))
 		btn.button_up.connect(func(): btn.remove_theme_color_override("font_color"))
@@ -71,7 +70,6 @@ func show_menu() -> void:
 	menu_ui.show()
 	menu_ui.modulate.a = 0.0
 	
-	# Fixed Layout Bug: Removed positional tween that was fighting the VBox container
 	var tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(menu_ui, "modulate:a", 1.0, 0.6)
 
@@ -81,14 +79,12 @@ func _on_game_selected(scene_path: String) -> void:
 		var game_scene = load(scene_path)
 		active_game_instance = game_scene.instantiate()
 		
-		# Inject this hub as the parent controller so children can call get_rigging_rtp() or return to menu
 		if "hub_controller" in active_game_instance:
 			active_game_instance.hub_controller = self
 			
 		game_container.add_child(active_game_instance)
 		menu_ui.hide()
 	else:
-		# Temporarily shake the button if the scene doesn't exist yet (Steps B-E)
 		_shake_ui(menu_ui)
 
 func return_to_menu() -> void:
@@ -98,19 +94,17 @@ func return_to_menu() -> void:
 	show_menu()
 
 # --- PSYCHOLOGY & RIGGING SYSTEM (Global Casino Math) ---
-# Returns the Target RTP (Return To Player) multiplier. 
-# > 1.0 = Forced Wins (The Hook). < 1.0 = Forced Losses (The Drain).
 func get_rigging_rtp() -> float:
 	var total_plays = RunState.get_meta("sugal_plays") if RunState.has_meta("sugal_plays") else 0
 	
-	if total_plays == 0:
-		return 1.8 # 180% return - Initial Hook. Almost guaranteed massive win.
-	elif total_plays <= 3:
-		return 1.1 # 110% return - Still feeding them hope.
-	elif total_plays % 7 == 0:
-		return 0.9 # Occasional "Near Miss / Break Even" to reset dopamine.
-	else:
-		return 0.25 # 25% return - The brutal casino drain. They will lose everything.
+	# The exact narrative sequence: W, W, L, L, L, L, W, L
+	var pattern: Array[float] = [1.5, 1.2, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0]
+	
+	if total_plays < pattern.size():
+		return pattern[total_plays]
+		
+	# Complete drain after sequence
+	return 0.0 
 
 func increment_play_count() -> void:
 	var total_plays = RunState.get_meta("sugal_plays") if RunState.has_meta("sugal_plays") else 0
