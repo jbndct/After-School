@@ -70,11 +70,10 @@ func _setup_withdrawal_system() -> void:
 func show_menu() -> void:
 	menu_ui.show()
 	menu_ui.modulate.a = 0.0
-	grid_container.position.y += 50 # Start slightly lower
 	
-	var tween = create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	# Fixed Layout Bug: Removed positional tween that was fighting the VBox container
+	var tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(menu_ui, "modulate:a", 1.0, 0.6)
-	tween.tween_property(grid_container, "position:y", grid_container.position.y - 50, 0.6)
 
 # --- MODULAR GAME LOADING ---
 func _on_game_selected(scene_path: String) -> void:

@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://bigsrsb5su6ty"]
+
+[ext_resource type="StyleBox" uid="uid://crhqsq6ha8opt" path="res://scenes/ui/sugalhub_menu_normal.tres" id="1_4etta"]
+[ext_resource type="Script" uid="uid://cd84r7dk12nsu" path="res://scripts/sugal_slots.gd" id="1_qdgcw"]
+[ext_resource type="StyleBox" uid="uid://ncm1nilrecto" path="res://scenes/ui/sugalhub_menu_pressed.tres" id="2_qdgcw"]
+[ext_resource type="StyleBox" uid="uid://cnx6vbjqsa8pl" path="res://scenes/ui/sugalhub_menu_hover.tres" id="3_b8onm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hevu"]
+bg_color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+border_width_bottom = 2
+border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7hevu"]
+font_size = 32
+font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k4o32"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cqs4o"]
+bg_color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+border_width_top = 2
+border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_k4o32"]
+font_size = 24
+font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cqs4o"]
+font_size = 20
+
+[node name="SugalSlots" type="Control" unique_id=449566977]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qdgcw")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1321597604]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.06666667, 0.011764706, 0.011764706, 1)
+
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=72200752]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.5
+offset_top = -340.0
+offset_right = 325.5
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TopBar" type="PanelContainer" parent="MainVBox" unique_id=1190864197]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7hevu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox/TopBar" unique_id=19485410]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="MainVBox/TopBar/HBoxContainer" unique_id=1049525377]
+layout_mode = 2
+text = "SKUTTER"
+label_settings = SubResource("LabelSettings_7hevu")
+
+[node name="GridCenter" type="CenterContainer" parent="MainVBox" unique_id=729657666]
+custom_minimum_size = Vector2(424, 352)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridFrame" type="PanelContainer" parent="MainVBox/GridCenter" unique_id=1801542503]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4o32")
+
+[node name="GameBoard" type="Control" parent="MainVBox/GridCenter/GridFrame" unique_id=674504017]
+custom_minimum_size = Vector2(520, 440)
+layout_mode = 2
+
+[node name="BottomBar" type="PanelContainer" parent="MainVBox" unique_id=1118824524]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cqs4o")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainVBox/BottomBar" unique_id=45170754]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox/BottomBar/MarginContainer" unique_id=1080572683]
+layout_mode = 2
+
+[node name="StatsBox" type="VBoxContainer" parent="MainVBox/BottomBar/MarginContainer/HBoxContainer" unique_id=28709559]
+layout_mode = 2
+
+[node name="BalanceLabel" type="Label" parent="MainVBox/BottomBar/MarginContainer/HBoxContainer/StatsBox" unique_id=1520109236]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_k4o32")
+
+[node name="WinLabel" type="Label" parent="MainVBox/BottomBar/MarginContainer/HBoxContainer/StatsBox" unique_id=1501432283]
+layout_mode = 2
+text = "BALANCE: ₱0"
+label_settings = SubResource("LabelSettings_cqs4o")
+
+[node name="BetDropdown" type="OptionButton" parent="MainVBox/BottomBar/MarginContainer/HBoxContainer" unique_id=180461110]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 0
+
+[node name="BtnSpin" type="Button" parent="MainVBox/BottomBar/MarginContainer/HBoxContainer" unique_id=1225550547]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("1_4etta")
+theme_override_styles/pressed = ExtResource("2_qdgcw")
+theme_override_styles/hover = ExtResource("3_b8onm")
+text = "SPIN"
+
+[node name="Spacer" type="Control" parent="MainVBox/BottomBar/MarginContainer/HBoxContainer" unique_id=1350172421]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="BtnBack" type="Button" parent="MainVBox/BottomBar/MarginContainer/HBoxContainer" unique_id=2001348229]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = ExtResource("1_4etta")
+theme_override_styles/pressed = ExtResource("2_qdgcw")
+theme_override_styles/hover = ExtResource("3_b8onm")
+text = "LOBBY"

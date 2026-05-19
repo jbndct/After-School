@@ -1,6 +1,14 @@
 [gd_scene format=3 uid="uid://bvif1vja8r37w"]
 
 [ext_resource type="Script" uid="uid://dg00b0csfq2wy" path="res://scripts/sugal_hub.gd" id="1_3kho2"]
+[ext_resource type="FontFile" uid="uid://ood803niatfl" path="res://assets/ui/PlayfairDisplay-ExtraBold.ttf" id="1_rsi76"]
+[ext_resource type="FontFile" uid="uid://bqrf3xq1vgc66" path="res://assets/ui/PlayfairDisplay-Bold.ttf" id="3_gfdq3"]
+[ext_resource type="StyleBox" uid="uid://crhqsq6ha8opt" path="res://scenes/ui/sugalhub_menu_normal.tres" id="4_ay62c"]
+[ext_resource type="StyleBox" uid="uid://ncm1nilrecto" path="res://scenes/ui/sugalhub_menu_pressed.tres" id="5_3nv2j"]
+[ext_resource type="StyleBox" uid="uid://cnx6vbjqsa8pl" path="res://scenes/ui/sugalhub_menu_hover.tres" id="6_3gpu8"]
+
+[sub_resource type="Theme" id="Theme_gfdq3"]
+default_font = ExtResource("1_rsi76")
 
 [sub_resource type="LabelSettings" id="LabelSettings_3kho2"]
 font_size = 64
@@ -11,6 +19,7 @@ shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(4, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rsi76"]
+font = ExtResource("3_gfdq3")
 font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_gfdq3"]
@@ -28,6 +37,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_gfdq3")
 script = ExtResource("1_3kho2")
 
 [node name="Background" type="ColorRect" parent="." unique_id=102590004]
@@ -40,6 +50,7 @@ grow_vertical = 2
 color = Color(0.101960786, 0.019607844, 0.019607844, 1)
 
 [node name="GoldBorder" type="ReferenceRect" parent="." unique_id=1410324612]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +105,6 @@ label_settings = SubResource("LabelSettings_rsi76")
 horizontal_alignment = 1
 
 [node name="Grid" type="GridContainer" parent="MenuUI/VBox" unique_id=232802333]
-custom_minimum_size = Vector2(300, 80)
 layout_mode = 2
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
@@ -104,24 +114,40 @@ columns = 2
 custom_minimum_size = Vector2(300, 80)
 layout_mode = 2
 focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("4_ay62c")
+theme_override_styles/pressed = ExtResource("5_3nv2j")
+theme_override_styles/hover = ExtResource("6_3gpu8")
 text = "🎰  SKUTTER"
 
 [node name="BtnParlay" type="Button" parent="MenuUI/VBox/Grid" unique_id=1144418794]
 custom_minimum_size = Vector2(300, 80)
 layout_mode = 2
 focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("4_ay62c")
+theme_override_styles/pressed = ExtResource("5_3nv2j")
+theme_override_styles/hover = ExtResource("6_3gpu8")
 text = "🏀 PARLAY"
 
 [node name="BtnRoulette" type="Button" parent="MenuUI/VBox/Grid" unique_id=1826530672]
 custom_minimum_size = Vector2(300, 80)
 layout_mode = 2
 focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("4_ay62c")
+theme_override_styles/pressed = ExtResource("5_3nv2j")
+theme_override_styles/hover = ExtResource("6_3gpu8")
 text = "🎡 ROULETTE"
 
 [node name="BtnBingo" type="Button" parent="MenuUI/VBox/Grid" unique_id=497347355]
 custom_minimum_size = Vector2(300, 80)
 layout_mode = 2
 focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("4_ay62c")
+theme_override_styles/pressed = ExtResource("5_3nv2j")
+theme_override_styles/hover = ExtResource("6_3gpu8")
 text = "🎱 BINGO"
 
 [node name="Spacer" type="Control" parent="MenuUI/VBox" unique_id=1310940598]
@@ -132,6 +158,10 @@ layout_mode = 2
 custom_minimum_size = Vector2(300, 60)
 layout_mode = 2
 focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = ExtResource("4_ay62c")
+theme_override_styles/pressed = ExtResource("5_3nv2j")
+theme_override_styles/hover = ExtResource("6_3gpu8")
 text = "CASH OUT"
 
 [node name="WithdrawalOverlay" type="ColorRect" parent="." unique_id=961546944]
@@ -225,5 +255,6 @@ custom_minimum_size = Vector2(200, 60)
 layout_mode = 0
 offset_right = 200.0
 offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.6662356, 0.97591084, 0.48894763, 1)
 text = "CONFIRM EXIT
 "
