@@ -1,3 +1,4 @@
+# res://ui/DialogueBox.gd
 extends CanvasLayer
 
 @onready var speaker_label = $PanelContainer/VBoxContainer/SpeakerLabel
@@ -23,6 +24,15 @@ func _ready() -> void:
 	add_child(timer)
 	visible = false
 
+# Use this method exclusively moving forward to link UI to JSON data
+func play_by_id(dialogue_id: String, callback: Callable = Callable()) -> void:
+	var fetched_lines = DialogManager.get_dialogue(dialogue_id)
+	if fetched_lines.is_empty():
+		if callback.is_valid():
+			callback.call()
+		return
+	play(fetched_lines, callback)
+
 func play(new_lines: Array, callback: Callable = Callable()) -> void:
 	lines = new_lines
 	current_line = 0
@@ -32,8 +42,14 @@ func play(new_lines: Array, callback: Callable = Callable()) -> void:
 
 func _show_line(index: int) -> void:
 	var line = lines[index]
-	speaker_label.text = line.get("speaker", "")
-	full_text = line.get("text", "")
+	
+	if typeof(line) == TYPE_DICTIONARY:
+		speaker_label.text = line.get("speaker", "")
+		full_text = line.get("text", "")
+	else:
+		speaker_label.text = ""
+		full_text = str(line)
+		
 	displayed_text = ""
 	char_index = 0
 	is_typing = true
@@ -53,22 +69,18 @@ func _input(event: InputEvent) -> void:
 	if not visible:
 		return
 		
-	# Check for left mouse click OR the 'E' key (interact action)
 	var is_click = event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT
 	var is_interact_key = event.is_action_pressed("interact")
 	
 	if is_click or is_interact_key:
-		# Consume the input so other nodes don't use it
 		get_viewport().set_input_as_handled() 
 		
 		if is_typing:
-			# skip to full text
 			displayed_text = full_text
 			dialogue_text.text = full_text
 			is_typing = false
 			timer.stop()
 		else:
-			# advance to next line
 			current_line += 1
 			if current_line < lines.size():
 				_show_line(current_line)

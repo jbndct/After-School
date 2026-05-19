@@ -9,20 +9,7 @@ extends Node2D
 var player_in_interact_zone: bool = false
 var player_at_door: bool = false
 
-var room_dialogue = {
-	"morning": [
-		"3,000 pesos. Ito na lang ang laman ng wallet ko.",
-		"15,000 ang tuition. Kung papasa ako sa scholarship exam mamaya, may 5,000 ako.",
-		"Tapos makukuha ko mamayang gabi yung 7,000 na sweldo ko para sa dalawang linggong shift.",
-		"Saktong 15,000. Pambayad lang talaga. Saktong zero ang maiiwan para makakain ako bukas.",
-		"Napanood ko sa vlog ni idol kagabi, nanalo daw siya ng 10k sa SugalHub habang naka-tambay lang. Nakaka-tempt subukan para lang magkaroon ng breathing room."
-	],
-	"night": [] 
-}
-
 func _ready() -> void:
-	_setup_night_dialogue()
-	
 	if RunState.previous_location == "street":
 		player.global_position.x = 100 
 		
@@ -34,41 +21,24 @@ func _ready() -> void:
 	
 	update_objectives()
 
-func _setup_night_dialogue() -> void:
-	var night_lines: Array[String] = []
-	night_lines.append("*Phone buzzes*")
-	
-	if RunState.scholarship_passed:
-		night_lines.append("SMS: Congratulations, your scholarship application is approved. You have officially been granted ₱5,000.")
-		night_lines.append("Salamat. May 5k na 'ko. Idagdag ko yung 7k na sweldo mamaya, saktong 15k na.")
-		night_lines.append("Mababayaran ko yung tuition... pero paano ako bukas? Nakakapagod na 'tong saktong-sakto lagi.")
-	else:
-		night_lines.append("SMS: We regret to inform you that you did not pass the scholarship exam.")
-		night_lines.append("...Wala na. Kahit makuha ko pa yung 7k na sweldo ko mamaya, kulang na kulang ang pera ko.")
-		night_lines.append("...Kailangan ko ba sumugal para sa kinabukasan ko?")
-		
-	night_lines.append("Kailangan ko nang mag-log in sa shift. Sobrang nakaka-bore yung routine na 'to, pero kailangan.")
-	room_dialogue["night"] = night_lines
-
 func update_objectives() -> void:
 	var phase = RunState.current_phase
 	var dialogue_id = "room_" + phase
 	var arrow = player.get_node_or_null("TutorialArrow")
 	
 	if not RunState.completed_dialogues.has(dialogue_id):
-		objective_label.text = "Objective: Clear my head first (Interact with desk/bed)."
+		objective_label.text = DialogManager.get_text("obj_room_clear_head")
 		if arrow: arrow.set_target($InteractableItem)
 	else:
 		if phase == "morning":
-			objective_label.text = "Objective: Head to school for the exam."
+			objective_label.text = DialogManager.get_text("obj_room_to_school")
 			if arrow: arrow.set_target($ExitDoor)
 		elif phase == "night":
-			# BUG FIX: Check if work is done
 			if RunState.has_meta("work_shift_done"):
-				objective_label.text = "Objective: Shift's over. Head to the door to end the day."
+				objective_label.text = DialogManager.get_text("obj_room_end_day")
 				if arrow: arrow.set_target($ExitDoor)
 			else:
-				objective_label.text = "Objective: Open laptop to start work shift."
+				objective_label.text = DialogManager.get_text("obj_room_start_work")
 				if arrow: arrow.set_target($InteractableItem)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -84,9 +54,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			var dialogue_id = "room_" + phase
 			
 			if RunState.completed_dialogues.has(dialogue_id):
-				# BUG FIX: Prevent leaving if work isn't done at night
 				if phase == "night" and not RunState.has_meta("work_shift_done"):
-					objective_label.text = "I need to finish my shift first."
+					objective_label.text = DialogManager.get_text("warn_room_finish_shift")
 					await get_tree().create_timer(2.0).timeout
 					update_objectives()
 					return
@@ -95,7 +64,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if arrow: arrow.set_target(null)
 				SceneManager.advance_story("room")
 			else:
-				objective_label.text = "I shouldn't leave until I clear my head."
+				objective_label.text = DialogManager.get_text("warn_room_clear_head")
 				await get_tree().create_timer(2.0).timeout
 				update_objectives()
 
@@ -103,16 +72,19 @@ func trigger_interaction() -> void:
 	var phase = RunState.current_phase
 	var dialogue_id = "room_" + phase
 	
-	if not RunState.completed_dialogues.has(dialogue_id) and room_dialogue.has(phase):
+	if not RunState.completed_dialogues.has(dialogue_id):
 		if player and "current_state" in player:
 			player.current_state = player.State.LOCKED
-		var lines: Array[String] = []
-		lines.assign(room_dialogue[phase])
-		DialogManager.start_dialog(player.global_position, lines)
+			
+		var json_id = "room_morning"
+		if phase == "night":
+			json_id = "room_night_passed" if RunState.scholarship_passed else "room_night_failed"
+			
+		DialogManager.start_world_dialog(json_id, player.global_position)
 	else:
 		if phase == "night":
 			if RunState.has_meta("work_shift_done"):
-				objective_label.text = "I'm done working for today. Time to sleep/leave."
+				objective_label.text = DialogManager.get_text("warn_room_done_working")
 				await get_tree().create_timer(2.0).timeout
 				update_objectives()
 			else:
@@ -120,7 +92,7 @@ func trigger_interaction() -> void:
 				if arrow: arrow.set_target(null)
 				SceneManager.load_scene("work")
 		elif phase == "morning":
-			objective_label.text = "I already thought about this. I should head out."
+			objective_label.text = DialogManager.get_text("warn_room_already_thought")
 			await get_tree().create_timer(2.0).timeout
 			update_objectives()
 
