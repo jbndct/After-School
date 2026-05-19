@@ -1,0 +1,167 @@
+[gd_scene format=3 uid="uid://da2tajqxweo2e"]
+
+[ext_resource type="Script" uid="uid://bgd426gjm6hcv" path="res://scripts/sugal_parlay.gd" id="1_jsgvo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kaa0n"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kaa0n"]
+font_size = 32
+font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jsgvo"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jsgvo"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nqd7d"]
+bg_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_nqd7d"]
+font_size = 32
+
+[node name="SugalParlay" type="Control" unique_id=170001609]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jsgvo")
+
+[node name="Background" type="ColorRect" parent="." unique_id=987127387]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06666667, 0.011764706, 0.011764706, 1)
+
+[node name="MainContainer" type="PanelContainer" parent="." unique_id=86202106]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kaa0n")
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer" unique_id=331164532]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="TopBar" type="HBoxContainer" parent="MainContainer/VBox" unique_id=1426716868]
+layout_mode = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="MainContainer/VBox/TopBar" unique_id=1060873837]
+layout_mode = 2
+text = "🏀 PARLAY 🏀 
+"
+label_settings = SubResource("LabelSettings_kaa0n")
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="MainContainer/VBox/TopBar" unique_id=761820962]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnBack" type="Button" parent="MainContainer/VBox/TopBar" unique_id=1841584554]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "LOBBY"
+
+[node name="DraftPhase" type="HBoxContainer" parent="MainContainer/VBox" unique_id=1454647615]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MatchupsList" type="VBoxContainer" parent="MainContainer/VBox/DraftPhase" unique_id=746506932]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="BetSlip" type="PanelContainer" parent="MainContainer/VBox/DraftPhase" unique_id=468290217]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jsgvo")
+
+[node name="SlipVBox" type="VBoxContainer" parent="MainContainer/VBox/DraftPhase/BetSlip" unique_id=1048075426]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SlipHeader" type="Label" parent="MainContainer/VBox/DraftPhase/BetSlip/SlipVBox" unique_id=576741417]
+layout_mode = 2
+text = "BET SLIP"
+horizontal_alignment = 1
+
+[node name="SelectedTeams" type="Label" parent="MainContainer/VBox/DraftPhase/BetSlip/SlipVBox" unique_id=1410458559]
+layout_mode = 2
+text = "0/5 Selected"
+horizontal_alignment = 1
+
+[node name="OddsLabel" type="Label" parent="MainContainer/VBox/DraftPhase/BetSlip/SlipVBox" unique_id=106198393]
+layout_mode = 2
+text = "Total Odds: 1.00x"
+horizontal_alignment = 1
+
+[node name="BetDropdown" type="OptionButton" parent="MainContainer/VBox/DraftPhase/BetSlip/SlipVBox" unique_id=1190009380]
+layout_mode = 2
+
+[node name="PayoutLabel" type="Label" parent="MainContainer/VBox/DraftPhase/BetSlip/SlipVBox" unique_id=612065045]
+layout_mode = 2
+text = "To Win: ₱0"
+horizontal_alignment = 1
+
+[node name="BtnLockIn" type="Button" parent="MainContainer/VBox/DraftPhase/BetSlip/SlipVBox" unique_id=33867280]
+layout_mode = 2
+text = "LOCK IN BET"
+
+[node name="SimPhase" type="VBoxContainer" parent="MainContainer/VBox" unique_id=733992964]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TimerLabel" type="Label" parent="MainContainer/VBox/SimPhase" unique_id=946571844]
+layout_mode = 2
+text = "LIVE: 15.0s"
+label_settings = SubResource("LabelSettings_jsgvo")
+horizontal_alignment = 1
+
+[node name="LiveGamesList" type="VBoxContainer" parent="MainContainer/VBox/SimPhase" unique_id=704248780]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BoostContainer" type="CenterContainer" parent="MainContainer/VBox/SimPhase" unique_id=263811450]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="BtnBoost" type="Button" parent="MainContainer/VBox/SimPhase/BoostContainer" unique_id=276588110]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_nqd7d")
+text = "⚡ MOMENTUM BOOST: ₱50"
+
+[node name="ResultLabel" type="Label" parent="MainContainer/VBox/SimPhase" unique_id=1165102438]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_nqd7d")
+horizontal_alignment = 1
