@@ -29,6 +29,8 @@ func _ready() -> void:
 		DialogManager.dialog_finished.connect(_on_dialogue_finished)
 		
 	setup_street_state()
+	
+	AudioManager.play_bgm("bgm_hub")
 
 func setup_street_state() -> void:
 	var phase = RunState.current_phase

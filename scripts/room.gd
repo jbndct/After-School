@@ -20,6 +20,8 @@ func _ready() -> void:
 		DialogManager.dialog_finished.connect(_on_dialogue_finished)
 	
 	update_objectives()
+	
+	AudioManager.play_bgm("bgm_hub")
 
 func update_objectives() -> void:
 	var phase = RunState.current_phase

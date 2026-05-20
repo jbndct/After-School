@@ -8,15 +8,22 @@ extends Node
 var active_bgm_player = 1
 var current_track_path: String = ""
 
+# Helper to find the correct file extension
+func _get_valid_path(base_path: String) -> String:
+	if ResourceLoader.exists(base_path + ".ogg"): return base_path + ".ogg"
+	if ResourceLoader.exists(base_path + ".wav"): return base_path + ".wav"
+	if ResourceLoader.exists(base_path + ".mp3"): return base_path + ".mp3"
+	return ""
+
 func play_bgm(track_name: String) -> void:
-	var path = "res://assets/audio/bgm/" + track_name + ".ogg"
+	var path = _get_valid_path("res://assets/audio/bgm/" + track_name)
 	
-	if current_track_path == path:
-		return # Do not restart the track if it's already playing
-		
-	if not ResourceLoader.exists(path):
-		push_error("AUDIO MANAGER: BGM track missing at " + path)
+	if path == "":
+		push_error("AUDIO MANAGER: BGM track missing for " + track_name)
 		return
+		
+	if current_track_path == path:
+		return 
 		
 	current_track_path = path
 	var stream = load(path)
@@ -35,9 +42,9 @@ func play_bgm(track_name: String) -> void:
 	active_bgm_player = 2 if active_bgm_player == 1 else 1
 
 func play_sfx(sfx_name: String) -> void:
-	var path = "res://assets/audio/sfx/" + sfx_name + ".ogg"
-	if ResourceLoader.exists(path):
-		# Spawns a temporary audio player so multiple SFX can overlap
+	var path = _get_valid_path("res://assets/audio/sfx/" + sfx_name)
+	
+	if path != "":
 		var temp_player = AudioStreamPlayer.new()
 		temp_player.stream = load(path)
 		temp_player.bus = "SFX"
@@ -45,9 +52,4 @@ func play_sfx(sfx_name: String) -> void:
 		temp_player.play()
 		temp_player.finished.connect(temp_player.queue_free)
 	else:
-		push_error("AUDIO MANAGER: SFX missing at " + path)
-
-# --- GLOBAL TRIGGERS ---
-# You can call these anywhere in your project like this:
-# AudioManager.play_bgm("bgm_sugal")
-# AudioManager.play_sfx("sfx_ui_click")
+		push_error("AUDIO MANAGER: SFX missing for " + sfx_name)

@@ -40,6 +40,8 @@ func _ready() -> void:
 	
 	withdrawal_overlay.hide()
 	show_menu()
+	
+	AudioManager.play_bgm("bgm_sugal")
 
 func _setup_button_connections() -> void:
 	btn_slots.pressed.connect(_on_game_selected.bind("res://scenes/sugal_slots.tscn"))
