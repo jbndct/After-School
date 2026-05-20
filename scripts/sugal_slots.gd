@@ -44,12 +44,13 @@ func _setup_grid() -> void:
 func _setup_ui() -> void:
 	for amount in bet_amounts:
 		bet_dropdown.add_item("₱" + str(amount))
-	
-	# Set default to index 1 (₱100)
 	bet_dropdown.select(1)
 	current_bet = bet_amounts[1]
 	
-	bet_dropdown.item_selected.connect(func(idx): current_bet = bet_amounts[idx])
+	bet_dropdown.item_selected.connect(func(idx): 
+		current_bet = bet_amounts[idx]
+		AudioManager.play_sfx("sfx_ui_click")
+	)
 	btn_spin.pressed.connect(_on_spin_pressed)
 	btn_back.pressed.connect(_on_back_pressed)
 
@@ -60,22 +61,23 @@ func get_cell_pos(col: int, row: int) -> Vector2:
 	return Vector2(col * (CELL_SIZE + GAP), row * (CELL_SIZE + GAP))
 
 func _on_back_pressed() -> void:
+	AudioManager.play_sfx("sfx_ui_click")
 	if is_spinning: return
-	if hub_controller:
-		hub_controller.return_to_menu()
+	if hub_controller: hub_controller.return_to_menu()
 
 func _on_spin_pressed() -> void:
 	if is_spinning: return
 	if RunState.money < current_bet:
+		AudioManager.play_sfx("sfx_error_buzz")
 		win_label.text = "INSUFFICIENT FUNDS"
 		win_label.add_theme_color_override("font_color", Color.RED)
 		return
 		
+	AudioManager.play_sfx("sfx_slot_spin")
 	RunState.money -= current_bet
 	_update_balance_display()
 	
-	if hub_controller:
-		hub_controller.increment_play_count()
+	if hub_controller: hub_controller.increment_play_count()
 		
 	is_spinning = true
 	spin_total_win = 0
@@ -84,7 +86,6 @@ func _on_spin_pressed() -> void:
 	btn_spin.disabled = true
 	btn_back.disabled = true
 	bet_dropdown.disabled = true
-	
 	_clear_board()
 
 func _clear_board() -> void:
@@ -105,59 +106,44 @@ func _clear_board() -> void:
 			
 	_drop_new_symbols()
 
-# --- PSYCHOLOGICAL RIGGING & DROP ---
 func _drop_new_symbols() -> void:
 	var rtp = hub_controller.get_rigging_rtp() if hub_controller else 1.0
 	var force_win = rtp > 1.0
 	var force_loss = rtp < 1.0
-	
 	var symbol_pool = _generate_rigged_pool(force_win, force_loss)
-	
 	var drop_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	for c in range(COLS):
 		for r in range(ROWS):
 			var sym = symbol_pool.pop_front()
 			var lbl = _create_symbol_label(c, r, sym)
 			lbl.position.y -= 500 + (r * 50)
-			drop_tween.tween_property(lbl, "position", get_cell_pos(c, r), 0.5 + (c * 0.1)) # Cascading fall effect
+			drop_tween.tween_property(lbl, "position", get_cell_pos(c, r), 0.5 + (c * 0.1)) 
 	
 	await drop_tween.finished
 	await _process_cascades()
 
 func _generate_rigged_pool(force_win: bool, force_loss: bool) -> Array:
 	var pool = []
-	var total_slots = COLS * ROWS # 30
-	
+	var total_slots = COLS * ROWS 
 	if force_loss:
-		# NEAR MISS GENERATOR: Create exactly 7 of one symbol, 6 of another. Total chaos for rest.
 		var tease_sym = SYMBOLS.pick_random()
 		var secondary_sym = SYMBOLS.pick_random()
 		while secondary_sym == tease_sym: secondary_sym = SYMBOLS.pick_random()
-		
 		for i in range(7): pool.append(tease_sym)
 		for i in range(6): pool.append(secondary_sym)
-		
 		var safe_symbols = SYMBOLS.duplicate()
 		safe_symbols.erase(tease_sym)
-		
 		while pool.size() < total_slots:
 			var rand_sym = safe_symbols.pick_random()
-			# Ensure we don't accidentally create an 8-match
-			if pool.count(rand_sym) < 7: 
-				pool.append(rand_sym)
-	
+			if pool.count(rand_sym) < 7: pool.append(rand_sym)
 	elif force_win:
-		# GUARANTEED HIT: Inject 8 to 11 of a single symbol
 		var win_sym = SYMBOLS.pick_random()
 		var win_count = randi_range(8, 11)
 		for i in range(win_count): pool.append(win_sym)
 		while pool.size() < total_slots:
 			pool.append(SYMBOLS.pick_random())
-			
 	else:
-		# True Random
 		for i in range(total_slots): pool.append(SYMBOLS.pick_random())
-		
 	pool.shuffle()
 	return pool
 
@@ -168,12 +154,9 @@ func _create_symbol_label(col: int, row: int, sym: String) -> Label:
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	lbl.add_theme_font_size_override("font_size", 42)
-	
-	# Premium shadow for symbols
 	lbl.add_theme_color_override("font_shadow_color", Color(0,0,0,0.8))
 	lbl.add_theme_constant_override("shadow_offset_x", 2)
 	lbl.add_theme_constant_override("shadow_offset_y", 4)
-	
 	lbl.position = get_cell_pos(col, row)
 	game_board.add_child(lbl)
 	grid_nodes[col][row] = lbl
@@ -192,8 +175,8 @@ func _process_cascades() -> void:
 		if counts[sym] >= WIN_THRESHOLD: winning.append(sym)
 
 	if winning.size() > 0:
+		AudioManager.play_sfx("sfx_scatter_pop")
 		for sym in winning: 
-			# Multiplier based on how many extra symbols they got
 			var overage = counts[sym] - WIN_THRESHOLD
 			var payout = int(current_bet * (1.5 + (overage * 0.5)))
 			spin_total_win += payout
@@ -201,7 +184,6 @@ func _process_cascades() -> void:
 		win_label.text = "SCATTER HIT! Win: ₱" + str(spin_total_win)
 		win_label.add_theme_color_override("font_color", Color("#d4af37"))
 		
-		# Animate the pop
 		var pop_tween = create_tween().set_parallel(true)
 		for c in range(COLS):
 			for r in range(ROWS):
@@ -219,7 +201,6 @@ func _process_cascades() -> void:
 					
 		await _apply_gravity()
 		await _process_cascades()
-		
 	else:
 		_end_spin()
 
@@ -241,7 +222,7 @@ func _apply_gravity() -> void:
 		
 		for i in range(empty):
 			var new_r = (empty - 1) - i
-			var sym = SYMBOLS.pick_random() # New symbols falling in are true random
+			var sym = SYMBOLS.pick_random() 
 			var lbl = _create_symbol_label(c, new_r, sym)
 			lbl.position.y -= 400 + (i * 60)
 			gravity_tween.tween_property(lbl, "position", get_cell_pos(c, new_r), 0.35)
@@ -253,6 +234,7 @@ func _apply_gravity() -> void:
 
 func _end_spin() -> void:
 	if spin_total_win > 0:
+		AudioManager.play_sfx("sfx_coin_fountain")
 		RunState.money += spin_total_win
 		win_label.text = "TOTAL WIN: ₱" + str(spin_total_win)
 		win_label.add_theme_color_override("font_color", Color("#00ff00"))

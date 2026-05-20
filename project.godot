@@ -15,6 +15,10 @@ run/main_scene="uid://dlsn3b4a0k2lx"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://7a63qwvcan4o"
+
 [autoload]
 
 GameState="*uid://dq6h8fhliiol7"
@@ -23,6 +27,8 @@ EventBus="*uid://buv372xdvsrhw"
 RunState="*uid://cvda2bjbofut1"
 SceneManager="*uid://drjd1h8ywrv6r"
 SettingsMenu="*uid://c63bdg0dakirq"
+WithdrawalManager="*uid://bq3stljqcrkuj"
+AudioManager="*uid://c2ee0o44tx6vh"
 
 [display]
 

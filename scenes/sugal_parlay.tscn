@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://da2tajqxweo2e"]
 
-[ext_resource type="Script" uid="uid://bgd426gjm6hcv" path="res://scripts/sugal_parlay.gd" id="1_jsgvo"]
+[ext_resource type="Script" uid="uid://bgd426gjm6hcv" path="res://scripts/sugal_parlay.gd" id="1_f61xa"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kaa0n"]
 content_margin_left = 20.0
@@ -46,7 +46,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jsgvo")
+script = ExtResource("1_f61xa")
 
 [node name="Background" type="ColorRect" parent="." unique_id=987127387]
 layout_mode = 1
