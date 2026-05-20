@@ -9,7 +9,11 @@ extends CanvasLayer
 @onready var menu_button = find_child("MenuButton", true, false)
 @onready var exit_button = find_child("ExitButton", true, false)
 
+
 var master_bus_index: int
+var master_bus_idx = AudioServer.get_bus_index("Master")
+var bgm_bus_idx = AudioServer.get_bus_index("BGM")
+var sfx_bus_idx = AudioServer.get_bus_index("SFX")
 
 func _ready() -> void:
 	# Final check. If this fails, the node simply doesn't exist in the scene tree.
@@ -74,3 +78,20 @@ func _on_menu_pressed() -> void:
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
+	
+
+
+# Example of how a slider signal should alter the volume
+func _on_master_slider_value_changed(value: float) -> void:
+	# value should be between 0.0 and 1.0
+	# linear_to_db converts a 0-1 percentage into audio decibels
+	AudioServer.set_bus_volume_db(master_bus_idx, linear_to_db(value))
+	# Optional: Mute completely if dragged to 0
+	AudioServer.set_bus_mute(master_bus_idx, value <= 0.01)
+
+func _on_bgm_slider_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(bgm_bus_idx, linear_to_db(value))
+
+func _on_sfx_slider_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(sfx_bus_idx, linear_to_db(value))
+	AudioManager.play_sfx("sfx_ui_click") # Play a test sound when dragging

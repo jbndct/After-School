@@ -7,6 +7,10 @@ enum State { FREE, LOCKED }
 var current_state: State = State.FREE
 
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var anim_sprite = $AnimatedSprite2D
+@onready var footstep_sfx = $FootstepSFX
+var walk_concrete = preload("res://assets/audio/sfx/sfx_walk_concrete.ogg")
+var walk_wood = preload("res://assets/audio/sfx/sfx_walk_wood.ogg")
 
 func _ready() -> void:
 	up_direction = Vector2.UP
@@ -14,6 +18,31 @@ func _ready() -> void:
 	# Listen to EventBus for state shifting
 	EventBus.sugalhub_opened.connect(_on_sugalhub_opened)
 	EventBus.sugalhub_closed.connect(_on_sugalhub_closed)
+	
+	anim_sprite.frame_changed.connect(_on_frame_changed)
+
+func _on_frame_changed():
+	var anim_name = anim_sprite.animation
+	var current_frame = anim_sprite.frame
+	
+	# Only trigger sounds during walking animations
+	if anim_name.begins_with("walk_") or anim_name.begins_with("player_walk"):
+		# Assuming a standard 4-frame walk cycle where feet hit the ground on frames 1 and 3
+		if current_frame == 1 or current_frame == 3:
+			_play_footstep()
+
+func _play_footstep():
+	var current_scene = get_tree().current_scene.name.to_lower()
+	
+	# Swap sound based on the map
+	if current_scene.begins_with("room"):
+		footstep_sfx.stream = walk_wood
+	else:
+		footstep_sfx.stream = walk_concrete
+		
+	# Randomize pitch slightly so footsteps don't sound identical like a machine gun
+	footstep_sfx.pitch_scale = randf_range(0.85, 1.15)
+	footstep_sfx.play()
 
 func _physics_process(delta: float) -> void:
 	# 1. Gravity (Always applies, even if locked)
