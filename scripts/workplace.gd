@@ -21,12 +21,11 @@ var current_input_index: int = 0
 var mistakes_this_ticket: int = 0
 
 var escalating_phrases = [
-	["Password reset sent.", "How can I help?", "Account verified."], 
-	["Let me check your billing.", "Please hold for a moment.", "Your refund is processed."], 
-	["I apologize for the inconvenience today.", "Your refund will reflect in 3 days."], 
-	["I understand your frustration. I am escalating this.", "To reset your password, click the link sent to your email."], 
-	["We are currently experiencing a system outage. Engineers are on it.", "Thank you for calling support. Can I have your 12-digit account number?"] 
-]
+	["Naiproseso na namin ang iyong kahilingan.", "Paano kita matutulungan?", "Naivalidate na ang iyong account."],
+	["Titingnan ko ang iyong dapat bang bayaran.", "Sandali lang po, hinihintay ko.", "Naiproseso na po ang dapat na ibabalik na bayad sa inyo."],
+	["Humihingi po ako ng paumanhin sa abala na ito.", "Malalaman mo ang status ng iyong refund sa loob ng tatlong araw."],
+	["Naiintindihan ko po ang iyong pagkabigo. Iniimbestigahan ko na ito.", "Para i-reset ang iyong password, pindutin ang link na ipinadala sa iyong email."],
+	["Kasalukuyan kaming nakakaranas ng pagkabigo sa sistema. Inaayos na ito ng aming team.", "Salamat sa pagtawag sa suporta. Maaari ko bang makuha ang iyong labindalawang digit na numero ng account?"] ]
 
 func _ready() -> void:
 	AudioManager.play_bgm("bgm_work")
@@ -94,7 +93,7 @@ func _update_display() -> void:
 	typing_display.text = bbcode
 
 func _update_header() -> void:
-	timer_label.text = "SYS_TIME: %.2fs" % max(time_left, 0.0)
+	timer_label.text = "TIME: %.2fs" % max(time_left, 0.0)
 	ticket_label.text = "TICKETS: %d/%d" % [tickets_completed, MAX_TICKETS]
 
 func _trigger_error_flash() -> void:

@@ -34,19 +34,19 @@ func _evaluate_run() -> void:
 	
 	if (not RunState.scholarship_passed or not RunState.job_completed) and not RunState.gambling_attempted:
 		ending_title = "[center]ENDING D: Mahirap maging mahirap.[/center]"
-		ending_body = "[center]Naka-kandado na ang gate. Wala ang pangalan ni Ador sa listahan ng mga ga-graduate. Kinapos siya. Ang 3,000 niya, pinagsama sa kakarampot na kinita, ay hindi umabot sa hinihinging 15,000. Hindi dahil tamad siya, kundi dahil kahit anong kayod niya, sadyang hindi sapat ang ibinibigay ng sistema. Tumalikod si Ador. Wala nang galit, tanging mabigat na pagod na lang. Isang tahimik na pagtanggap na mayroon talagang mga naiiwan sa dilim.[/center]"
+		ending_body = "[center]Naka-kandado na ang gate. Wala ang pangalan ni Ador sa listahan — hindi dahil hindi siya nagsikap, kundi dahil ang sistema ay hindi dinisenyo para sa mga katulad niya. Ginawa niya ang lahat ng tamang bagay. Nag-aral. Nagtatrabaho. Hindi nagpadala. At hindi pa rin sapat. Tumalikod siya nang tahimik — walang luha, walang sigaw. Tanging yung uri ng pagod na hindi mapapawi ng tulog. Mayroon talagang mga taong ginagawa ang lahat ng tama, at naiiwanan pa rin. Ikaw — kung nasa katayuan mo si Ador, anong pagbabago sa labas niya ang sana ay nagawa mong baguhin?[/center]"
 		
 	elif RunState.scholarship_passed and RunState.job_completed and not RunState.gambling_attempted:
 		ending_title = "[center]ENDING A: Matuwid na daan. [/center]"
-		ending_body = "[center]Nasisilaw si Ador sa ilaw ng entablado. Naalala niya kung paanong ang 3,000 niya, ang 5,000 sa scholarship, at ang 7,000 sa dalawang linggong shift ay saktong umabot sa 15,000. Kinailangan niyang tiisin ang gutom at labanan ang tukso ng mga influencers na nangangako ng mabilis na pera para sa 'breathing room'. Nakatawid siya nang malinis, hindi nagpadala sa peer pressure, at nilabanan ang boredom ng paulit-ulit na hirap. Hawak niya ang diploma. Siya ang nanalo.[/center]"
+		ending_body = "[center]Natapos na. Hindi may putok ng paputok o malakas na palakpakan. Tahimik lang. Pero hawak ni Ador ang katibayan ng lahat ng araw na tiniis niya. Ang 3,000, ang 5,000, ang 7,000, bawat piso na pinaghandaan, hindi pinaglaruan. Maraming beses na itinanong ng utak niya kung may mas madaling daan. Ngayon, alam na niya ang sagot. Hindi ang pagiging perpekto ang nagpapanalo sa kanya, kundi ang hindi sumuko nang hindi pa tapos ang laban. Saan ka pupunta mula dito? [/center]"
 		
 	elif RunState.gambling_attempted:
 		if RunState.gambling_net_result >= 0:
 			ending_title = "[center]ENDING B: Paldo, Pero...[/center]"
-			ending_body = "[center]Umaapaw ang palakpakan. Mukha siyang success story. Nung gabing kailangan niya ng breathing room at nalamon siya ng boredom, nakinig siya sa paborito niyang vlogger at isinugal ang pera niya. Nanalo siya. Nabayaran ang 15,000 na tuition, at nakakain siya kinabukasan. Pero pagbalik niya sa upuan mula sa entablado, pasimpleng umiilaw ang screen ng phone niya sa ilalim ng toga. Bukas ang SugalHub. Hindi siya sinira ng app noon... pero alam niyang habambuhay na siyang nakakulong sa bitag ng pag-i-spin.[/center]"
+			ending_body = "[center]Umaapaw ang palakpakan. Nabayaran ang tuition. Nakakain siya kinabukasan. Sa mata ng lahat, natapos niya ang laban. Pero sa mga susunod na araw, pagkatapos ng lahat, binuksan niya muli ang app. Hindi dahil kailangan niya ng pera. Dahil gusto niyang maulit ang pakiramdam. Isang laro pa lang. Pero ang 'isa pa' ay naging sampung beses. Sampung beses ay naging gabi. At ang gabi ay naging ugali na hindi niya napansin na lumagkit sa kanya. Nagtapos nga si Ador ng pag-aaral. Pero hindi siya ang Ador na nagsimula. At hindi niya alam kung kailan eksaktong nawala yung bersyon niya na may kontrol pa. Ikaw ang pumili para sa kanya noon. Alam mo bang ganito ang magiging katapusan ng isang 'oo'? Ano ang gagawin mo kung mabibigyan ka ng pagkakataong muli?[/center]"
 		else:
 			ending_title = "[center]ENDING C: Saan nga ba ako patungo? [/center]"
-			ending_body = "[center]Naglakad si Ador sa entablado, pero parang tingga ang mga binti niya. Dahil sa inip, peer pressure, at paniniwala sa mga pekeng success stories ng mga influencers, isinugal niya ang perang nakalaan sana sa tuition. Natalo siya. Nasira ang saktong 15,000. Para makarating sa graduation, kinailangan niyang mangutang sa mga loan sharks. Pagtingin niya sa baba, nakita niya ang mga kaklase niyang nag-uudyok sa kanya noon. Hawak ni Ador ang diploma, pero ang tanging nasa isip niya ay kung paano niya babayaran ang libo-libong utang na sisira sa kinabukasan niya.[/center]"
+			ending_body = "[center]Natalo. Hindi lang ang pera — natalo rin ang bersyon ni Ador na naniniwala pa sa sarili niya. Dahil sa isang sandali ng inip at pag-asa sa maling bagay, nawasak ang pinaghandaan niyang buwan. Hindi siya masamang tao. Naliit lang siya sa tamang sandali, ng tamang ad, ng tamang pangako. Ngayon, nakatayo siya sa harap ng bukas na hindi niya inaasahan. Hindi malinaw kung saan patungo. Ikaw — kung ikaw ang pumili para sa kanya, anong nararamdaman mo ngayon?[/center]"
 
 	title_label.text = ending_title
 	story_text.text = ending_body
@@ -55,17 +55,20 @@ func _evaluate_run() -> void:
 
 func _setup_credits() -> void:
 	credits_text.text = """[center]
+
+[b]AFTER SCHOOL[/b]
+A CSMC221: Software Engineering 1 Final Project
+
 [b]TEAM[/b]
-Kirsten Gail Querubin
 John Benedict Baladia
+Kirsten Gail Querubin
 Arwen Fajardo
 
 [b]ADVOCACY[/b]
 Thousands of Filipino students work double shifts just to stay enrolled. 
 Predatory gambling apps target the desperate and the young. 
-Education is not a privilege — it is a right worth protecting.
+Education is not a privilege. It is a right worth protecting.
 
-#AlagangEskwela #LabanSaOnlineGambling
 [/center]"""
 
 func _process(delta: float) -> void:
