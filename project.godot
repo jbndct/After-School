@@ -23,6 +23,7 @@ EventBus="*uid://buv372xdvsrhw"
 RunState="*uid://cvda2bjbofut1"
 SceneManager="*uid://drjd1h8ywrv6r"
 SettingsMenu="*uid://c63bdg0dakirq"
+WithdrawalManager="*uid://bq3stljqcrkuj"
 
 [display]
 

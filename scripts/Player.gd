@@ -17,6 +17,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# 1. Gravity (Always applies, even if locked)
+	
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
@@ -29,6 +30,8 @@ func _physics_process(delta: float) -> void:
 			
 	# 3. Apply physics
 	move_and_slide()
+	
+	
 
 func handle_movement() -> void:
 	var direction = Input.get_axis("move_left", "move_right")

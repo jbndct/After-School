@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://bq3stljqcrkuj"]
+
+[ext_resource type="Script" uid="uid://bk4g5pmd3ws8v" path="res://scripts/withdrawal_manager.gd" id="1_avt16"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kav8y"]
+bg_color = Color(0.101960786, 0.019607844, 0.019607844, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.06666667, 0.06666667, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(1, 0, 0, 0.26666668)
+shadow_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_kav8y"]
+font_size = 32
+font_color = Color(1, 0.2, 0.2, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_avt16"]
+font_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_avt16"]
+bg_color = Color(0.039215688, 0.039215688, 0.039215688, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tqbxa"]
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.33333334, 0.33333334, 0.33333334, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="WithdrawalManager" type="CanvasLayer" unique_id=1103184655]
+layer = 100
+script = ExtResource("1_avt16")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1731232158]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="DangerBox" type="PanelContainer" parent="Overlay" unique_id=314289154]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kav8y")
+
+[node name="MarginContainer" type="MarginContainer" parent="Overlay/DangerBox" unique_id=1797034101]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBox" type="VBoxContainer" parent="Overlay/DangerBox/MarginContainer" unique_id=519018787]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Overlay/DangerBox/MarginContainer/VBox" unique_id=842698385]
+layout_mode = 2
+text = "WITHDRAWAL"
+label_settings = SubResource("LabelSettings_kav8y")
+horizontal_alignment = 1
+
+[node name="Thought" type="Label" parent="Overlay/DangerBox/MarginContainer/VBox" unique_id=80305309]
+layout_mode = 2
+text = "Ador: Namiss ko yung SugalHub, parang gusto ko maglaro... Kahit isa lang...."
+label_settings = SubResource("LabelSettings_avt16")
+autowrap_mode = 2
+
+[node name="BtnContainer" type="HBoxContainer" parent="Overlay/DangerBox/MarginContainer/VBox" unique_id=1101746463]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="BtnPlay" type="Button" parent="Overlay/DangerBox/MarginContainer/VBox/BtnContainer" unique_id=1296088586]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_avt16")
+text = "Maglaro"
+
+[node name="BtnResist" type="Button" parent="Overlay/DangerBox/MarginContainer/VBox/BtnContainer" unique_id=2051759716]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_tqbxa")
+text = "Pigilin"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=346405712]
