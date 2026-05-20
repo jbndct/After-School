@@ -13,16 +13,14 @@ var all_questions: Array = []
 var active_questions: Array = []
 var current_question_index: int = 0
 var score: int = 0
-var required_score: int = 7 # Passed 7 out of 10
+var required_score: int = 7 
 
 func setup_game() -> void:
+	AudioManager.play_bgm("bgm_scholarship")
 	minigame_id = "scholarship"
-	reward_amount = 5000 # The 5k stipend you mentioned earlier
-	
-	# Initial State: Hide Quiz, Show Tutorial
+	reward_amount = 5000 
 	paper_ui.hide()
 	tutorial_popup.show()
-	
 	start_button.pressed.connect(_on_start_pressed)
 	load_questions()
 
@@ -41,24 +39,20 @@ func load_questions() -> void:
 		push_error("Missing JSON file.")
 
 func _on_start_pressed() -> void:
+	AudioManager.play_sfx("sfx_ui_click")
 	tutorial_popup.hide()
 	paper_ui.show()
 	start_quiz()
 
 func start_quiz() -> void:
 	if all_questions.is_empty(): return
-	
-	# Randomize and strictly pick exactly 10 questions
 	all_questions.shuffle()
 	active_questions = all_questions.slice(0, 10)
-	
 	current_question_index = 0
 	score = 0
-	
 	_setup_option_connections()
 	update_score_display()
 	load_question(current_question_index)
-	
 	start_game()
 
 func _setup_option_connections() -> void:
@@ -77,7 +71,6 @@ func load_question(index: int) -> void:
 
 	var q_data = active_questions[index]
 	question_label.text = "Q" + str(index + 1) + ". " + q_data["question"]
-	
 	var buttons = options_container.get_children()
 	for i in range(buttons.size()):
 		if buttons[i] is Button:
@@ -85,13 +78,16 @@ func load_question(index: int) -> void:
 				buttons[i].text = q_data["options"][i]
 				buttons[i].show()
 			else:
-				buttons[i].hide() # Hide extra buttons if a question has fewer options
+				buttons[i].hide()
 
 func _on_option_pressed(selected_index: int) -> void:
 	var correct_index = int(active_questions[current_question_index]["answer_index"])
 	
 	if selected_index == correct_index:
+		AudioManager.play_sfx("sfx_correct_ding")
 		score += 1
+	else:
+		AudioManager.play_sfx("sfx_error_buzz")
 		
 	current_question_index += 1
 	update_score_display()
@@ -101,16 +97,16 @@ func update_score_display() -> void:
 	score_label.text = "Score: %d / 10" % score
 
 func finish_quiz() -> void:
-	# Hide options, show final results on the paper
 	options_container.hide() 
-	
 	if score >= required_score:
+		AudioManager.play_sfx("sfx_coin_fountain")
 		RunState.scholarship_passed = true
 		question_label.text = "EXAM COMPLETE\n\nFinal Score: %d / 10\n\nStatus: PASSED.\nStipend secured. Check your phone later." % score
 		question_label.add_theme_color_override("font_color", Color.DARK_GREEN)
 		await get_tree().create_timer(3.5).timeout
 		finish_game(true) 
 	else:
+		AudioManager.play_sfx("sfx_ear_ringing")
 		RunState.scholarship_passed = false
 		question_label.text = "EXAM COMPLETE\n\nFinal Score: %d / 10\n\nStatus: FAILED.\nScholarship denied. Without this, tuition is impossible..." % score
 		question_label.add_theme_color_override("font_color", Color.DARK_RED)

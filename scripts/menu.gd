@@ -1,6 +1,7 @@
+# res://scripts/menu.gd
 extends Node2D
 
-@onready var play_button = $PlayButton # Change path based on your scene tree
+@onready var play_button = $PlayButton 
 @onready var quit_button = $QuitButton 
 
 func _ready() -> void:
@@ -10,6 +11,8 @@ func _ready() -> void:
 		quit_button.pressed.connect(_on_quit_pressed)
 
 func _on_play_pressed() -> void:
+	AudioManager.play_sfx("sfx_ui_click")
+	
 	# THIS IS CRITICAL. Wipes all ending flags, sets phase to morning, sets money to 550.
 	RunState.reset_run() 
 	
@@ -17,4 +20,5 @@ func _on_play_pressed() -> void:
 	SceneManager.load_scene("room")
 
 func _on_quit_pressed() -> void:
+	AudioManager.play_sfx("sfx_ui_click")
 	get_tree().quit()

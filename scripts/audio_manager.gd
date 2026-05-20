@@ -3,27 +3,35 @@ extends Node
 
 @onready var bgm_player_1 = $BGMPlayer1
 @onready var bgm_player_2 = $BGMPlayer2
-@onready var sfx_player = $SFXPlayer
+# We are ignoring the manual $SFXPlayer node in the scene. 
+# We will generate a clean, fixed-size memory pool dynamically.
 
 var active_bgm_player = 1
 var current_track_path: String = ""
 
-# Helper to find the correct file extension
-func _get_valid_path(base_path: String) -> String:
-	if ResourceLoader.exists(base_path + ".ogg"): return base_path + ".ogg"
-	if ResourceLoader.exists(base_path + ".wav"): return base_path + ".wav"
-	if ResourceLoader.exists(base_path + ".mp3"): return base_path + ".mp3"
-	return ""
+const MAX_SFX_PLAYERS = 12
+var sfx_pool: Array[AudioStreamPlayer] = []
+var sfx_pool_index = 0
+
+func _ready() -> void:
+	# Pre-allocate our Audio Pool to prevent dynamic node leakage
+	for i in range(MAX_SFX_PLAYERS):
+		var p = AudioStreamPlayer.new()
+		p.bus = &"SFX"
+		add_child(p)
+		sfx_pool.append(p)
 
 func play_bgm(track_name: String) -> void:
-	var path = _get_valid_path("res://assets/audio/bgm/" + track_name)
+	# Strip extension if passed accidentally to prevent double extensions
+	var clean_name = track_name.get_basename()
+	var path = "res://assets/audio/bgm/" + clean_name + ".ogg"
 	
-	if path == "":
-		push_error("AUDIO MANAGER: BGM track missing for " + track_name)
-		return
-		
 	if current_track_path == path:
 		return 
+		
+	if not ResourceLoader.exists(path):
+		push_error("AUDIO MANAGER: BGM track missing at " + path)
+		return
 		
 	current_track_path = path
 	var stream = load(path)
@@ -42,14 +50,41 @@ func play_bgm(track_name: String) -> void:
 	active_bgm_player = 2 if active_bgm_player == 1 else 1
 
 func play_sfx(sfx_name: String) -> void:
-	var path = _get_valid_path("res://assets/audio/sfx/" + sfx_name)
+	# Strip extension to prevent .ogg.ogg or .wav.ogg traps
+	var clean_name = sfx_name.get_basename()
+	var base_path = "res://assets/audio/sfx/" + clean_name
 	
-	if path != "":
-		var temp_player = AudioStreamPlayer.new()
-		temp_player.stream = load(path)
-		temp_player.bus = "SFX"
-		add_child(temp_player)
-		temp_player.play()
-		temp_player.finished.connect(temp_player.queue_free)
+	var path = ""
+	# Check for .ogg first, fallback to .wav if it exists
+	if ResourceLoader.exists(base_path + ".ogg"):
+		path = base_path + ".ogg"
+	elif ResourceLoader.exists(base_path + ".wav"):
+		path = base_path + ".wav"
 	else:
-		push_error("AUDIO MANAGER: SFX missing for " + sfx_name)
+		push_error("AUDIO MANAGER: SFX missing at " + base_path)
+		return
+		
+	var stream: AudioStream = load(path)
+	
+	# Brutal memory override: If an OGG slipped through with Loop enabled, forcefully kill the loop
+	# so it doesn't hijack our Audio Pool voices forever.
+	if stream is AudioStreamOggVorbis:
+		stream.loop = false
+		
+	# Grab the next available player in the pool (Round-Robin assignment)
+	var player = sfx_pool[sfx_pool_index]
+	player.stream = stream
+	player.play()
+	
+	# Advance index and wrap around
+	sfx_pool_index = (sfx_pool_index + 1) % MAX_SFX_PLAYERS
+
+# --- GLOBAL TRIGGERS ---
+# You can call these anywhere in your project like this:
+# AudioManager.play_bgm("bgm_sugal")
+# AudioManager.play_sfx("sfx_ui_click")
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_SPACE:
+		print("DEBUG: Spacebar pressed. Firing test SFX...")
+		play_sfx("sfx_ui_click")

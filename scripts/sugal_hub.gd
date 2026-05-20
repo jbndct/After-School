@@ -25,6 +25,8 @@ var move_timer: Timer
 var active_game_instance: Node = null
 
 func _ready() -> void:
+	AudioManager.play_bgm("bgm_sugal")
+	
 	minigame_id = "sugal"
 	reward_amount = 0
 	is_active = true 
@@ -40,17 +42,13 @@ func _ready() -> void:
 	
 	withdrawal_overlay.hide()
 	show_menu()
-	
-	AudioManager.play_bgm("bgm_sugal")
 
 func _setup_button_connections() -> void:
 	btn_slots.pressed.connect(_on_game_selected.bind("res://scenes/sugal_slots.tscn"))
 	btn_parlay.pressed.connect(_on_game_selected.bind("res://scenes/sugal_parlay.tscn"))
 	btn_roulette.pressed.connect(_on_game_selected.bind("res://scenes/sugal_roulette.tscn"))
-	
 	btn_exit.pressed.connect(_on_cash_out_pressed)
 	
-	# Extravagant UI: Dynamic text color changes on press
 	var all_btns = [btn_slots, btn_parlay, btn_roulette, btn_exit]
 	for btn in all_btns:
 		btn.button_down.connect(func(): btn.add_theme_color_override("font_color", Color.BLACK))
@@ -67,26 +65,23 @@ func _setup_withdrawal_system() -> void:
 		if fake_btn is Button:
 			fake_btn.pressed.connect(_on_trap_button_pressed)
 
-# --- LUXURY UI ANIMATIONS ---
 func show_menu() -> void:
 	menu_ui.show()
 	menu_ui.modulate.a = 0.0
-	
 	var tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(menu_ui, "modulate:a", 1.0, 0.6)
 
-# --- MODULAR GAME LOADING ---
 func _on_game_selected(scene_path: String) -> void:
+	AudioManager.play_sfx("sfx_ui_click")
 	if ResourceLoader.exists(scene_path):
 		var game_scene = load(scene_path)
 		active_game_instance = game_scene.instantiate()
-		
 		if "hub_controller" in active_game_instance:
 			active_game_instance.hub_controller = self
-			
 		game_container.add_child(active_game_instance)
 		menu_ui.hide()
 	else:
+		AudioManager.play_sfx("sfx_error_buzz")
 		_shake_ui(menu_ui)
 
 func return_to_menu() -> void:
@@ -95,17 +90,11 @@ func return_to_menu() -> void:
 		active_game_instance = null
 	show_menu()
 
-# --- PSYCHOLOGY & RIGGING SYSTEM (Global Casino Math) ---
 func get_rigging_rtp() -> float:
 	var total_plays = RunState.get_meta("sugal_plays") if RunState.has_meta("sugal_plays") else 0
-	
-	# The exact narrative sequence: W, W, L, L, L, L, W, L
 	var pattern: Array[float] = [1.5, 1.2, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0]
-	
 	if total_plays < pattern.size():
 		return pattern[total_plays]
-		
-	# Complete drain after sequence
 	return 0.0 
 
 func increment_play_count() -> void:
@@ -113,8 +102,8 @@ func increment_play_count() -> void:
 	RunState.set_meta("sugal_plays", total_plays + 1)
 	RunState.gambling_attempted = true
 
-# --- WITHDRAWAL / EXIT SYSTEM ---
 func _on_cash_out_pressed() -> void:
+	AudioManager.play_sfx("sfx_ui_click")
 	if withdrawal_active: return
 	
 	required_exit_clicks = GameState.sugal_visits
@@ -129,10 +118,10 @@ func _on_cash_out_pressed() -> void:
 	menu_ui.hide()
 	withdrawal_overlay.show()
 	withdrawal_overlay.modulate.a = 0
+	AudioManager.play_sfx("sfx_heartbeat_fast")
 	
 	var tween = create_tween()
 	tween.tween_property(withdrawal_overlay, "modulate:a", 1.0, 0.3)
-	
 	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
 	_move_all_buttons()
 	move_timer.start()
@@ -145,6 +134,7 @@ func _move_all_buttons() -> void:
 			fake_btn.position = Vector2(randf_range(50, screen_size.x - 200), randf_range(100, screen_size.y - 100))
 
 func _on_moving_exit_pressed() -> void:
+	AudioManager.play_sfx("sfx_ui_click")
 	current_exit_clicks += 1
 	if current_exit_clicks >= required_exit_clicks: 
 		execute_exit()
@@ -154,6 +144,7 @@ func _on_moving_exit_pressed() -> void:
 		move_timer.start()
 
 func _on_trap_button_pressed() -> void:
+	AudioManager.play_sfx("sfx_error_buzz")
 	current_exit_clicks = 0
 	thought_label.text = "Ador: Just one more bet... maybe I can win it back."
 	_move_all_buttons()

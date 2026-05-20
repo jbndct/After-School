@@ -30,7 +30,7 @@ var is_simulating: bool = false
 var time_remaining: float = 15.0
 var live_bars: Array = []
 var rigged_to_lose: bool = false
-var heartbreaker_index: int = 4 # The last game on the list will be the trap
+var heartbreaker_index: int = 4 
 var has_boosted: bool = false
 
 func _ready() -> void:
@@ -65,29 +65,25 @@ func _generate_matchups() -> void:
 func _create_matchup_ui(idx: int, team_a: String, team_b: String, odd_a: float, odd_b: float) -> void:
 	var row = HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	
 	var btn_a = Button.new()
 	btn_a.text = team_a + " (" + str(odd_a) + "x)"
 	btn_a.custom_minimum_size = Vector2(250, 60)
-	
 	var lbl_vs = Label.new()
 	lbl_vs.text = " VS "
 	lbl_vs.add_theme_color_override("font_color", Color("#888888"))
-	
 	var btn_b = Button.new()
 	btn_b.text = team_b + " (" + str(odd_b) + "x)"
 	btn_b.custom_minimum_size = Vector2(250, 60)
-	
 	btn_a.pressed.connect(_on_pick_selected.bind(idx, team_a, odd_a, btn_a, btn_b))
 	btn_b.pressed.connect(_on_pick_selected.bind(idx, team_b, odd_b, btn_b, btn_a))
-	
 	row.add_child(btn_a)
 	row.add_child(lbl_vs)
 	row.add_child(btn_b)
 	matchups_list.add_child(row)
 
 func _on_pick_selected(match_idx: int, team_name: String, odd: float, active_btn: Button, inactive_btn: Button) -> void:
-	active_btn.modulate = Color("#d4af37") # Highlight gold
+	AudioManager.play_sfx("sfx_ui_click")
+	active_btn.modulate = Color("#d4af37") 
 	inactive_btn.modulate = Color("#ffffff")
 	selected_picks[match_idx] = {"team": team_name, "odd": odd}
 	_update_slip()
@@ -97,14 +93,13 @@ func _update_slip() -> void:
 	total_odds = 1.0
 	for pick in selected_picks.values():
 		total_odds *= pick["odd"]
-		
 	total_odds = snapped(total_odds, 0.01)
 	odds_label.text = "Total Odds: " + str(total_odds) + "x"
 	_on_bet_changed(bet_dropdown.selected)
-	
 	btn_lock_in.disabled = selected_picks.size() < 5
 
 func _on_bet_changed(idx: int) -> void:
+	AudioManager.play_sfx("sfx_ui_click")
 	current_bet = bet_amounts[idx]
 	var payout = int(current_bet * total_odds)
 	payout_label.text = "To Win: ₱" + str(payout)
@@ -117,19 +112,22 @@ func _on_bet_changed(idx: int) -> void:
 		if selected_picks.size() == 5: btn_lock_in.disabled = false
 
 func _on_back_pressed() -> void:
+	AudioManager.play_sfx("sfx_ui_click")
 	if is_simulating: return
 	if hub_controller: hub_controller.return_to_menu()
 
-# --- THE SWEAT & RIGGING ---
 func _on_lock_in_pressed() -> void:
-	if RunState.money < current_bet: return
+	if RunState.money < current_bet: 
+		AudioManager.play_sfx("sfx_error_buzz")
+		return
+		
+	AudioManager.play_sfx("sfx_ui_click")
+	AudioManager.play_sfx("sfx_tension_tick")
 	RunState.money -= current_bet
 	if hub_controller: hub_controller.increment_play_count()
 	
-	# Determine Fate
 	var rtp = hub_controller.get_rigging_rtp() if hub_controller else 1.0
 	rigged_to_lose = rtp < 1.0
-	
 	draft_phase.hide()
 	btn_back.disabled = true
 	sim_phase.show()
@@ -143,7 +141,6 @@ func _setup_live_bars() -> void:
 		var lbl = Label.new()
 		lbl.text = pick["team"]
 		lbl.custom_minimum_size = Vector2(150, 0)
-		
 		var bar = ProgressBar.new()
 		bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		bar.min_value = -20
@@ -151,16 +148,12 @@ func _setup_live_bars() -> void:
 		bar.value = 0
 		bar.show_percentage = false
 		bar.custom_minimum_size = Vector2(0, 30)
-		
-		# Apply premium colors based on tug-of-war
 		var sb_bg = StyleBoxFlat.new()
-		sb_bg.bg_color = Color("#ff3333") # Red if losing
+		sb_bg.bg_color = Color("#ff3333") 
 		bar.add_theme_stylebox_override("background", sb_bg)
-		
 		var sb_fill = StyleBoxFlat.new()
-		sb_fill.bg_color = Color("#33ff33") # Green if winning
+		sb_fill.bg_color = Color("#33ff33") 
 		bar.add_theme_stylebox_override("fill", sb_fill)
-		
 		hbox.add_child(lbl)
 		hbox.add_child(bar)
 		live_games_list.add_child(hbox)
@@ -172,23 +165,19 @@ func _process(delta: float) -> void:
 	time_remaining -= delta
 	timer_label.text = "LIVE: " + str(max(0, snapped(time_remaining, 0.1))) + "s"
 	
-	# Simulate scores jumping around
 	if int(time_remaining * 10) % 5 == 0:
 		for i in range(5):
 			var bar = live_bars[i]
 			var is_trap = (rigged_to_lose and i == heartbreaker_index)
-			
 			if is_trap:
-				# Trap game: Stays tied or slightly losing to induce panic
 				if time_remaining > 5.0:
 					bar.value = move_toward(bar.value, randf_range(-5, 2), 2)
 				elif time_remaining > 1.0 and not has_boosted:
-					bar.value = -8 # Start losing badly
+					bar.value = -8 
 					boost_container.show()
 				elif time_remaining <= 0.1:
-					bar.value = -20 # Buzzer beater loss
+					bar.value = -20 
 			else:
-				# Other games win comfortably to build false hope
 				bar.value = move_toward(bar.value, randf_range(5, 15), 3)
 
 	if time_remaining <= 0:
@@ -196,11 +185,10 @@ func _process(delta: float) -> void:
 
 func _on_boost_pressed() -> void:
 	if RunState.money < 50: return
+	AudioManager.play_sfx("sfx_correct_ding")
 	RunState.money -= 50
 	has_boosted = true
 	boost_container.hide()
-	
-	# Fake out the player by giving them the lead temporarily
 	var trap_bar = live_bars[heartbreaker_index]
 	var tween = create_tween().set_trans(Tween.TRANS_BOUNCE)
 	tween.tween_property(trap_bar, "value", 5, 0.5)
@@ -209,16 +197,17 @@ func _end_simulation() -> void:
 	is_simulating = false
 	btn_back.disabled = false
 	boost_container.hide()
-	
 	var won = true
 	for bar in live_bars:
 		if bar.value <= 0: won = false
 		
 	if won and not rigged_to_lose:
+		AudioManager.play_sfx("sfx_coin_fountain")
 		var payout = int(current_bet * total_odds)
 		RunState.money += payout
 		result_label.text = "PARLAY HIT! +₱" + str(payout)
 		result_label.add_theme_color_override("font_color", Color("#00ff00"))
 	else:
+		AudioManager.play_sfx("sfx_error_buzz")
 		result_label.text = "PARLAY BUSTED."
 		result_label.add_theme_color_override("font_color", Color("#ff3333"))
