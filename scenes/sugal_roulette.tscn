@@ -78,9 +78,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_5fi8r")
 
 [node name="VBox" type="VBoxContainer" parent="MainContainer" unique_id=489459857]
 layout_mode = 2
+alignment = 1
 
 [node name="TopBar" type="HBoxContainer" parent="MainContainer/VBox" unique_id=2030855111]
 layout_mode = 2
+alignment = 1
 
 [node name="TitleLabel" type="Label" parent="MainContainer/VBox/TopBar" unique_id=1239252367]
 layout_mode = 2
@@ -90,10 +92,6 @@ label_settings = SubResource("LabelSettings_5fi8r")
 [node name="Spacer" type="Control" parent="MainContainer/VBox/TopBar" unique_id=1100871480]
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="BtnBack" type="Button" parent="MainContainer/VBox/TopBar" unique_id=335643786]
-layout_mode = 2
-text = "LOBBY"
 
 [node name="WheelWindow" type="PanelContainer" parent="MainContainer/VBox" unique_id=1395171776]
 clip_children = 1
@@ -161,3 +159,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(180, 60)
 layout_mode = 2
 text = "SPIN"
+
+[node name="BtnBack" type="Button" parent="MainContainer/VBox/BottomControls" unique_id=335643786]
+layout_mode = 2
+text = "LOBBY"

@@ -9,6 +9,8 @@ func _ready() -> void:
 		play_button.pressed.connect(_on_play_pressed)
 	if quit_button:
 		quit_button.pressed.connect(_on_quit_pressed)
+		
+	AudioManager.play_bgm("bgm_menu")
 
 func _on_play_pressed() -> void:
 	AudioManager.play_sfx("sfx_ui_click")
