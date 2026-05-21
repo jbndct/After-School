@@ -17,10 +17,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -255.0
-offset_top = 118.0
-offset_right = 757.0
-offset_bottom = 318.0
+offset_left = -181.0
+offset_top = 343.0
+offset_right = 683.0
+offset_bottom = 733.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -47,12 +47,12 @@ icon = ExtResource("3_b6cxs")
 flat = true
 
 [node name="Background" type="Sprite2D" parent="." unique_id=2051250186]
-position = Vector2(962, 541)
-scale = Vector2(1.0135417, 1.0222223)
+position = Vector2(1008, 599.49994)
+scale = Vector2(0.7479853, 0.7923176)
 texture = ExtResource("4_aaywf")
 
 [node name="Title" type="Sprite2D" parent="." unique_id=2043950573]
-position = Vector2(946.99994, 524.99994)
+position = Vector2(994.99994, 535)
 scale = Vector2(0.669, 0.7)
 texture = ExtResource("5_1abgu")
 
