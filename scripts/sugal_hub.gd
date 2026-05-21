@@ -92,10 +92,26 @@ func return_to_menu() -> void:
 
 func get_rigging_rtp() -> float:
 	var total_plays = RunState.get_meta("sugal_plays") if RunState.has_meta("sugal_plays") else 0
-	var pattern: Array[float] = [1.5, 1.2, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0]
-	if total_plays < pattern.size():
-		return pattern[total_plays]
-	return 0.0 
+	var phase = total_plays % 10
+
+	# Win probability per phase
+	var win_chance: float
+	match phase:
+		0: win_chance = 0.95  # near-guaranteed hook
+		1: win_chance = 0.75  # still feels good
+		2: win_chance = 0.50  # coin flip, player doesn't notice the drop yet
+		3: win_chance = 0.20  # first cold streak hits
+		4: win_chance = 0.10  # brutal drought
+		5: win_chance = 0.10  # still nothing
+		6: win_chance = 0.10  # rock bottom
+		7: win_chance = 0.35  # tease — feels like it's coming back
+		8: win_chance = 0.20  # rug pull — false hope crushed
+		9: win_chance = 0.65  # strong close so cycle 2 feels promising
+		_: win_chance = 0.10
+
+	if randf() < win_chance:
+		return 1.5  # win — whatever your standard payout multiplier is
+	return 0.0      # loss
 
 func increment_play_count() -> void:
 	var total_plays = RunState.get_meta("sugal_plays") if RunState.has_meta("sugal_plays") else 0
@@ -106,8 +122,11 @@ func _on_cash_out_pressed() -> void:
 	AudioManager.play_sfx("sfx_ui_click")
 	if withdrawal_active: return
 	
-	required_exit_clicks = GameState.sugal_visits
+	# Increment the actual visit tracker first
 	GameState.sugal_visits += 1
+	
+	# Add 2 so Visit 1 requires 3 clicks, Visit 2 requires 4, etc.
+	required_exit_clicks = GameState.sugal_visits + 2
 	
 	if required_exit_clicks <= 0:
 		execute_exit()
@@ -122,7 +141,7 @@ func _on_cash_out_pressed() -> void:
 	
 	var tween = create_tween()
 	tween.tween_property(withdrawal_overlay, "modulate:a", 1.0, 0.3)
-	panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
+	panic_label.text = "Ayoko pa umalis. Ansaya pala nito. \n CLICK 'CONFIRM EXIT' TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
 	_move_all_buttons()
 	move_timer.start()
 
@@ -139,12 +158,13 @@ func _on_moving_exit_pressed() -> void:
 	if current_exit_clicks >= required_exit_clicks: 
 		execute_exit()
 	else:
-		panic_label.text = "CLICK 'CONFIRM EXIT' " + str(required_exit_clicks) + " TIMES TO LEAVE\nPROGRESS: " + str(current_exit_clicks) + "/" + str(required_exit_clicks)
+		panic_label.text = "Ayoko pa umalis. Ansaya pala nito. \n CLICK 'CONFIRM EXIT' TO LEAVE\nPROGRESS: " + str(current_exit_clicks) + "/" + str(required_exit_clicks)
 		_move_all_buttons()
 		move_timer.start()
 
 func _on_trap_button_pressed() -> void:
 	AudioManager.play_sfx("sfx_error_buzz")
+	panic_label.text = "Ayoko pa umalis. Ansaya pala nito. \n CLICK 'CONFIRM EXIT' TO LEAVE\nPROGRESS: 0/" + str(required_exit_clicks)
 	current_exit_clicks = 0
 	thought_label.text = "Ador: Just one more bet... maybe I can win it back."
 	_move_all_buttons()

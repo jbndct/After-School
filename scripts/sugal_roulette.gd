@@ -13,7 +13,7 @@ extends Control
 @onready var result_label = $MainContainer/VBox/BottomControls/StatsBox/ResultLabel
 @onready var bet_dropdown = $MainContainer/VBox/BottomControls/BetDropdown
 @onready var btn_spin = $MainContainer/VBox/BottomControls/BtnSpin
-@onready var btn_back = $MainContainer/VBox/TopBar/BtnBack
+@onready var btn_back = $MainContainer/VBox/BottomControls/BtnBack
 
 var hub_controller: Node = null
 var bet_amounts: Array[int] = [10, 20, 50, 100]
@@ -126,7 +126,7 @@ func _on_spin_pressed() -> void:
 	result_label.add_theme_color_override("font_color", Color.WHITE)
 	
 	var rtp = hub_controller.get_rigging_rtp() if hub_controller else 1.0
-	var forced_loss = rtp < 1.0
+	var forced_loss = rtp <= 1.0
 	var target_color = ""
 	var near_miss_color = ""
 	

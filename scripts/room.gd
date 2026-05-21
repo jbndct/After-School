@@ -10,7 +10,7 @@ var player_in_interact_zone: bool = false
 var player_at_door: bool = false
 
 func _ready() -> void:
-	AudioManager.play_bgm("bgm_menu")
+	AudioManager.play_bgm("bgm_hub")
 	
 	if RunState.previous_location == "street":
 		player.global_position.x = 100 
