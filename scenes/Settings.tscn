@@ -1,13 +1,29 @@
 [gd_scene format=3 uid="uid://c63bdg0dakirq"]
 
 [ext_resource type="Script" uid="uid://cwq6537dkcbgi" path="res://scripts/settings.gd" id="1_rbmmp"]
+[ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="2_46duy"]
+[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/ui/IosevkaCharon-Regular.ttf" id="3_1dggd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4ih8"]
-bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+bg_color = Color(1, 0.98039216, 0.9529412, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8901961, 0.54509807, 0.023529412, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_8e7v8"]
+font = ExtResource("2_46duy")
+font_size = 30
+font_color = Color(0.8901961, 0.54509807, 0.023529412, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_j1j16"]
+font = ExtResource("3_1dggd")
+font_color = Color(0.8901961, 0.54509807, 0.023529412, 1)
 
 [node name="SettingsMenu" type="CanvasLayer" unique_id=1876814777]
 process_mode = 3
@@ -62,6 +78,7 @@ theme_override_constants/separation = 20
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "SETTINGS"
+label_settings = SubResource("LabelSettings_8e7v8")
 horizontal_alignment = 1
 
 [node name="AudioBox" type="VBoxContainer" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1304864145]
@@ -71,6 +88,7 @@ theme_override_constants/separation = 10
 [node name="MasterLabel" type="Label" parent="Overlay/PopupPanel/Padding/VBox/AudioBox" unique_id=616720532]
 layout_mode = 2
 text = "Master Volume"
+label_settings = SubResource("LabelSettings_j1j16")
 horizontal_alignment = 1
 
 [node name="MasterSlider" type="HSlider" parent="Overlay/PopupPanel/Padding/VBox/AudioBox" unique_id=2110821600]
