@@ -1,101 +1,100 @@
 [gd_scene format=3 uid="uid://dlsn3b4a0k2lx"]
 
 [ext_resource type="Script" uid="uid://bxdho438bytyt" path="res://scripts/room.gd" id="1_85yof"]
-[ext_resource type="Texture2D" uid="uid://dq8dunm84867p" path="res://assets/sprites/room.png" id="1_ffxv4"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="2_14vil"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="2_85yof"]
-[ext_resource type="Texture2D" uid="uid://dg6jujiglq0br" path="res://assets/sprites/interact.png" id="3_jn645"]
-[ext_resource type="Texture2D" uid="uid://du2lfudoggyma" path="res://assets/sprites/door.png" id="3_jxe34"]
+[ext_resource type="Texture2D" uid="uid://dpnq5m46qlwk2" path="res://assets/sprites/Envi/room.png" id="2_jn645"]
+[ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="3_jxe34"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_36trf"]
-size = Vector2(1055.5, 27.5)
+size = Vector2(3601.75, 27.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_14vil"]
-size = Vector2(54, 458)
+size = Vector2(901.5, 1060)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ffxv4"]
-size = Vector2(200, 172)
+size = Vector2(544.5, 245)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jxe34"]
+font = ExtResource("3_jxe34")
+font_size = 40
+font_color = Color(0.8936466, 0.551805, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxe34"]
-size = Vector2(76, 230)
+size = Vector2(395, 489)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jn645"]
+font = ExtResource("3_jxe34")
+font_size = 13
+font_color = Color(0.2710485, 0.7376744, 0.5742666, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jn645"]
-size = Vector2(29, 524)
+size = Vector2(966, 932)
 
 [node name="Room" type="Node2D" unique_id=1908229503]
 position = Vector2(3, 2)
 script = ExtResource("1_85yof")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=857301467]
-position = Vector2(-8.999993, 0.9999776)
-scale = Vector2(1.4664981, 1.5126436)
-texture = ExtResource("1_ffxv4")
+position = Vector2(83.2, -4.9999847)
+scale = Vector2(0.5819254, 0.56145835)
+texture = ExtResource("2_jn645")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1914316027]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=190565674]
-position = Vector2(24.25, 287)
+position = Vector2(98.125, 394)
 shape = SubResource("RectangleShape2D_36trf")
 
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=39138454]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=2066318148]
-position = Vector2(-549, 74)
+position = Vector2(-1248.75, -14)
 shape = SubResource("RectangleShape2D_14vil")
 
 [node name="InteractableItem" type="Area2D" parent="." unique_id=826110394]
 position = Vector2(-143, 44)
 
-[node name="Sprite2D" type="Sprite2D" parent="InteractableItem" unique_id=329539197]
-position = Vector2(-219.00002, 131.99998)
-scale = Vector2(0.384, 0.312)
-texture = ExtResource("3_jn645")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableItem" unique_id=1640971554]
-position = Vector2(-206, 133)
+position = Vector2(-252.25, 210.5)
 shape = SubResource("RectangleShape2D_ffxv4")
 
 [node name="InteractPrompt" type="Label" parent="InteractableItem" unique_id=1004316630]
-offset_left = -244.0
-offset_top = 12.0
-offset_right = -157.0
+offset_left = -522.0
+offset_top = -10.0
+offset_right = -338.0
 offset_bottom = 35.0
 text = "[E] to Think"
+label_settings = SubResource("LabelSettings_jxe34")
 metadata/_edit_use_anchors_ = true
 
 [node name="ExitDoor" type="Area2D" parent="." unique_id=1134028885]
-position = Vector2(154, 59)
+position = Vector2(516, -90)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor" unique_id=23486877]
-position = Vector2(359, 105)
+position = Vector2(410.5, 234.5)
 shape = SubResource("RectangleShape2D_jxe34")
 
-[node name="TextureRect" type="TextureRect" parent="ExitDoor" unique_id=199579486]
-offset_left = 273.0
-offset_top = -3.0
-offset_right = 401.0
-offset_bottom = 215.0
-texture = ExtResource("3_jxe34")
-expand_mode = 1
-metadata/_edit_use_anchors_ = true
-
 [node name="DoorPrompt" type="Label" parent="ExitDoor" unique_id=797385000]
-offset_left = 288.0
-offset_top = -43.0
-offset_right = 377.0
-offset_bottom = -20.0
+offset_left = 407.0
+offset_top = -79.0
+offset_right = 631.0
+offset_bottom = -27.0
 text = "[E] to Leave"
+label_settings = SubResource("LabelSettings_jxe34")
 metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." unique_id=1915667930 instance=ExtResource("2_14vil")]
-position = Vector2(-17, 200)
+position = Vector2(-12, 161)
+scale = Vector2(3, 3)
 
 [node name="ObjectiveLabel" type="Label" parent="Player" unique_id=1348700933]
-offset_left = -279.0
-offset_top = -74.0
-offset_right = 283.0
-offset_bottom = -51.0
+offset_left = -134.33333
+offset_top = -213.00002
+offset_right = -19.333328
+offset_bottom = -186.00002
 text = "Objective: ..."
+label_settings = SubResource("LabelSettings_jn645")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -105,7 +104,7 @@ vertical_alignment = 1
 position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=826862855]
-position = Vector2(564.5, 50)
+position = Vector2(1494, -70)
 shape = SubResource("RectangleShape2D_jn645")
 
 [connection signal="body_entered" from="InteractableItem" to="." method="_on_interactable_item_body_entered"]

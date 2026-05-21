@@ -5,8 +5,10 @@
 [ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/ui/IosevkaCharon-Regular.ttf" id="3_hh5wg"]
 
 [node name="TextBox" type="MarginContainer" unique_id=809015429]
-offset_right = 86.0
-offset_bottom = 33.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 85.0
+offset_bottom = 37.0
 script = ExtResource("1_jrwbe")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=220327235]

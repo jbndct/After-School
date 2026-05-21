@@ -150,7 +150,7 @@ position_smoothing_enabled = true
 [node name="SmartphoneUi" parent="CanvasLayer" unique_id=351376932 instance=ExtResource("5_qu4a1")]
 
 [node name="TutorialArrow" parent="." unique_id=1240372964 instance=ExtResource("6_70d11")]
-position = Vector2(5, -137)
+position = Vector2(-2, -121)
 
 [node name="FootstepSFX" type="AudioStreamPlayer2D" parent="." unique_id=1869132178]
 bus = &"SFX"
