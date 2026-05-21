@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://xdxdqveawknb"]
+
+[ext_resource type="Texture2D" uid="uid://da6a68oacx517" path="res://assets/sprites/Envi/grass.png" id="1_od8sr"]
+[ext_resource type="Texture2D" uid="uid://bbdmogv1ei023" path="res://assets/sprites/Envi/cement_tile.jpg" id="2_jhpg2"]
+[ext_resource type="Texture2D" uid="uid://c4g5ytf06j7d5" path="res://assets/sprites/Envi/home1.png" id="3_ddpu7"]
+[ext_resource type="Texture2D" uid="uid://om6mq67dwrpj" path="res://assets/sprites/Envi/road.png" id="3_exfrf"]
+[ext_resource type="Texture2D" uid="uid://dg7i8pkqfhm5g" path="res://assets/sprites/Envi/home2.png" id="4_exfrf"]
+[ext_resource type="Texture2D" uid="uid://beo51s4ti1brt" path="res://assets/sprites/Envi/school1.png" id="5_c1tb5"]
+[ext_resource type="Texture2D" uid="uid://cswapexsjwtal" path="res://assets/sprites/Envi/classroom.png" id="6_o3lnv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0t0sb"]
+albedo_texture = ExtResource("1_od8sr")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3m0d"]
+material = SubResource("StandardMaterial3D_0t0sb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84j7p"]
+albedo_texture = ExtResource("2_jhpg2")
+rim = 0.0
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p5lnq"]
+material = SubResource("StandardMaterial3D_84j7p")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1tb5"]
+albedo_texture = ExtResource("3_exfrf")
+
+[sub_resource type="BoxMesh" id="BoxMesh_o3lnv"]
+material = SubResource("StandardMaterial3D_c1tb5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tng7"]
+albedo_texture = ExtResource("3_ddpu7")
+rim = 0.0
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o6kl1"]
+material = SubResource("StandardMaterial3D_1tng7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fntdg"]
+albedo_texture = ExtResource("4_exfrf")
+rim = 0.0
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4qysm"]
+material = SubResource("StandardMaterial3D_fntdg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_74fkb"]
+albedo_texture = ExtResource("5_c1tb5")
+rim = 0.0
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yafrn"]
+material = SubResource("StandardMaterial3D_74fkb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vsyic"]
+albedo_texture = ExtResource("6_o3lnv")
+rim = 0.0
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_crvj2"]
+material = SubResource("StandardMaterial3D_vsyic")
+
+[node name="Node3D" type="Node3D" unique_id=836077877]
+
+[node name="Grass" type="MeshInstance3D" parent="." unique_id=1821249975]
+mesh = SubResource("BoxMesh_i3m0d")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Grass" unique_id=1797346744]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grass/StaticBody3D" unique_id=1840505548]
+
+[node name="Concrete" type="MeshInstance3D" parent="." unique_id=1365558858]
+mesh = SubResource("BoxMesh_p5lnq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Concrete" unique_id=112061901]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Concrete/StaticBody3D" unique_id=1045537498]
+
+[node name="Road" type="MeshInstance3D" parent="." unique_id=1371285956]
+mesh = SubResource("BoxMesh_o3lnv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Road" unique_id=1867092953]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Road/StaticBody3D" unique_id=1208144834]
+
+[node name="Home1" type="MeshInstance3D" parent="." unique_id=246640801]
+mesh = SubResource("BoxMesh_o6kl1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Home1" unique_id=1593869240]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Home1/StaticBody3D" unique_id=1433065982]
+
+[node name="Home2" type="MeshInstance3D" parent="." unique_id=217127197]
+mesh = SubResource("BoxMesh_4qysm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Home2" unique_id=16638362]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Home2/StaticBody3D" unique_id=426519077]
+
+[node name="School" type="MeshInstance3D" parent="." unique_id=1387052114]
+mesh = SubResource("BoxMesh_yafrn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="School" unique_id=98481253]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="School/StaticBody3D" unique_id=543799049]
+
+[node name="Room" type="MeshInstance3D" parent="." unique_id=844422737]
+mesh = SubResource("BoxMesh_crvj2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Room" unique_id=806326735]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room/StaticBody3D" unique_id=1139425067]

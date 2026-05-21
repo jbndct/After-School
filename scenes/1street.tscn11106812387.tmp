@@ -1,0 +1,169 @@
+[gd_scene format=3 uid="uid://dolglollxeib6"]
+
+[ext_resource type="Script" uid="uid://c1wk2ogd0phig" path="res://scenes/1_street.gd" id="1_oebmy"]
+[ext_resource type="MeshLibrary" uid="uid://lma6owjgi0n7" path="res://envi.meshlib" id="1_w6kgh"]
+[ext_resource type="Script" uid="uid://btt2xeviyy82w" path="res://scenes/character_body_3d.gd" id="2_8lj2j"]
+[ext_resource type="Texture2D" uid="uid://b4ahqtwyrhmn8" path="res://assets/sprites/Player/MC_sheet.png" id="2_vy7f2"]
+[ext_resource type="Texture2D" uid="uid://cw7sf3wc3cb2s" path="res://assets/sprites/Envi/Clouds 2/1.png" id="4_oebmy"]
+[ext_resource type="Texture2D" uid="uid://ytejvyvygk40" path="res://assets/sprites/Envi/Clouds 2/2.png" id="5_2xdlq"]
+[ext_resource type="Texture2D" uid="uid://ibikuwrxthp5" path="res://assets/sprites/Envi/Clouds 2/4.png" id="7_f0njs"]
+
+[sub_resource type="Animation" id="Animation_8lj2j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tvkiv"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.36666667, 0.53333336, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_oebmy"]
+resource_name = "walk_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 2), Vector2i(1, 2), Vector2i(3, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_6fbaa"]
+resource_name = "walk_right"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13060187, 0.26666668, 0.46666667, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 1), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2xdlq"]
+_data = {
+&"RESET": SubResource("Animation_8lj2j"),
+&"idle": SubResource("Animation_tvkiv"),
+&"walk_left": SubResource("Animation_oebmy"),
+&"walk_right": SubResource("Animation_6fbaa")
+}
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tvkiv"]
+
+[sub_resource type="Sky" id="Sky_vy7f2"]
+sky_material = SubResource("PanoramaSkyMaterial_tvkiv")
+
+[sub_resource type="Environment" id="Environment_8lj2j"]
+background_mode = 2
+sky = SubResource("Sky_vy7f2")
+ambient_light_source = 2
+ambient_light_color = Color(0.7869866, 0.8175824, 0.6426319, 1)
+ambient_light_energy = 1.5
+reflected_light_source = 2
+tonemap_exposure = 1.11
+glow_enabled = true
+glow_intensity = 0.67
+glow_bloom = 0.75
+glow_hdr_luminance_cap = 81.0
+volumetric_fog_density = 0.2336
+adjustment_enabled = true
+adjustment_contrast = 0.86
+adjustment_saturation = 1.04
+
+[node name="World" type="Node3D" unique_id=569640231]
+script = ExtResource("1_oebmy")
+
+[node name="GridMap" type="GridMap" parent="." unique_id=406998052]
+mesh_library = ExtResource("1_w6kgh")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65534, 0, 1, 65534, 65535, 0, 65535, 65535, 0, 65535, 0, 1, 0, 0, 1, 0, 65535, 0, 1, 65535, 0, 1, 0, 1, 2, 0, 1, 2, 65535, 0, 3, 65535, 0, 3, 0, 1, 2, 1, 1, 1, 1, 1, 0, 1, 1, 65535, 1, 1, 65534, 1, 1, 65533, 0, 1, 65533, 65535, 0, 65533, 1, 1, 3, 1, 1, 4, 1, 1, 4, 0, 1, 4, 65535, 0, 65532, 1, 1, 65532, 0, 1, 65532, 65535, 0, 4, 65534, 0, 3, 65534, 0, 2, 65534, 0, 2, 65533, 1, 1, 65534, 0, 1, 65533, 1, 0, 65534, 0, 65535, 65534, 0, 65535, 65533, 1, 65534, 65533, 1, 65534, 65534, 0, 65533, 65534, 0, 65532, 65534, 0, 65532, 65533, 1, 65533, 65533, 1, 65535, 65532, 1, 0, 65532, 1, 1, 65532, 1, 2, 65532, 1, 3, 65532, 1, 0, 65533, 1, 3, 65533, 1, 4, 65533, 1, 4, 65532, 1, 65532, 65532, 1, 65533, 65532, 1, 65533, 65531, 1, 65534, 65531, 1, 65534, 65532, 1, 65532, 65531, 1, 65535, 65531, 1, 0, 65531, 1, 1, 65531, 1, 2, 65531, 1, 3, 65531, 1, 4, 65531, 1)
+}
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=2111364059]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2, -3)
+script = ExtResource("2_8lj2j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=879118017]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=743804045]
+transform = Transform3D(0.85646534, -0.5162045, 0, 0.5162045, 0.85646534, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D" unique_id=1054036579]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.24214923, 1.6533318, 7.985368)
+fov = 84.37499
+
+[node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D" unique_id=1579542779]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.10582924, 0.063771725, 0)
+texture = ExtResource("2_vy7f2")
+hframes = 5
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D" unique_id=264199298]
+libraries/ = SubResource("AnimationLibrary_2xdlq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1351001569]
+transform = Transform3D(1, 1.4109342e-07, 1.0326477e-07, 0, -0.5906056, 0.80696034, 1.7484555e-07, -0.80696034, -0.5906056, 0.043198913, 12.129452, 4.8378096)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=244327034]
+environment = SubResource("Environment_8lj2j")
+
+[node name="BaseSky" type="Sprite3D" parent="." unique_id=625730755]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, -0.018278122, 0.13468933, -25.025162)
+texture_filter = 2
+texture = ExtResource("4_oebmy")
+
+[node name="Horizon" type="Sprite3D" parent="." unique_id=2066923258]
+transform = Transform3D(13, 0, 0, 0, 13, 0, 0, 0, 13, -0.018278122, 10.134689, -20.025162)
+texture_filter = 2
+texture = ExtResource("5_2xdlq")
+
+[node name="NearCouds" type="Sprite3D" parent="." unique_id=1123747036]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.018278122, 10.134689, -15.025162)
+texture_filter = 2
+texture = ExtResource("7_f0njs")
