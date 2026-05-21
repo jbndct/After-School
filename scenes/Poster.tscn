@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://da62va4g22alq"]
 
 [ext_resource type="Script" uid="uid://crj8i57tmlio2" path="res://scripts/poster.gd" id="1_1bwu2"]
-[ext_resource type="Texture2D" uid="uid://b04f1xer0qlm7" path="res://assets/sprites/Player/player_tilesheet.png" id="2_fs0pc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rnqot"]
-size = Vector2(184, 171)
+size = Vector2(159.27713, 689.29767)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bwu2"]
 bg_color = Color(0.050980393, 0.050980393, 0.050980393, 1)
@@ -38,13 +37,8 @@ corner_radius_bottom_left = 4
 [node name="Poster" type="Area2D" unique_id=1414501502]
 script = ExtResource("1_1bwu2")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1797006343]
-position = Vector2(191.38074, 189.5199)
-scale = Vector2(0.4982798, 1.0819387)
-texture = ExtResource("2_fs0pc")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1442669979]
-position = Vector2(193.9234, 187.38818)
+position = Vector2(96, 735.7368)
 scale = Vector2(2.096974, 2.1159601)
 shape = SubResource("RectangleShape2D_rnqot")
 
