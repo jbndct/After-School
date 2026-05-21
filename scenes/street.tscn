@@ -30,7 +30,7 @@ font_color = Color(0.2710485, 0.7376744, 0.5742666, 1)
 shadow_size = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t23v0"]
-size = Vector2(743.5, 1159.5)
+size = Vector2(180.75, 1159.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yrasx"]
 size = Vector2(1249.25, 1481)
@@ -116,17 +116,17 @@ uppercase = true
 [node name="SmartphoneUi2" parent="Player" unique_id=351376932 instance=ExtResource("7_5m0si")]
 
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=1945931944]
-position = Vector2(-146, -67)
+position = Vector2(-53, -59)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=836129400]
-position = Vector2(-1148, 307.25)
+position = Vector2(-449, 255)
 shape = SubResource("RectangleShape2D_t23v0")
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1943427091]
 position = Vector2(-264, -18)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=1354219775]
-position = Vector2(3130.625, 156)
+position = Vector2(3118, 160)
 shape = SubResource("RectangleShape2D_yrasx")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1808613131]
