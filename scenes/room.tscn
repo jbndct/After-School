@@ -88,6 +88,12 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-12, 161)
 scale = Vector2(3, 3)
 
+[node name="ColorRect" type="ColorRect" parent="Player" unique_id=1732631955]
+offset_left = -154.33334
+offset_top = -218.99998
+offset_right = 188.99997
+offset_bottom = -178.99998
+
 [node name="ObjectiveLabel" type="Label" parent="Player" unique_id=1348700933]
 offset_left = -134.33333
 offset_top = -213.00002

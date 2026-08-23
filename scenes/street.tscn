@@ -102,6 +102,12 @@ color = Color(0.14509805, 0.14509805, 0.14509805, 0)
 [node name="Player" parent="." unique_id=1915667930 instance=ExtResource("4_7vr8w")]
 position = Vector2(217, 673)
 
+[node name="ColorRect" type="ColorRect" parent="Player" unique_id=1771524188]
+offset_left = -479.0
+offset_top = -183.0
+offset_right = 408.0
+offset_bottom = -113.0
+
 [node name="ObjectiveLabel" type="Label" parent="Player" unique_id=1445627522]
 offset_left = -449.0
 offset_top = -175.0
