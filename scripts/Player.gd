@@ -2,6 +2,7 @@
 extends CharacterBody2D
 
 const SPEED = 180.0
+const SPRINT_SPEED = 300.0
 const GRAVITY = 800.0
 
 enum State { FREE, LOCKED }
@@ -37,9 +38,11 @@ func _physics_process(delta: float) -> void:
 
 func handle_movement(delta: float) -> void:
 	var direction = Input.get_axis("move_left", "move_right")
+	var is_sprinting = Input.is_action_pressed("sprint")
+	var current_speed = SPRINT_SPEED if is_sprinting else SPEED
 	
 	if direction != 0:
-		velocity.x = direction * SPEED
+		velocity.x = direction * current_speed
 		
 		if direction > 0 and animated_sprite.animation != "walk_right":
 			animated_sprite.play("walk_right")
@@ -51,7 +54,7 @@ func handle_movement(delta: float) -> void:
 			footstep_timer -= delta
 			if footstep_timer <= 0.0:
 				_play_footstep()
-				footstep_timer = FOOTSTEP_INTERVAL
+				footstep_timer = FOOTSTEP_INTERVAL * (0.6 if is_sprinting else 1.0)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		footstep_timer = 0.0 # Reset so next movement plays a step instantly
