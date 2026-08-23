@@ -1,103 +1,70 @@
 {
   "poster_intro_morning": [
-	"SugalHub: Gawing milyon ang barya mo! Play now, approved by your favorite vloggers!",
-	"Aga-aga pa lang, nandoon na agad. Kahit sa jeep, halos lahat nakatingin sa phone nila — spin nang spin, tap nang tap.",
-	"Naiisip ko kung gaano kadali ang mukha nila. Parang walang exam. Parang walang kailangang bayaran bukas.",
-	"3,000 ko 'to. Pambayad sa tuition na kulang pa rin. Kung may 'breathing room' lang sana ako kahit konti...",
-	"Pero kung matalo ako? Wala na. Hindi lang tuition — wala na akong makakain. Hindi na ako makaka-upo sa exam.",
-	"Hindi. Focus muna. Scholarship muna.",
-	"Isusugal ko ba ang pera ko?",
+	"💰💵 EZ WIN! Gawing libo ang barya mo sa SugalHub! 100% Legit, no cash-out limit! Spin na idol, baka ikaw na ang next VIP! 🎰",
+	"Aga-aga, 'yan agad. Sa jeep, sa kanto, puro tap nang tap. Nakakapagod mag-aral tapos makikita mo sila, parang ang dali lang ng buhay.",
+    "Focus, Ador. May exam pa mamaya. ...Pero paano kung totoo? Isang spin lang para ma-distract. Para lang gumaan pakiramdam ko. Susubok ba 'ko?"
   ],
   "poster_intro_afternoon": [
-	"SugalHub: Doblehin ang pera mo habang naghihintay! Wala nang talo!",
-	"Tapos na ang exam. Naghihintay na lang ako ng shift mamayang gabi. Walang magawa. Tahimik lang.",
-	"Lahat parang may ginagawa. Ako? Nandito lang, nakaupo, naghihintay ng oras.",
-	"Kung i-download ko lang... pampalipas oras lang naman. Malay mo, maging swerte ako ngayon.",
-	"Kahit kaunting dagdag sa budget. Napagod na ako sa palaging kulang.",
-	"Pero alam ko naman kung saan ito pupunta. Alam ko.",
-	"Susubok ba ako magsugal?"
+	"🚨 x10 MULTIPLIER ALERT! Doblehin ang pera mo habang nag-aabang! Wag nang mag-sana all, mag-SugalHub na! 🚨",
+	"Tapos na exam. Hihintayin ko pa shift ko mamaya. Walang ginagawa, tahimik masyado. Dito pumapasok yung tukso eh.",
+    "Kung i-download ko kaya? Pampalipas oras lang. Nakaka-drain yung ganitong routine. Alam kong delikado 'to, pero... ano ba naman yung isang try?"
   ],
   "poster_repeat_morning": [
-    "Yung SugalHub ulit. Nakaka-engganyo, pero hindi ngayon. Kailangan ko munang mapasa 'tong exam."
+    "SugalHub ulit. Lakas mang-hypnotize. Pero hindi muna. Sayang utak ko, kailangan ko sa exam."
   ],
   "poster_repeat_afternoon": [
-    "SugalHub nanaman. Alam ko kung anong gusto niyang gawin sa akin. Hindi ko papayagan. Hindi pa."
+    "Andito nanaman siya. Gusto niya talaga akong pilitin. Pass muna. Nakakapagod na nga, dadagdagan ko pa problema ko."
   ],
   "poster_outro": [
-    "Hindi. Ang kailangan ko ngayon ay manatiling nakatuon. Iyon lang."
+    "Pass. Kailangan kong ibalik yung focus ko. Wag padala."
   ],
   "room_morning": [
-	"3,000 pesos. Iyon na ang lahat ng nasa pitaka ko.",
-	"15,000 ang tuition. Kung mapapasa ko ang scholarship exam mamaya, may 5,000 pa ako.",
-	"Tapos makukuha ko mamayang gabi ang 7,000 na sweldo ko sa dalawang linggong shift.",
-	"Saktong-sakto. 15,000. Eksakto para sa tuition, at wala nang sobra para sa pagkain bukas.",
-	"Nakita ko kagabi ang vlog ni idol. Nanalo raw siya ng 10k sa SugalHub nang hindi umaalis ng upuan. Sabi niya, laro lang, trabaho na.",
-    "Pero ako... hindi ako siya. At hindi ako maaaring matalo ngayon. Hindi ngayon."
+	"3,000 pesos. Eto savings ko. Isang buwan kong inipon galing sa baon.",
+	"May scholarship exam mamaya tapos shift sa gabi. Nakakapagod lang isipin na kailangan kong ubusin lakas ko para maka-usad.",
+    "Tapos makikita ko vlog ni idol kagabi? Nanalo ng 10k nang naka-upo lang. Walang puyat, walang stress. Nakaka-tempt. Gusto ko na lang din ng madaling paraan."
   ],
   "room_night_passed": [
-	"*Tumunog ang phone.*",
-	"SMS: Congratulations, your scholarship application is approved. You have officially been granted ₱5,000.",
-	"Pumasa ako. Salamat.",
-	"5,000 mula sa scholarship. 7,000 mula sa shift mamaya. Saktong 15,000 para sa tuition.",
-	"Pero pagkatapos nito? Zero. Wala nang natira para bukas.",
-	"Nakakapagod. Hindi ang trabaho — kundi ang pakiramdam na lagi kang isang hakbang sa gilid ng bangin.",
-    "Kailangan ko na sa shift. Halos ayaw na ng katawan ko, pero kailangan."
+	"*Tumunog ang phone.* SMS: Congratulations, your scholarship application is approved.",
+	"Pumasa ako. Nice. Pero bakit parang wala akong naramdamang saya? Pagod lang.",
+    "May shift pa 'ko. Paulit-ulit na lang. Minsan naiisip ko, kung nag-SugalHub ba 'ko, mas excited kaya ako ngayon? Ewan. Trabaho na muna."
   ],
   "room_night_failed": [
-	"*Tumunog ang phone.*",
-	"SMS: We regret to inform you that you did not pass the scholarship exam.",
-	"...",
-	"Kahit makuha ko ang 7,000 ko mamaya, malayo pa rin sa 15,000.",
-	"Kulang. Lagi na lang kulang.",
-	"Naiisip ko kung may paraan pa. Kung may solusyon na hindi ko nakikita.",
-	"...O baka wala na talaga.",
-    "Kailangan ko pa rin sa shift. Kahit papaano, kailangan."
+	"*Tumunog ang phone.* SMS: We regret to inform you that you did not pass the scholarship exam.",
+	"Bagsak. Sayang effort. Sayang puyat.",
+    "Eto yung mga oras na ang sarap na lang mag-give up at sumugal eh. Yung tipong, baka doon maswerte ako. Pero kailangan pumasok sa shift. Wala akong choice."
   ],
   "school_arrival": [
-	"Nandito na ako. Ang bulletin board, ang exam — ito na ang pinaka-importante ngayon.",
-	"Kung mapapasa ko ito, may pag-asa pa. Kung hindi...",
-    "Huwag muna. Isa-isang hakbang. Focus ka, Ador."
+    "Nandito na 'ko. Bulletin board, exam. Eto muna. Wag mo munang isipin yung app, Ador. Focus."
   ],
   "school_passed": [
-	"Pasa.",
-	"Hindi ko agad narealize kung gaano kalaking bigat ang nawala sa dibdib ko.",
-	"Salamat. Hindi ko alam kanino, pero... salamat.",
-    "May shift pa ako mamaya. Uwi na muna."
+	"Pasa. Nakahinga rin kahit papaano.",
+    "Pero pagod pa rin utak ko. Shift naman mamaya. Bahala na."
   ],
   "school_failed": [
-	"Bagsak.",
-	"Tinitingnan ko ang papel na may pangalan ko. Parang hindi pa rin totoo.",
-	"Kung paano ko tatahaking ito... hindi ko pa alam.",
-    "Uwi na lang muna. Mag-iisip na lang ako sa daan."
+	"Bagsak. Parang joke. Binuhos ko oras ko dito tapos wala rin.",
+    "Nakakawalang-gana mag-aral. Uwi na muna 'ko. Parang gusto ko na lang mag-phone para makalimot."
   ],
   "street_morning": [
-	"Kailangan kong pumasa. Walang planong B na gusto kong isipin.",
-	"Lahat sa paligid ko, nakatingin sa phone nila. Sugal ang nakikita ko sa bawat screen.",
-	"Minsan naiisip ko — ako na lang ba ang nahuhuli? Ako na lang ba ang gumagawa ng mahirap na paraan?",
-    "Pero alam ko rin ang sagot. Alam ko kung bakit kailangan kong gawin ito nang tama."
+	"Kailangan pumasa. Pero lahat ng tao dito sa labas, SugalHub yung hawak. Nakaka-praning.",
+    "Nakakapagod mag-focus kung ang ingay ng paligid mo sinasabing may mas madaling paraan."
   ],
   "street_afternoon": [
-	"Tapos na ang exam. Wala na akong magagawa doon.",
-	"Naghihintay na lang ako ng shift. Matagal pa. Malungkot ang oras na hindi gumagalaw.",
-	"Naiisip ko yung app. Isang laro lang. Pampalipas oras.",
-    "Pero sabi ko na sa sarili ko — alam ko kung saan ito laging nagtatapos. Hindi sa nanalo. Sa nandoon pa rin, naghahanap ng isa pang laro."
+	"Tapos na exam. Ang bagal ng oras bago mag-shift.",
+    "Ang daling i-download nung app ngayon. Isang laro lang, pampagising. Pero alam ko ending niyan. Addiction. Ubos."
   ],
-
-  "obj_room_clear_head": "Layunin: Mag-isip-isip muna (Pumunta sa desk/kama).",
-  "obj_room_to_school": "Layunin: Pumunta sa eskwelahan para sa exam.",
-  "obj_room_start_work": "Layunin: Buksan ang laptop para magsimula sa trabaho.",
-  "obj_room_end_day": "Layunin: Tapos na ang shift. Pumunta sa pinto para tapusin ang araw.",
-  "warn_room_clear_head": "Hindi muna ako aalis hangga't hindi pa malinaw ang isip ko.",
-  "warn_room_already_thought": "Naisip ko na 'to. Kailangan ko nang umalis.",
-  "warn_room_finish_shift": "Kailangan ko munang tapusin ang shift ko.",
-  "warn_room_done_working": "Tapos na ang trabaho ko ngayon. Oras na para magpahinga at umalis.",
-
-  "obj_school_exam": "Layunin: Kunin ang scholarship exam sa bulletin board.",
-  "obj_school_leave": "Layunin: Bumalik sa kalsada.",
-  "warn_school_no_exam": "Hindi ako pwedeng umalis nang hindi pa nag-eexam.",
-  "warn_school_exam_done": "Tapos na 'kong mag-exam. Oras na para umalis.",
-
-  "obj_street_school": "Layunin: Pumunta sa eskwelahan.",
-  "obj_street_dorm": "Layunin: Bumalik sa dorm.",
-  "warn_street_wrong_way": "Hindi ko kailangang pumunta diyan ngayon."
-} 
+  "obj_room_clear_head": "Task: Mag-isip-isip muna (Punta sa desk/kama).",
+  "obj_room_to_school": "Task: Pumasok para sa exam.",
+  "obj_room_start_work": "Task: Buksan ang laptop para sa shift.",
+  "obj_room_end_day": "Task: Tapusin ang araw (Punta sa pinto).",
+  "warn_room_clear_head": "Kailangan ko munang pakalmahin isip ko bago umalis.",
+  "warn_room_already_thought": "Naisip ko na 'to. Alis na 'ko.",
+  "warn_room_finish_shift": "Teka, di pa tapos shift ko.",
+  "warn_room_done_working": "Out na 'ko. Ayoko na, pahinga na.",
+  "obj_school_exam": "Task: I-check ang scholarship exam sa bulletin board.",
+  "obj_school_leave": "Task: Lumabas ng campus.",
+  "warn_school_no_exam": "Di pwedeng umuwi nang di nag-eexam.",
+  "warn_school_exam_done": "Tapos na 'to. Oras na para umalis.",
+  "obj_street_school": "Task: Pumunta sa campus.",
+  "obj_street_dorm": "Task: Umuwi ng dorm.",
+  "warn_street_wrong_way": "Wala akong gagawin dyan ngayon."
+}
