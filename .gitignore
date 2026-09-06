@@ -5,3 +5,13 @@
 After School.pck
 export_presets.cfg
 .aider*
+*.png
+*.jpg
+*.jpeg
+*.ogg
+*.wav
+*.mp3
+*.ttf
+*.otf
+.godot/
+.import/
