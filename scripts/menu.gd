@@ -19,7 +19,7 @@ func _on_play_pressed() -> void:
 	RunState.reset_run() 
 	
 	# Start the game
-	SceneManager.load_scene("room")
+	SceneManager.load_scene("intro")
 
 func _on_quit_pressed() -> void:
 	AudioManager.play_sfx("sfx_ui_click")

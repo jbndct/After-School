@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bb5pcfo00my23"]
+
+[ext_resource type="Script" uid="uid://oo2b5ly8plli" path="res://scripts/intro_story.gd" id="1_ufiat"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qkv2j"]
+bg_color = Color(0.2, 0.23921569, 0.29411766, 1)
+
+[node name="IntroStory" type="Control" unique_id=769935351]
+custom_minimum_size = Vector2(1152, 648)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ufiat")
+
+[node name="Background" type="ColorRect" parent="." unique_id=312974130]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.050980393, 0.06666667, 0.09019608, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=820636435]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 60
+
+[node name="ContentVBox" type="VBoxContainer" parent="MarginContainer" unique_id=1368796045]
+layout_mode = 2
+
+[node name="ChapterTitle" type="Label" parent="MarginContainer/ContentVBox" unique_id=626953655]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+theme_override_font_sizes/font_size = 28
+text = "CHAPTER 0: DUE DATE"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/ContentVBox" unique_id=177193812]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_qkv2j")
+
+[node name="StoryText" type="RichTextLabel" parent="MarginContainer/ContentVBox" unique_id=477362578]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+vertical_alignment = 3
+
+[node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/ContentVBox" unique_id=1293247009]
+layout_mode = 2
+alignment = 2
+
+[node name="SkipButton" type="Button" parent="MarginContainer/ContentVBox/ButtonRow" unique_id=1199926492]
+layout_mode = 2
+text = "SKIP"
+
+[node name="NextButton" type="Button" parent="MarginContainer/ContentVBox/ButtonRow" unique_id=1747681575]
+layout_mode = 2
+text = "CONTINUE"

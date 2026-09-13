@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cwcpf6w2puvbh"]
+
+[sub_resource type="GDScript" id="GDScript_7hnv8"]
+script/source = "extends CanvasLayer
+
+@onready var container: MarginContainer = $MarginContainer
+@onready var prompt_label: Label = $MarginContainer/PanelContainer/PromptLabel
+
+enum Step { MOVE, INTERACT, COMPLETED }
+var current_step: Step = Step.MOVE
+var move_timer: float = 0.0
+
+func _ready() -> void:
+	prompt_label.text = \"Use [A] / [D] or [Left] / [Right] to Move\"
+	container.modulate.a = 0.0
+	# Fade in smoothly
+	var tween = create_tween()
+	tween.tween_property(container, \"modulate:a\", 1.0, 0.5)
+
+func _process(delta: float) -> void:
+	match current_step:
+		Step.MOVE:
+			var move_axis = Input.get_axis(\"ui_left\", \"ui_right\")
+			if move_axis != 0.0:
+				move_timer += delta
+				if move_timer >= 1.2:
+					_advance_to_interact()
+
+		Step.INTERACT:
+			if Input.is_action_just_pressed(\"ui_accept\"):
+				_finish_tutorial()
+
+func _advance_to_interact() -> void:
+	current_step = Step.INTERACT
+	prompt_label.text = \"Press [E] or [Space] to Interact\"
+
+func _finish_tutorial() -> void:
+	current_step = Step.COMPLETED
+	var tween = create_tween()
+	tween.tween_property(container, \"modulate:a\", 0.0, 0.4)
+	await tween.finished
+	queue_free()"
+
+[node name="TutorialPrompt" type="CanvasLayer" unique_id=1361534998]
+follow_viewport_enabled = true
+script = SubResource("GDScript_7hnv8")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=230028863]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 40
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1849588969]
+layout_mode = 2
+
+[node name="PromptLabel" type="Label" parent="MarginContainer/PanelContainer" unique_id=1419451455]
+layout_mode = 2
+text = "Use [A] / [D] or [←] / [→] to Move"
+horizontal_alignment = 1
+vertical_alignment = 1

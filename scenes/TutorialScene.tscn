@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://msi10y20t76k"]
+
+[ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="1_0tiu2"]
+[ext_resource type="Script" uid="uid://bykw2gjpm4sw5" path="res://scripts/tutorial_scene.gd" id="1_fuokr"]
+[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/ui/IosevkaCharon-Regular.ttf" id="2_fuokr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ruop6"]
+size = Vector2(1391, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wop4l"]
+size = Vector2(134, 209)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mm0ox"]
+bg_color = Color(0.6080201, 0.5094989, 0.08908323, 1)
+
+[node name="TutorialScene" type="Node2D" unique_id=1396304569]
+script = ExtResource("1_fuokr")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1051689830]
+offset_left = -17.0
+offset_top = -15.0
+offset_right = 1135.0
+offset_bottom = 633.0
+color = Color(0.09411765, 0.1254902, 0.17254902, 1)
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=2083220302]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=788413848]
+position = Vector2(580.5, 579.5)
+shape = SubResource("RectangleShape2D_ruop6")
+debug_color = Color(0.79035884, 0.40940997, 0.35535425, 0.41960785)
+
+[node name="ColorRect" type="ColorRect" parent="Ground" unique_id=1809969236]
+custom_minimum_size = Vector2(1400, 40)
+offset_left = -124.0
+offset_top = 560.0
+offset_right = 1276.0
+offset_bottom = 600.0
+
+[node name="Player" parent="." unique_id=1915667930 instance=ExtResource("1_0tiu2")]
+position = Vector2(200, 500)
+
+[node name="InteractDummyDoor" type="Area2D" parent="." unique_id=813531391]
+position = Vector2(950, 520)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractDummyDoor" unique_id=1946741320]
+position = Vector2(6, -4)
+shape = SubResource("RectangleShape2D_wop4l")
+
+[node name="Label" type="Label" parent="InteractDummyDoor" unique_id=1272005095]
+offset_left = -128.0
+offset_top = -136.0
+offset_right = 149.0
+offset_bottom = -113.0
+theme_override_fonts/font = ExtResource("2_fuokr")
+text = "[E] ENTER TO COMPLETE"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="TutorialUI" type="CanvasLayer" parent="." unique_id=1543921391]
+
+[node name="PanelContainer" type="PanelContainer" parent="TutorialUI" unique_id=622828566]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 37.0
+offset_right = -800.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mm0ox")
+
+[node name="InstructionLabel" type="Label" parent="TutorialUI/PanelContainer" unique_id=1122784550]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fuokr")
+theme_override_font_sizes/font_size = 22
+text = "TUTORIAL: Use A / D or Left / Right Arrows to Walk."
+horizontal_alignment = 1
+
+[node name="GoalBox" type="PanelContainer" parent="TutorialUI" unique_id=197661707]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1451.0
+offset_top = -973.0
+offset_right = -1254.0
+offset_bottom = -898.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="StatusLabel" type="Label" parent="TutorialUI/GoalBox" unique_id=1542958028]
+layout_mode = 2
+text = "[ ] Walk left and right
+[ ] Check your objective
+[ ] Walk to the exit door"
