@@ -22,7 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.050980393, 0.06666667, 0.09019608, 1)
+color = Color(0.047058824, 0.0627451, 0.09019608, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=820636435]
 layout_mode = 1
@@ -31,9 +31,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 60
+theme_override_constants/margin_left = 120
 theme_override_constants/margin_top = 60
-theme_override_constants/margin_right = 60
+theme_override_constants/margin_right = 120
 theme_override_constants/margin_bottom = 60
 
 [node name="ContentVBox" type="VBoxContainer" parent="MarginContainer" unique_id=1368796045]
@@ -52,18 +52,25 @@ theme_override_styles/separator = SubResource("StyleBoxFlat_qkv2j")
 
 [node name="StoryText" type="RichTextLabel" parent="MarginContainer/ContentVBox" unique_id=477362578]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 22
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
+autowrap_mode = 2
 vertical_alignment = 3
 
 [node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/ContentVBox" unique_id=1293247009]
 layout_mode = 2
+theme_override_constants/separation = 24
 alignment = 2
 
 [node name="SkipButton" type="Button" parent="MarginContainer/ContentVBox/ButtonRow" unique_id=1199926492]
+custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
+focus_mode = 0
 text = "SKIP"
 
 [node name="NextButton" type="Button" parent="MarginContainer/ContentVBox/ButtonRow" unique_id=1747681575]
+custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
+focus_mode = 0
 text = "CONTINUE"
