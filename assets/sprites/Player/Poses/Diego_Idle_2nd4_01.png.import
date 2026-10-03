@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pyjdlhi72goq"
-path="res://.godot/imported/player_kick.png-40313c6e67185ffee0dc7efc0cd805b5.ctex"
+uid="uid://dt8f541x6v12n"
+path="res://.godot/imported/Diego_Idle_2nd4_01.png-495d544647657ce14d67d164079a5ad6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Player/Poses/player_kick.png"
-dest_files=["res://.godot/imported/player_kick.png-40313c6e67185ffee0dc7efc0cd805b5.ctex"]
+source_file="res://assets/sprites/Player/Poses/Diego_Idle_2nd4_01.png"
+dest_files=["res://.godot/imported/Diego_Idle_2nd4_01.png-495d544647657ce14d67d164079a5ad6.ctex"]
 
 [params]
 

@@ -1,90 +1,92 @@
-extends Node2D
+# res://singleton/WithdrawalManager.gd
+extends CanvasLayer
 
-@onready var player = $Player
-@onready var instruction_text = $TutorialUI/PanelContainer/InstructionText
-@onready var desk_area = $InteractableItem
-@onready var door_area = $ExitDoor
+@onready var overlay = $Overlay
+@onready var danger_box = $Overlay/DangerBox
+@onready var btn_play = $Overlay/DangerBox/MarginContainer/VBox/BtnContainer/BtnPlay
+@onready var btn_resist = $Overlay/DangerBox/MarginContainer/VBox/BtnContainer/BtnResist
+@onready var notif_sound = $NotifSound
 
-# The 4 strict steps
-enum Step { WALK_LEFT, WALK_RIGHT, INTERACT_BED, EXIT_DOOR }
-var current_step: Step = Step.WALK_LEFT
+var time_since_last_attack: float = 0.0
+var next_attack_threshold: float = 9999.0
+var valid_scenes: Array = ["room", "street", "school"]
 
 func _ready() -> void:
-	# Hide the interact prompts initially so we control when they appear
-	var desk_prompt = desk_area.get_node_or_null("InteractPrompt")
-	if desk_prompt: desk_prompt.hide()
+	overlay.hide()
+	btn_play.pressed.connect(_on_give_in)
+	btn_resist.pressed.connect(_on_resist)
+	_calculate_next_threshold()
+
+func _process(delta: float) -> void:
+	var visits = GameState.sugal_visits if "sugal_visits" in GameState else 0
+	if visits == 0: return # Do nothing if they've never played
 	
-	var door_prompt = door_area.get_node_or_null("DoorPrompt")
-	if door_prompt: door_prompt.hide()
+	var current_scene = get_tree().current_scene
+	if not current_scene: return
 	
-	# Make sure the player can move
-	if player and "current_state" in player:
-		player.current_state = player.State.FREE
+	var scene_name = current_scene.name.to_lower()
+	var in_valid_scene = false
+	for valid in valid_scenes:
+		if scene_name.begins_with(valid):
+			in_valid_scene = true
+			break
+			
+	if not in_valid_scene or overlay.visible: return
+	
+	# Do not interrupt if they are already in a dialogue
+	if "is_dialog_active" in DialogManager and DialogManager.is_dialog_active:
+		return
 		
-	_update_instructions()
+	time_since_last_attack += delta
+	if time_since_last_attack >= next_attack_threshold:
+		_trigger_attack()
 
-func _process(_delta: float) -> void:
-	if not is_instance_valid(player): return
+func _calculate_next_threshold() -> void:
+	time_since_last_attack = 0.0
+	var visits = GameState.sugal_visits if "sugal_visits" in GameState else 0
 	
-	# Get the player's current X position
-	var player_x = player.global_position.x
-	
-	# STEP 1: Walk to the far left
-	if current_step == Step.WALK_LEFT:
-		if player_x < 150: # Adjust this number if it's too far or too close to the left wall
-			current_step = Step.WALK_RIGHT
-			_update_instructions()
-			
-	# STEP 2: Walk to the far right
-	elif current_step == Step.WALK_RIGHT:
-		if player_x > 900: # Adjust this number if it's too far or too close to the right wall
-			current_step = Step.INTERACT_BED
-			_update_instructions()
+	if visits <= 2:
+		next_attack_threshold = randf_range(75.0, 105.0) # Approx 90s
+	elif visits <= 4:
+		next_attack_threshold = randf_range(45.0, 75.0) # Approx 60s
+	else:
+		next_attack_threshold = randf_range(20.0, 40.0) # Approx 30s
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not is_instance_valid(player): return
+func _trigger_attack() -> void:
+	overlay.show()
+	overlay.modulate.a = 0.0
 	
-	if event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and event.keycode == KEY_E):
+	var tween = create_tween()
+	tween.tween_property(overlay, "modulate:a", 1.0, 0.2)
+	
+	if notif_sound.stream != null:
+		notif_sound.play()
 		
-		# STEP 3: Force interaction with the bed
-		if current_step == Step.INTERACT_BED:
-			# BULLETPROOF CHECK: Is the player physically inside the bed's Area2D right now?
-			if desk_area.get_overlapping_bodies().has(player):
-				var desk_prompt = desk_area.get_node_or_null("InteractPrompt")
-				if desk_prompt: desk_prompt.hide()
-				
-				current_step = Step.EXIT_DOOR
-				_update_instructions()
-				
-		# STEP 4: Exit through the door
-		elif current_step == Step.EXIT_DOOR:
-			# BULLETPROOF CHECK: Is the player physically inside the door's Area2D right now?
-			if door_area.get_overlapping_bodies().has(player):
-				# Load using the proper Enum to avoid string path crashes
-				SceneManager.load_scene(SceneManager.GameScene.ROOM)
+	_shake_camera()
 
-func _update_instructions() -> void:
-	var tutorial_arrow = player.get_node_or_null("TutorialArrow")
+func _shake_camera() -> void:
+	var cam = get_viewport().get_camera_2d()
+	if cam:
+		var orig_offset = cam.offset
+		var tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		for i in range(12):
+			tween.tween_property(cam, "offset", orig_offset + Vector2(randf_range(-15, 15), randf_range(-15, 15)), 0.04)
+		tween.tween_property(cam, "offset", orig_offset, 0.04)
+
+func _on_give_in() -> void:
+	overlay.hide()
+	RunState.set_meta("withdrawal_debuff", false) # Cure the debuff
+	_calculate_next_threshold()
 	
-	match current_step:
-		Step.WALK_LEFT:
-			instruction_text.text = "TUTORIAL 1/4: Maglakad pakaliwa (A key o Left Arrow) hanggang sa dulo."
-			if tutorial_arrow: tutorial_arrow.set_target(null) # Hide arrow
-			
-		Step.WALK_RIGHT:
-			instruction_text.text = "TUTORIAL 2/4: Maglakad pakanan (D key o Right Arrow) hanggang sa dulo."
-			if tutorial_arrow: tutorial_arrow.set_target(null)
-			
-		Step.INTERACT_BED:
-			instruction_text.text = "TUTORIAL 3/4: Sundan ang dilaw na arrow sa itaas mo. Lumapit sa kama at pindutin ang [E]."
-			
-			if tutorial_arrow: tutorial_arrow.set_target(desk_area) # Point to the bed
-			var desk_prompt = desk_area.get_node_or_null("InteractPrompt")
-			if desk_prompt: desk_prompt.show()
-			
-		Step.EXIT_DOOR:
-			instruction_text.text = "TUTORIAL 4/4: Sundan ang arrow papunta sa pinto. Pindutin ang [E] para simulan ang laro."
-			
-			if tutorial_arrow: tutorial_arrow.set_target(door_area) # Point to the door
-			var door_prompt = door_area.get_node_or_null("DoorPrompt")
-			if door_prompt: door_prompt.show()
+	# Save position and teleport
+	var players = get_tree().get_nodes_in_group("Player")
+	if players.size() > 0:
+		RunState.interruption_return_x = players[0].global_position.x
+		
+	GameState.last_scene_path = get_tree().current_scene.scene_file_path
+	SceneManager.load_scene("sugal")
+
+func _on_resist() -> void:
+	overlay.hide()
+	RunState.set_meta("withdrawal_debuff", true) # Apply slow-walk penalty
+	_calculate_next_threshold()

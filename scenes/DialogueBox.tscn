@@ -20,6 +20,8 @@ layout_mode = 2
 
 [node name="SpeakerLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=828655120]
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 
 [node name="DialogueText" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1950979162]
 layout_mode = 2
+theme_override_font_sizes/font_size = 19

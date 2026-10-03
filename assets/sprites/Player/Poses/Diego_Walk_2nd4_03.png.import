@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdv2sc2oadp4x"
-path="res://.godot/imported/player_stand.png-7d7e4b4a85141430468f5efe9d3e7e91.ctex"
+uid="uid://dqkjxcvyouqlk"
+path="res://.godot/imported/Diego_Walk_2nd4_03.png-0b1b7db909284d1292ee784ef6a17bb8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Player/Poses/player_stand.png"
-dest_files=["res://.godot/imported/player_stand.png-7d7e4b4a85141430468f5efe9d3e7e91.ctex"]
+source_file="res://assets/sprites/Player/Poses/Diego_Walk_2nd4_03.png"
+dest_files=["res://.godot/imported/Diego_Walk_2nd4_03.png-0b1b7db909284d1292ee784ef6a17bb8.ctex"]
 
 [params]
 

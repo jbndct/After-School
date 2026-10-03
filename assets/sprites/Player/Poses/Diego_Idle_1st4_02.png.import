@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cluua10ttpgdu"
-path="res://.godot/imported/player_cheer1.png-007826f317ec45145780a201d841c62a.ctex"
+uid="uid://b2mnvndn2daxc"
+path="res://.godot/imported/Diego_Idle_1st4_02.png-95733d6b72acba10a5eab7f52767b97c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Player/Poses/player_cheer1.png"
-dest_files=["res://.godot/imported/player_cheer1.png-007826f317ec45145780a201d841c62a.ctex"]
+source_file="res://assets/sprites/Player/Poses/Diego_Idle_1st4_02.png"
+dest_files=["res://.godot/imported/Diego_Idle_1st4_02.png-95733d6b72acba10a5eab7f52767b97c.ctex"]
 
 [params]
 

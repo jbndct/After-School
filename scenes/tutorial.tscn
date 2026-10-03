@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bf6xcd5wgrcm7"]
 
-[ext_resource type="Script" uid="uid://bykw2gjpm4sw5" path="res://scripts/tutorial_scene.gd" id="1_cq4me"]
+[ext_resource type="Script" uid="uid://mskxnfa1uag1" path="res://scripts/tutorial.gd" id="1_cq4me"]
 [ext_resource type="Texture2D" uid="uid://dpnq5m46qlwk2" path="res://assets/sprites/Envi/room.png" id="2_iy4an"]
 [ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="3_a1yrd"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_f5mxk"]
@@ -91,7 +91,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-12, 161)
 scale = Vector2(3, 3)
 
-[node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("5_cy84h")]
+[node name="DialogueBox" parent="Player" unique_id=274261236 instance=ExtResource("5_cy84h")]
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1286947090]
 position = Vector2(-1, 0)
