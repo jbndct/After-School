@@ -3,10 +3,14 @@
 [ext_resource type="Script" uid="uid://oo2b5ly8plli" path="res://scripts/intro_story.gd" id="1_ufiat"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qkv2j"]
-bg_color = Color(0.2, 0.23921569, 0.29411766, 1)
+bg_color = Color(0.024049198, 0.040222786, 0.08531359, 0.90588236)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.61694735, 0.5626994, 0, 1)
 
-[node name="IntroStory" type="Control" unique_id=769935351]
-custom_minimum_size = Vector2(1152, 648)
+[node name="IntroStory" type="Control" unique_id=158445697]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,62 +19,41 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ufiat")
 
-[node name="Background" type="ColorRect" parent="." unique_id=312974130]
+[node name="BackgroundImage" type="TextureRect" parent="." unique_id=1927352897]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.047058824, 0.0627451, 0.09019608, 1)
+expand_mode = 1
+stretch_mode = 6
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=820636435]
+[node name="DialogMargin" type="MarginContainer" parent="." unique_id=86950614]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 120
-theme_override_constants/margin_top = 60
-theme_override_constants/margin_right = 120
-theme_override_constants/margin_bottom = 60
+grow_vertical = 0
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 30
 
-[node name="ContentVBox" type="VBoxContainer" parent="MarginContainer" unique_id=1368796045]
+[node name="PanelContainer" type="PanelContainer" parent="DialogMargin" unique_id=156227745]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qkv2j")
 
-[node name="ChapterTitle" type="Label" parent="MarginContainer/ContentVBox" unique_id=626953655]
+[node name="MarginContainer" type="MarginContainer" parent="DialogMargin/PanelContainer" unique_id=1656315270]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
-theme_override_font_sizes/font_size = 28
-text = "CHAPTER 0: DUE DATE"
-horizontal_alignment = 1
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/ContentVBox" unique_id=177193812]
+[node name="StoryText" type="RichTextLabel" parent="DialogMargin/PanelContainer/MarginContainer" unique_id=1558867951]
 layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxFlat_qkv2j")
-
-[node name="StoryText" type="RichTextLabel" parent="MarginContainer/ContentVBox" unique_id=477362578]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-autowrap_mode = 2
-vertical_alignment = 3
-
-[node name="ButtonRow" type="HBoxContainer" parent="MarginContainer/ContentVBox" unique_id=1293247009]
-layout_mode = 2
-theme_override_constants/separation = 24
-alignment = 2
-
-[node name="SkipButton" type="Button" parent="MarginContainer/ContentVBox/ButtonRow" unique_id=1199926492]
-custom_minimum_size = Vector2(180, 50)
-layout_mode = 2
-focus_mode = 0
-text = "SKIP"
-
-[node name="NextButton" type="Button" parent="MarginContainer/ContentVBox/ButtonRow" unique_id=1747681575]
-custom_minimum_size = Vector2(180, 50)
-layout_mode = 2
-focus_mode = 0
-text = "CONTINUE"

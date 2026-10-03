@@ -1,82 +1,75 @@
 extends Node2D
 
 @onready var player = $Player
-@onready var instruction_label: Label = $TutorialUI/InstructionPanel/InstructionLabel
-@onready var status_label: Label = $TutorialUI/GoalBox/StatusLabel
-@onready var door_area: Area2D = $InteractDummyDoor
+@onready var instruction_text = $TutorialUI/PanelContainer/InstructionText
+@onready var desk_area = $InteractableItem
+@onready var door_area = $ExitDoor
 
 var walked_left: bool = false
 var walked_right: bool = false
-var player_at_door: bool = false
+var near_desk: bool = false
+var near_door: bool = false
 
-enum Step { MOVE, PHONE, DOOR }
-var current_step = Step.MOVE
+# The 4 strict steps
+enum Step { LEARN_MOVE, LEARN_INTERACT, LEARN_PHONE, GO_TO_DOOR }
+var current_step: Step = Step.LEARN_MOVE
 
 func _ready() -> void:
-	if is_instance_valid(door_area):
-		door_area.body_entered.connect(_on_door_entered)
-		door_area.body_exited.connect(_on_door_exited)
+	# Hide the interact prompts initially so we control when they appear
+	$InteractableItem/InteractPrompt.hide()
+	$ExitDoor/DoorPrompt.hide()
 	
-	# Ensure Player starts in free movement mode
-	if player and "current_state" in player:
-		player.current_state = player.State.FREE
-		
-	_update_ui()
+	# Detect when player is near the desk
+	desk_area.body_entered.connect(func(b): if b.is_in_group("Player"): near_desk = true; if current_step == Step.LEARN_INTERACT: $InteractableItem/InteractPrompt.show())
+	desk_area.body_exited.connect(func(b): if b.is_in_group("Player"): near_desk = false; $InteractableItem/InteractPrompt.hide())
+	
+	# Detect when player is near the door
+	door_area.body_entered.connect(func(b): if b.is_in_group("Player"): near_door = true; if current_step == Step.GO_TO_DOOR: $ExitDoor/DoorPrompt.show())
+	door_area.body_exited.connect(func(b): if b.is_in_group("Player"): near_door = false; $ExitDoor/DoorPrompt.hide())
+	
+	# Disable the bouncing tutorial arrow for the tutorial scene to avoid clutter
+	var arrow = player.get_node_or_null("TutorialArrow")
+	if arrow: arrow.queue_free()
+	
+	_update_instructions()
 
 func _process(_delta: float) -> void:
-	if current_step == Step.MOVE:
-		if Input.is_action_pressed("move_left"):
-			walked_left = true
-		if Input.is_action_pressed("move_right"):
-			walked_right = true
-			
+	# STEP 1: Wait for A and D
+	if current_step == Step.LEARN_MOVE:
+		if Input.is_action_pressed("move_left"): walked_left = true
+		if Input.is_action_pressed("move_right"): walked_right = true
+		
 		if walked_left and walked_right:
-			current_step = Step.PHONE
-			_update_ui()
+			current_step = Step.LEARN_INTERACT
+			_update_instructions()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if current_step == Step.PHONE:
-		var pressed_phone = false
-		if event.is_action_pressed("toggle_phone"):
-			pressed_phone = true
-		elif event is InputEventKey and event.pressed and not event.echo:
-			if event.keycode == KEY_TAB:
-				pressed_phone = true
-				
-		if pressed_phone:
-			current_step = Step.DOOR
-			_update_ui()
+	# STEP 2: Force interaction with the desk
+	if current_step == Step.LEARN_INTERACT:
+		if event.is_action_pressed("interact") and near_desk:
+			$InteractableItem/InteractPrompt.hide()
+			current_step = Step.LEARN_PHONE
+			_update_instructions()
 			
-	elif current_step == Step.DOOR and player_at_door:
-		if event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and event.keycode == KEY_E):
+	# STEP 3: Force opening the phone
+	elif current_step == Step.LEARN_PHONE:
+		if event.is_action_pressed("toggle_phone") or (event is InputEventKey and event.pressed and event.keycode == KEY_TAB):
+			current_step = Step.GO_TO_DOOR
+			_update_instructions()
+			
+	# STEP 4: Exit through the door
+	elif current_step == Step.GO_TO_DOOR:
+		if event.is_action_pressed("interact") and near_door:
+			# Tutorial is done! Send them to the real Day 1 Room.
 			SceneManager.load_scene("room")
 
-func _update_ui() -> void:
-	if not is_instance_valid(instruction_label) or not is_instance_valid(status_label):
-		return
-
+func _update_instructions() -> void:
 	match current_step:
-		Step.MOVE:
-			instruction_label.text = "Hakbang 1: Gamitin ang A/D o LEFT/RIGHT Arrow Keys para gumalaw."
-			status_label.text = "[ %s ] Lumakad pakaliwa\n[ %s ] Lumakad pakanan\n[  ] Buksan ang Smartphone (TAB)\n[  ] Pumasok sa Pinto (E)" % [
-				"✓" if walked_left else " ",
-				"✓" if walked_right else " "
-			]
-		Step.PHONE:
-			instruction_label.text = "Hakbang 2: Pindutin ang [TAB] o ang Phone Icon para makita ang pera at gastusin."
-			status_label.text = "[✓] Lumakad pakaliwa\n[✓] Lumakad pakanan\n[  ] Buksan ang Smartphone (TAB)\n[  ] Pumasok sa Pinto (E)"
-		Step.DOOR:
-			instruction_label.text = "Hakbang 3: Lumapit sa pinto sa kanan at pindutin ang [E] upang simulan ang araw."
-			status_label.text = "[✓] Lumakad pakaliwa\n[✓] Lumakad pakanan\n[✓] Nasuri ang Smartphone\n[  ] Pumasok sa Pinto (E)"
-
-func _on_door_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		player_at_door = true
-		var prompt = door_area.get_node_or_null("DoorPrompt")
-		if prompt: prompt.visible = true
-
-func _on_door_exited(body: Node2D) -> void:
-	if body.is_in_group("Player"):
-		player_at_door = false
-		var prompt = door_area.get_node_or_null("DoorPrompt")
-		if prompt: prompt.visible = false
+		Step.LEARN_MOVE:
+			instruction_text.text = "TUTORIAL 1/4: Gamitin ang A / D o Left / Right Arrows para maglakad."
+		Step.LEARN_INTERACT:
+			instruction_text.text = "TUTORIAL 2/4: Lumapit sa desk at pindutin ang [E] para mag-interact."
+		Step.LEARN_PHONE:
+			instruction_text.text = "TUTORIAL 3/4: Pindutin ang [TAB] para makita ang iyong Smartphone."
+		Step.GO_TO_DOOR:
+			instruction_text.text = "TUTORIAL 4/4: Magaling! Lumapit sa pinto at pindutin ang [E] para simulan ang laro."

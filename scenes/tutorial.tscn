@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://baj0v7muyxcrw"]
+[gd_scene format=3 uid="uid://bf6xcd5wgrcm7"]
 
-[ext_resource type="Script" uid="uid://bxdho438bytyt" path="res://scripts/room.gd" id="1_irucb"]
+[ext_resource type="Script" uid="uid://bykw2gjpm4sw5" path="res://scripts/tutorial_scene.gd" id="1_cq4me"]
 [ext_resource type="Texture2D" uid="uid://dpnq5m46qlwk2" path="res://assets/sprites/Envi/room.png" id="2_iy4an"]
 [ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="3_a1yrd"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_f5mxk"]
@@ -23,17 +23,20 @@ font_color = Color(0.8936466, 0.551805, 0, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxe34"]
 size = Vector2(395, 489)
 
-[sub_resource type="LabelSettings" id="LabelSettings_jn645"]
-font = ExtResource("3_a1yrd")
-font_size = 13
-font_color = Color(0.2710485, 0.7376744, 0.5742666, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jn645"]
 size = Vector2(966, 932)
 
-[node name="Room" type="Node2D" unique_id=1908229503]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4kmhl"]
+bg_color = Color(0.05442247, 0.06436433, 0.22343391, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.78740185, 0.7544633, 0.21803655, 1)
+
+[node name="TutorialScene" type="Node2D" unique_id=1620595104]
 position = Vector2(3, 2)
-script = ExtResource("1_irucb")
+script = ExtResource("1_cq4me")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=857301467]
 position = Vector2(83.2, -4.9999847)
@@ -88,16 +91,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-12, 161)
 scale = Vector2(3, 3)
 
-[node name="ObjectiveLabel" type="Label" parent="Player" unique_id=1348700933]
-offset_left = -134.33333
-offset_top = -213.00002
-offset_right = -19.333328
-offset_bottom = -186.00002
-text = "Objective: ..."
-label_settings = SubResource("LabelSettings_jn645")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="DialogueBox" parent="." unique_id=274261236 instance=ExtResource("5_cy84h")]
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1286947090]
@@ -106,6 +99,20 @@ position = Vector2(-1, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=826862855]
 position = Vector2(1494, -70)
 shape = SubResource("RectangleShape2D_jn645")
+
+[node name="TutorialUI" type="CanvasLayer" parent="." unique_id=1214294170]
+
+[node name="PanelContainer" type="PanelContainer" parent="TutorialUI" unique_id=934789248]
+custom_minimum_size = Vector2(0, 80)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4kmhl")
+
+[node name="InstructionText" type="Label" parent="TutorialUI/PanelContainer" unique_id=1938090721]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
 
 [connection signal="body_entered" from="InteractableItem" to="." method="_on_interactable_item_body_entered"]
 [connection signal="body_exited" from="InteractableItem" to="." method="_on_interactable_item_body_exited"]
