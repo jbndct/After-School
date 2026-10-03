@@ -1,8 +1,8 @@
 # res://scripts/menu.gd
 extends Node2D
 
-@onready var play_button = $PlayButton 
-@onready var quit_button = $QuitButton 
+@onready var play_button: Button = find_child("PlayButton", true, false)
+@onready var quit_button: Button = find_child("QuitButton", true, false)
 
 func _ready() -> void:
 	if play_button:
@@ -19,7 +19,7 @@ func _on_play_pressed() -> void:
 	RunState.reset_run() 
 	
 	# Start the game
-	SceneManager.load_scene("room")
+	SceneManager.load_scene("intro")
 
 func _on_quit_pressed() -> void:
 	AudioManager.play_sfx("sfx_ui_click")

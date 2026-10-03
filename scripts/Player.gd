@@ -1,8 +1,9 @@
 # res://scripts/Player.gd
 extends CharacterBody2D
+@onready var sprite = $AnimatedSprite2D
 
-const SPEED = 180.0
-const SPRINT_SPEED = 300.0
+const SPEED = 150.0
+const SPRINT_SPEED = 250.0
 const GRAVITY = 800.0
 
 enum State { FREE, LOCKED }
@@ -25,15 +26,47 @@ func _ready() -> void:
 	EventBus.sugalhub_closed.connect(_on_sugalhub_closed)
 
 func _physics_process(delta: float) -> void:
+	# 1. GRAVITY (We keep this at the top so he falls even if a dialogue pops up mid-air)
 	if not is_on_floor():
-		velocity.y += GRAVITY * delta
+		velocity += get_gravity() * delta
 
-	match current_state:
-		State.FREE:
-			handle_movement(delta)
-		State.LOCKED:
-			handle_locked()
-			
+	# 2. THE DIALOGUE LOCK (This is what was missing)
+	# Checks if DialogManager is active, OR if the room/tutorial script locked the player
+	var is_locked = false
+	if "is_dialog_active" in DialogManager and DialogManager.is_dialog_active:
+		is_locked = true
+	if "current_state" in self and current_state == State.LOCKED:
+		is_locked = true
+
+	if is_locked:
+		velocity.x = move_toward(velocity.x, 0, 300.0) # Force Diego to slide to a halt
+		if is_on_floor():
+			$AnimatedSprite2D.play("idle") # Force him into the idle animation
+		move_and_slide()
+		return # This 'return' completely stops the rest of the movement code below from running!
+
+	# 3. NORMAL MOVEMENT & SPRINTING
+	var direction := Input.get_axis("move_left", "move_right")
+	var speed = 150.0
+	
+	if Input.is_key_pressed(KEY_SHIFT):
+		speed = 250.0 
+		
+	if direction:
+		velocity.x = direction * speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, speed)
+
+	# 4. NORMAL ANIMATION
+	if velocity.x != 0:
+		$AnimatedSprite2D.flip_h = velocity.x < 0
+		if Input.is_key_pressed(KEY_SHIFT):
+			$AnimatedSprite2D.play("run")
+		else:
+			$AnimatedSprite2D.play("walk")
+	else:
+		$AnimatedSprite2D.play("idle")
+
 	move_and_slide()
 
 func handle_movement(delta: float) -> void:
