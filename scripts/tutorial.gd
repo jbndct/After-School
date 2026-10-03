@@ -12,6 +12,8 @@ var current_step: Step = Step.WALK_LEFT
 var sprint_timer: float = 0.0
 
 func _ready() -> void:
+	AudioManager.play_bgm("bg1.mp3")
+	
 	# Hide all "Press E" prompts at the start
 	if desk_area:
 		var p = desk_area.find_child("*Prompt*", true, false)

@@ -4,22 +4,24 @@ extends Control
 @onready var background_image: TextureRect = find_child("BackgroundImage", true, false)
 @onready var story_text: RichTextLabel = find_child("StoryText", true, false)
 
+
+
 # The 5-Slide Visual Novel Story for Diego
 var story_pages: Array[Dictionary] = [
 	{
 		# Slide 1: Character Intro
 		"text": "[center]Kilala mo ba siya? Siya si Diego. Si Diego at isang working student na pinipilit pagsabayin ang kolehiyo at ang paghahanap-buhay para sa kanyang pamilya.[/center]",
-		"image": preload("res://assets/sprites/Envi/room.png") 
+		"image": preload("res://assets/sprites/story1.png") 
 	},
 	{
 		# Slide 2: His Story
 		"text": "[center]Gabi-gabi siyang nakaharap sa computer, hindi dahil siya'y naglalaro, pero dahil sumasagot ng tawag bilang isang call center agent sa graveyard shift. Sa umaga, diretso siya sa klase. Walang pahinga.[/center]",
-		"image": preload("res://assets/sprites/Envi/room.png") 
+		"image": preload("res://assets/sprites/story2.png") 
 	},
 	{
 		# Slide 3: The Problem
 		"text": "[center]Ngunit may malaking problema. May ₱15,000 na tuition deadline si Diego bago matapos ang araw na ito. Kung hindi siya makakabayad, hindi siya makakapag-exam.\n\nKasalukuyang laman ng pitaka: [color=#ff5555]₱3,000[/color].[/center]",
-		"image": preload("res://assets/sprites/Envi/room.png") 
+		"image": preload("res://assets/sprites/story3.png") 
 	},
 	{
 		# Slide 4: The Plan
@@ -38,6 +40,7 @@ var text_tween: Tween
 
 func _ready() -> void:
 	_display_page(0)
+	AudioManager.play_bgm("bgm_hub")
 
 func _input(event: InputEvent) -> void:
 	# Advance story on Left Click, E, Space, or Enter

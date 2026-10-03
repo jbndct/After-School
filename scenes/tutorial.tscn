@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bf6xcd5wgrcm7"]
+[gd_scene format=3 uid="uid://ca5mhvcmwheyf"]
 
 [ext_resource type="Script" uid="uid://mskxnfa1uag1" path="res://scripts/tutorial.gd" id="1_cq4me"]
 [ext_resource type="Texture2D" uid="uid://dpnq5m46qlwk2" path="res://assets/sprites/Envi/room.png" id="2_iy4an"]
