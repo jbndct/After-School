@@ -1,6 +1,6 @@
 {
   "poster_intro_morning": [
-	"💰💵 EZ WIN! Gawing libo ang barya mo sa SugalHub! 100% Legit, no cash-out limit! Spin na idol, baka ikaw na ang next VIP! 🎰",
+	"EZ WIN 💰💵 ! Gawing libo ang barya mo sa SugalHub! 100% Legit, no cash-out limit! Spin na idol, baka ikaw na ang next VIP! 🎰",
 	"Aga-aga, 'yan agad. Sa jeep, sa kanto, puro tap nang tap. Nakakapagod mag-aral tapos makikita mo sila, parang ang dali lang ng buhay.",
     "Focus, Ador. May exam pa mamaya. ...Pero paano kung totoo? Isang spin lang para ma-distract. Para lang gumaan pakiramdam ko. Susubok ba 'ko?"
   ],
@@ -52,19 +52,19 @@
 	"Tapos na exam. Ang bagal ng oras bago mag-shift.",
     "Ang daling i-download nung app ngayon. Isang laro lang, pampagising. Pero alam ko ending niyan. Addiction. Ubos."
   ],
-  "obj_room_clear_head": "Task: Mag-isip-isip muna (Punta sa desk/kama).",
-  "obj_room_to_school": "Task: Pumasok para sa exam.",
-  "obj_room_start_work": "Task: Buksan ang laptop para sa shift.",
-  "obj_room_end_day": "Task: Tapusin ang araw (Punta sa pinto).",
+  "obj_room_clear_head": "LAYUNIN: Mag-isip-isip muna (Punta sa desk/kama).",
+  "obj_room_to_school": "LAYUNIN: Pumasok para sa exam.",
+  "obj_room_start_work": "LAYUNIN: Buksan ang laptop para sa shift.",
+  "obj_room_end_day": "LAYUNIN: Tapusin ang araw (Punta sa pinto).",
   "warn_room_clear_head": "Kailangan ko munang pakalmahin isip ko bago umalis.",
   "warn_room_already_thought": "Naisip ko na 'to. Alis na 'ko.",
   "warn_room_finish_shift": "Teka, di pa tapos shift ko.",
   "warn_room_done_working": "Out na 'ko. Ayoko na, pahinga na.",
-  "obj_school_exam": "Task: I-check ang scholarship exam sa bulletin board.",
-  "obj_school_leave": "Task: Lumabas ng campus.",
+  "obj_school_exam": "LAYUNIN: I-check ang scholarship exam sa bulletin board.",
+  "obj_school_leave": "LAYUNIN: Lumabas ng campus.",
   "warn_school_no_exam": "Di pwedeng umuwi nang di nag-eexam.",
   "warn_school_exam_done": "Tapos na 'to. Oras na para umalis.",
-  "obj_street_school": "Task: Pumunta sa campus.",
-  "obj_street_dorm": "Task: Umuwi ng dorm.",
+  "obj_street_school": "LAYUNIN: Pumunta sa campus.",
+  "obj_street_dorm": "LAYUNIN: Umuwi ng dorm.",
   "warn_street_wrong_way": "Wala akong gagawin dyan ngayon."
 }

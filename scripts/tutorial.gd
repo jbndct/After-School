@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 			
 	# STEP 2: Walk to the far right
 	elif current_step == Step.WALK_RIGHT:
-		if player_x > 900:
+		if player_x > 700:
 			current_step = Step.LEARN_SPRINT
 			_update_instructions()
 			
@@ -53,7 +53,7 @@ func _process(delta: float) -> void:
 		
 		if is_moving and is_sprinting:
 			sprint_timer += delta
-			if sprint_timer > 1.0: # They must run for 1 full second to pass this step
+			if sprint_timer > 3.0: # They must run for 1 full second to pass this step
 				current_step = Step.INTERACT_BED
 				_update_instructions()
 
@@ -85,26 +85,26 @@ func _update_instructions() -> void:
 	
 	match current_step:
 		Step.WALK_LEFT:
-			instruction_text.text = "TUTORIAL 1/5: Maglakad pakaliwa (A key o Left Arrow) papunta sa dulo."
+			instruction_text.text = "TUTORYAL 1/5: Maglakad pakaliwa (A key o Left Arrow) papunta sa dulo."
 			if tutorial_arrow: tutorial_arrow.set_target(null)
 			
 		Step.WALK_RIGHT:
-			instruction_text.text = "TUTORIAL 2/5: Maglakad pakanan (D key o Right Arrow) papunta sa dulo."
+			instruction_text.text = "TUTORYAL 2/5: Maglakad pakanan (D key o Right Arrow) papunta sa dulo."
 			if tutorial_arrow: tutorial_arrow.set_target(null)
 			
 		Step.LEARN_SPRINT:
-			instruction_text.text = "TUTORIAL 3/5: Pindutin nang matagal ang [SHIFT] habang naglalakad para tumakbo (Sprint)."
+			instruction_text.text = "TUTORYAL 3/5: Pindutin nang matagal ang [SHIFT] habang naglalakad para tumakbo (Sprint)."
 			if tutorial_arrow: tutorial_arrow.set_target(null)
 			
 		Step.INTERACT_BED:
-			instruction_text.text = "TUTORIAL 4/5: Sundan ang dilaw na arrow. Lumapit sa kama at pindutin ang [E]."
+			instruction_text.text = "TUTORYAL 4/5: Sundan ang dilaw na arrow. Lumapit sa mga upuan at pindutin ang [E]."
 			if tutorial_arrow and desk_area: tutorial_arrow.set_target(desk_area)
 			if desk_area:
 				var p = desk_area.find_child("*Prompt*", true, false)
 				if p: p.show()
 				
 		Step.EXIT_DOOR:
-			instruction_text.text = "TUTORIAL 5/5: Mahusay! Sundan ang arrow papunta sa pinto. Pindutin ang [E] para simulan."
+			instruction_text.text = "TUTORYAL 5/5: Mahusay! Sundan ang arrow papunta sa pinto. Pindutin ang [E] para simulan."
 			if tutorial_arrow and door_area: tutorial_arrow.set_target(door_area)
 			if door_area:
 				var p = door_area.find_child("*Prompt*", true, false)

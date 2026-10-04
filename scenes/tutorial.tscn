@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ca5mhvcmwheyf"]
 
 [ext_resource type="Script" uid="uid://mskxnfa1uag1" path="res://scripts/tutorial.gd" id="1_cq4me"]
-[ext_resource type="Texture2D" uid="uid://dpnq5m46qlwk2" path="res://assets/sprites/Envi/room.png" id="2_iy4an"]
+[ext_resource type="Texture2D" uid="uid://d0xf5efuns8mh" path="res://assets/sprites/school_inside.png" id="2_cq4me"]
 [ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="3_a1yrd"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_f5mxk"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="5_cy84h"]
@@ -13,7 +13,7 @@ size = Vector2(3601.75, 27.5)
 size = Vector2(901.5, 1060)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ffxv4"]
-size = Vector2(544.5, 245)
+size = Vector2(182, 250.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_jxe34"]
 font = ExtResource("3_a1yrd")
@@ -21,7 +21,7 @@ font_size = 40
 font_color = Color(0.8936466, 0.551805, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxe34"]
-size = Vector2(395, 489)
+size = Vector2(207.5, 489)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jn645"]
 size = Vector2(966, 932)
@@ -41,7 +41,7 @@ script = ExtResource("1_cq4me")
 [node name="Background" type="Sprite2D" parent="." unique_id=857301467]
 position = Vector2(83.2, -4.9999847)
 scale = Vector2(0.5819254, 0.56145835)
-texture = ExtResource("2_iy4an")
+texture = ExtResource("2_cq4me")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1914316027]
 
@@ -52,22 +52,22 @@ shape = SubResource("RectangleShape2D_36trf")
 [node name="LeftWall" type="StaticBody2D" parent="." unique_id=39138454]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=2066318148]
-position = Vector2(-1248.75, -14)
+position = Vector2(-1162, -92)
 shape = SubResource("RectangleShape2D_14vil")
 
 [node name="InteractableItem" type="Area2D" parent="." unique_id=826110394]
 position = Vector2(-143, 44)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableItem" unique_id=1640971554]
-position = Vector2(-252.25, 210.5)
+position = Vector2(-466, 202.75)
 shape = SubResource("RectangleShape2D_ffxv4")
 
 [node name="InteractPrompt" type="Label" parent="InteractableItem" unique_id=1004316630]
-offset_left = -522.0
-offset_top = -10.0
-offset_right = -338.0
-offset_bottom = 35.0
-text = "[E] to Think"
+offset_left = -773.0
+offset_top = 369.0
+offset_right = -179.0
+offset_bottom = 421.0
+text = "Lumapit dito at pindutin ang [E] "
 label_settings = SubResource("LabelSettings_jxe34")
 metadata/_edit_use_anchors_ = true
 
@@ -75,15 +75,15 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(516, -90)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor" unique_id=23486877]
-position = Vector2(410.5, 234.5)
+position = Vector2(161.25, 232)
 shape = SubResource("RectangleShape2D_jxe34")
 
 [node name="DoorPrompt" type="Label" parent="ExitDoor" unique_id=797385000]
-offset_left = 407.0
-offset_top = -79.0
-offset_right = 631.0
-offset_bottom = -27.0
-text = "[E] to Leave"
+offset_left = -84.0
+offset_top = 505.0
+offset_right = 427.0
+offset_bottom = 557.0
+text = "Pindutin ang [E] para umalis"
 label_settings = SubResource("LabelSettings_jxe34")
 metadata/_edit_use_anchors_ = true
 
@@ -97,7 +97,7 @@ scale = Vector2(3, 3)
 position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=826862855]
-position = Vector2(1494, -70)
+position = Vector2(1370, -60)
 shape = SubResource("RectangleShape2D_jn645")
 
 [node name="TutorialUI" type="CanvasLayer" parent="." unique_id=1214294170]

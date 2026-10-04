@@ -21,12 +21,12 @@ var story_pages: Array[Dictionary] = [
 	{
 		# Slide 3: The Problem
 		"text": "[center]Ngunit may malaking problema. May ₱15,000 na tuition deadline si Diego bago matapos ang araw na ito. Kung hindi siya makakabayad, hindi siya makakapag-exam.\n\nKasalukuyang laman ng pitaka: [color=#ff5555]₱3,000[/color].[/center]",
-		"image": preload("res://assets/sprites/story3.png") 
+		"image": preload("res://assets/sprites/story1.png") 
 	},
 	{
 		# Slide 4: The Plan
 		"text": "[center]Ang plano:\n1. Pumasa sa scholarship exam mamaya ([color=#55ff55]+₱5,000[/color]).\n2. Tapusin ang shift sa call center nang walang palya ([color=#55ff55]+₱7,000[/color]).\n\nSaktong ₱15,000. Eksaktong zero ang maiiwan para sa pagkain bukas.[/center]",
-		"image": preload("res://assets/sprites/school_inside.png") 
+		"image": preload("res://assets/sprites/story2.png") 
 	},
 	{
 		# Slide 5: The Temptation
