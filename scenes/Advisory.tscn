@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bkhu3pxnlfhsf"]
+
+[ext_resource type="Script" uid="uid://dqlh0ra2f1tls" path="res://scripts/advisory.gd" id="1_4qbi0"]
+[ext_resource type="Texture2D" uid="uid://c287u8upy8nqb" path="res://assets/sprites/Paalala.png" id="1_hx268"]
+
+[node name="Advisory" type="Control" unique_id=1017656184]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_4qbi0")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=428271275]
+custom_minimum_size = Vector2(1000, 1000)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -3.0
+offset_right = 1938.0
+offset_bottom = 1111.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="WarningImage" type="TextureRect" parent="." unique_id=406629231]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_hx268")

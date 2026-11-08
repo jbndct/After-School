@@ -12,6 +12,7 @@ const SCENES = {
 	"sugal": "res://scenes/SugalHub.tscn",
 	"intro": "res://scenes/IntroStory.tscn",
 	"tutorial": "res://scenes/tutorial.tscn",
+	"advisory": "res://scenes/Advisory.tscn",
 }
 
 func load_scene(scene_key: String) -> void:
