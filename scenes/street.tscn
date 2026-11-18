@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://do08rpnikfwu0" path="res://assets/sprites/street better.png" id="2_5m0si"]
 [ext_resource type="PackedScene" uid="uid://da62va4g22alq" path="res://scenes/Poster.tscn" id="2_wjoh7"]
 [ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="3_5m0si"]
+[ext_resource type="Texture2D" uid="uid://cht7ugpt3fw63" path="res://assets/sprites/Envi/store.png" id="3_dxpu0"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="4_7vr8w"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="5_yrasx"]
 [ext_resource type="PackedScene" uid="uid://biif40fa0fqjc" path="res://scenes/SmartphoneUI.tscn" id="7_5m0si"]
@@ -48,6 +49,11 @@ texture = ExtResource("2_5m0si")
 position = Vector2(7418.0107, 2.1129642)
 scale = Vector2(-0.8554496, 0.99336255)
 texture = ExtResource("2_5m0si")
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=205331908]
+position = Vector2(40.37216, 616.62494)
+scale = Vector2(0.21342728, 0.21535963)
+texture = ExtResource("3_dxpu0")
 
 [node name="HomeEntrance" type="Area2D" parent="." unique_id=6531692]
 position = Vector2(-1556, -68)

@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cw7sf3wc3cb2s" path="res://assets/sprites/Envi/Clouds 2/1.png" id="4_oebmy"]
 [ext_resource type="Texture2D" uid="uid://ytejvyvygk40" path="res://assets/sprites/Envi/Clouds 2/2.png" id="5_2xdlq"]
 [ext_resource type="Texture2D" uid="uid://kixk4kcfp6k4" path="res://assets/sprites/Envi/Frame 20.png" id="8_2xdlq"]
+[ext_resource type="Texture2D" uid="uid://do08rpnikfwu0" path="res://assets/sprites/street better.png" id="8_dkrv1"]
+[ext_resource type="Texture2D" uid="uid://cht7ugpt3fw63" path="res://assets/sprites/Envi/store.png" id="9_dkrv1"]
 
 [sub_resource type="Animation" id="Animation_8lj2j"]
 length = 0.001
@@ -167,3 +169,13 @@ texture = ExtResource("5_2xdlq")
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 5, -10)
 cast_shadow = 0
 texture = ExtResource("8_2xdlq")
+
+[node name="Buildings2" type="Sprite3D" parent="." unique_id=1068555914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.9232445, -9.413305)
+cast_shadow = 0
+texture = ExtResource("8_dkrv1")
+
+[node name="tindahan" type="Sprite3D" parent="." unique_id=673985735]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 3, 2.6, -9.413)
+cast_shadow = 0
+texture = ExtResource("9_dkrv1")

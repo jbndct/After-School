@@ -18,6 +18,8 @@ border_width_bottom = 1
 bg_color = Color(0, 0, 0, 0)
 border_width_bottom = 1
 
+[sub_resource type="LabelSettings" id="LabelSettings_l0ne0"]
+
 [node name="ScholarshipMinigame" type="Control" unique_id=871926095]
 layout_mode = 3
 anchors_preset = 15
@@ -199,6 +201,7 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "SCHOLARSHIP EXAM"
+label_settings = SubResource("LabelSettings_l0ne0")
 
 [node name="Label2" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=25717864]
 layout_mode = 2

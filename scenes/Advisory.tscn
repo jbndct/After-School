@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bkhu3pxnlfhsf"]
 
 [ext_resource type="Script" uid="uid://dqlh0ra2f1tls" path="res://scripts/advisory.gd" id="1_4qbi0"]
-[ext_resource type="Texture2D" uid="uid://c287u8upy8nqb" path="res://assets/sprites/Paalala.png" id="1_hx268"]
+[ext_resource type="Texture2D" uid="uid://b0h3vx7u6d1hg" path="res://assets/sprites/NOTICE.png" id="2_4qbi0"]
 
 [node name="Advisory" type="Control" unique_id=1017656184]
 layout_mode = 3
@@ -24,6 +24,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="WarningImage" type="TextureRect" parent="." unique_id=406629231]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("1_hx268")
+offset_right = 3876.0
+offset_bottom = 2204.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_4qbi0")
