@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c63bdg0dakirq"]
 
 [ext_resource type="Script" uid="uid://cwq6537dkcbgi" path="res://scripts/settings.gd" id="1_rbmmp"]
-[ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="2_46duy"]
-[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/ui/IosevkaCharon-Regular.ttf" id="3_1dggd"]
+[ext_resource type="Texture2D" uid="uid://b8cnjbjdxsa7d" path="res://assets/sprites/Setting.png" id="2_46duy"]
+[ext_resource type="FontFile" uid="uid://mqtoemlmvk7v" path="res://assets/sprites/StackSansHeadline-VariableFont_wght.ttf" id="3_1dggd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4ih8"]
 bg_color = Color(1, 0.98039216, 0.9529412, 1)
@@ -15,11 +15,6 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-
-[sub_resource type="LabelSettings" id="LabelSettings_8e7v8"]
-font = ExtResource("2_46duy")
-font_size = 30
-font_color = Color(0.8901961, 0.54509807, 0.023529412, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_j1j16"]
 font = ExtResource("3_1dggd")
@@ -45,7 +40,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.4862745)
+color = Color(0, 0, 0, 0.5764706)
 
 [node name="PopupPanel" type="PanelContainer" parent="Overlay" unique_id=432025409]
 custom_minimum_size = Vector2(400, 0)
@@ -70,16 +65,14 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
+[node name="Sprite2D" type="Sprite2D" parent="Overlay/PopupPanel/Padding" unique_id=574353953]
+position = Vector2(206, 143.5)
+scale = Vector2(0.9024768, 0.907767)
+texture = ExtResource("2_46duy")
+
 [node name="VBox" type="VBoxContainer" parent="Overlay/PopupPanel/Padding" unique_id=447342002]
 layout_mode = 2
 theme_override_constants/separation = 20
-
-[node name="Title" type="Label" parent="Overlay/PopupPanel/Padding/VBox" unique_id=266788179]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "SETTINGS"
-label_settings = SubResource("LabelSettings_8e7v8")
-horizontal_alignment = 1
 
 [node name="AudioBox" type="VBoxContainer" parent="Overlay/PopupPanel/Padding/VBox" unique_id=1304864145]
 layout_mode = 2
