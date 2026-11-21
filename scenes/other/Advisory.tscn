@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bkhu3pxnlfhsf"]
 
-[ext_resource type="Script" uid="uid://dqlh0ra2f1tls" path="res://scripts/advisory.gd" id="1_4qbi0"]
-[ext_resource type="Texture2D" uid="uid://b0h3vx7u6d1hg" path="res://assets/sprites/NOTICE.png" id="2_4qbi0"]
+[ext_resource type="Script" uid="uid://dqlh0ra2f1tls" path="res://scripts/advisory.gd" id="1_pscrt"]
+[ext_resource type="Texture2D" uid="uid://b0h3vx7u6d1hg" path="res://assets/sprites/NOTICE.png" id="2_wpvgu"]
 
 [node name="Advisory" type="Control" unique_id=1017656184]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_4qbi0")
+script = ExtResource("1_pscrt")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=428271275]
 custom_minimum_size = Vector2(1000, 1000)
@@ -27,4 +27,4 @@ layout_mode = 0
 offset_right = 3876.0
 offset_bottom = 2204.0
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_4qbi0")
+texture = ExtResource("2_wpvgu")

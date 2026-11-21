@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d0xf5efuns8mh" path="res://assets/sprites/school_inside.png" id="2_oaecj"]
 [ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="3_7cd4u"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="5_x8rpw"]
-[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/DialogueBox.tscn" id="6_vrcpw"]
+[ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/archive/DialogueBox.tscn" id="6_vrcpw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k7vhd"]
 size = Vector2(327, 1130)
