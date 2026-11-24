@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b5ub56ptfjitn"]
 
-[ext_resource type="Script" uid="uid://dqlh0ra2f1tls" path="res://scripts/advisory.gd" id="1_a0na0"]
+[ext_resource type="Script" uid="uid://bs34n6clcud5c" path="res://scenes/other/intrologo.gd" id="1_a0na0"]
 [ext_resource type="Texture2D" uid="uid://dcxqnvq5bmpth" path="res://assets/sprites/logointro.png" id="2_a0na0"]
 
-[node name="Advisory" type="Control" unique_id=1017656184]
+[node name="IntroLogo" type="Control" unique_id=1017656184]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_a0na0")
@@ -22,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="WarningImage" type="TextureRect" parent="." unique_id=406629231]
+[node name="IntroLogo" type="TextureRect" parent="." unique_id=406629231]
 layout_mode = 0
 offset_right = 3876.0
 offset_bottom = 2204.0
