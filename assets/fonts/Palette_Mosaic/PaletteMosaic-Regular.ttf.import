@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cjsg7uniky1fk"
-path="res://.godot/imported/IosevkaCharon-Regular.ttf-90e0ed8de076c6dd16b8ed02a587146e.fontdata"
+uid="uid://dl5rfr6uvie4r"
+path="res://.godot/imported/PaletteMosaic-Regular.ttf-0a6a29b2115e8cb8664e3156d1d37575.fontdata"
 
 [deps]
 
-source_file="res://assets/ui/IosevkaCharon-Regular.ttf"
-dest_files=["res://.godot/imported/IosevkaCharon-Regular.ttf-90e0ed8de076c6dd16b8ed02a587146e.fontdata"]
+source_file="res://assets/fonts/Palette_Mosaic/PaletteMosaic-Regular.ttf"
+dest_files=["res://.godot/imported/PaletteMosaic-Regular.ttf-0a6a29b2115e8cb8664e3156d1d37575.fontdata"]
 
 [params]
 

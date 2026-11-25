@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://0yurno14cocl"
-path="res://.godot/imported/PlayfairDisplay-BlackItalic.ttf-bb1f480b5a6495b7c4ee29fc2d7739ac.fontdata"
+uid="uid://cjklufm6hj6m5"
+path="res://.godot/imported/StackSansHeadline-SemiBold.ttf-4baa7164ec29a05e1273089e318debc8.fontdata"
 
 [deps]
 
-source_file="res://assets/ui/PlayfairDisplay-BlackItalic.ttf"
-dest_files=["res://.godot/imported/PlayfairDisplay-BlackItalic.ttf-bb1f480b5a6495b7c4ee29fc2d7739ac.fontdata"]
+source_file="res://assets/fonts/Stack_Sans_Headline/static/StackSansHeadline-SemiBold.ttf"
+dest_files=["res://.godot/imported/StackSansHeadline-SemiBold.ttf-4baa7164ec29a05e1273089e318debc8.fontdata"]
 
 [params]
 

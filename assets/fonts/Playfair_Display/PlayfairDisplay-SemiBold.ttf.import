@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cjrah3cv7qhl5"
-path="res://.godot/imported/PlayfairDisplay-Italic.ttf-2aee7660e5af698057241839d1d9cd76.fontdata"
+uid="uid://con7bb4l0h6a"
+path="res://.godot/imported/PlayfairDisplay-SemiBold.ttf-949bf49733a874e3d3dd6aa3c636a2dd.fontdata"
 
 [deps]
 
-source_file="res://assets/ui/PlayfairDisplay-Italic.ttf"
-dest_files=["res://.godot/imported/PlayfairDisplay-Italic.ttf-2aee7660e5af698057241839d1d9cd76.fontdata"]
+source_file="res://assets/fonts/Playfair_Display/PlayfairDisplay-SemiBold.ttf"
+dest_files=["res://.godot/imported/PlayfairDisplay-SemiBold.ttf-949bf49733a874e3d3dd6aa3c636a2dd.fontdata"]
 
 [params]
 

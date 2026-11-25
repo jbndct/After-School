@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://usltlsyb863f"
-path="res://.godot/imported/IosevkaCharon-Bold.ttf-2a3d5756d097bb4d1697812e6ebbf645.fontdata"
+uid="uid://cmoc104af0wkt"
+path="res://.godot/imported/StackSansHeadline-ExtraLight.ttf-a10fc346aef707660650b73c9937f2fe.fontdata"
 
 [deps]
 
-source_file="res://assets/ui/IosevkaCharon-Bold.ttf"
-dest_files=["res://.godot/imported/IosevkaCharon-Bold.ttf-2a3d5756d097bb4d1697812e6ebbf645.fontdata"]
+source_file="res://assets/fonts/Stack_Sans_Headline/static/StackSansHeadline-ExtraLight.ttf"
+dest_files=["res://.godot/imported/StackSansHeadline-ExtraLight.ttf-a10fc346aef707660650b73c9937f2fe.fontdata"]
 
 [params]
 

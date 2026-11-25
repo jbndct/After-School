@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://0sq6txs0u20f"
-path="res://.godot/imported/PlayfairDisplay-MediumItalic.ttf-452695b702cdfd66bf381962a4ba5e50.fontdata"
+uid="uid://chsxf23sbt03l"
+path="res://.godot/imported/StackSansHeadline-Light.ttf-85283c1deaf4ce361c8a1b1984c65895.fontdata"
 
 [deps]
 
-source_file="res://assets/ui/PlayfairDisplay-MediumItalic.ttf"
-dest_files=["res://.godot/imported/PlayfairDisplay-MediumItalic.ttf-452695b702cdfd66bf381962a4ba5e50.fontdata"]
+source_file="res://assets/fonts/Stack_Sans_Headline/static/StackSansHeadline-Light.ttf"
+dest_files=["res://.godot/imported/StackSansHeadline-Light.ttf-85283c1deaf4ce361c8a1b1984c65895.fontdata"]
 
 [params]
 

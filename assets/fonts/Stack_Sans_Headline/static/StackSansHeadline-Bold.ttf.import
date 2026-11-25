@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://vssk1vottatk"
-path="res://.godot/imported/PlayfairDisplay-Regular.ttf-509426d07d7500dda81c609674220101.fontdata"
+uid="uid://6kdt087x7r2n"
+path="res://.godot/imported/StackSansHeadline-Bold.ttf-b9b2986a657ddace1b995ea4ec3311c7.fontdata"
 
 [deps]
 
-source_file="res://assets/ui/PlayfairDisplay-Regular.ttf"
-dest_files=["res://.godot/imported/PlayfairDisplay-Regular.ttf-509426d07d7500dda81c609674220101.fontdata"]
+source_file="res://assets/fonts/Stack_Sans_Headline/static/StackSansHeadline-Bold.ttf"
+dest_files=["res://.godot/imported/StackSansHeadline-Bold.ttf-b9b2986a657ddace1b995ea4ec3311c7.fontdata"]
 
 [params]
 

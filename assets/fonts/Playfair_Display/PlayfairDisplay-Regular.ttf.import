@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bp6lsxjeesq0t"
-path="res://.godot/imported/PlayfairDisplay-SemiBoldItalic.ttf-0b0715442e35f3151c9041409df0ecfb.fontdata"
+uid="uid://vssk1vottatk"
+path="res://.godot/imported/PlayfairDisplay-Regular.ttf-81174e732558b6014a9df08ddc2a538f.fontdata"
 
 [deps]
 
-source_file="res://assets/ui/PlayfairDisplay-SemiBoldItalic.ttf"
-dest_files=["res://.godot/imported/PlayfairDisplay-SemiBoldItalic.ttf-0b0715442e35f3151c9041409df0ecfb.fontdata"]
+source_file="res://assets/fonts/Playfair_Display/PlayfairDisplay-Regular.ttf"
+dest_files=["res://.godot/imported/PlayfairDisplay-Regular.ttf-81174e732558b6014a9df08ddc2a538f.fontdata"]
 
 [params]
 
