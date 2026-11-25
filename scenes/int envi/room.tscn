@@ -4,7 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="2_14vil"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/archive/DialogueBox.tscn" id="2_85yof"]
 [ext_resource type="Texture2D" uid="uid://dpnq5m46qlwk2" path="res://assets/sprites/Envi/room.png" id="2_jn645"]
-[ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/ui/IosevkaCharon-Bold.ttf" id="3_jxe34"]
+[ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/fonts/Iosevka_Charon/IosevkaCharon-Bold.ttf" id="3_jxe34"]
+[ext_resource type="PackedScene" uid="uid://c8gb3o13pjyo8" path="res://scenes/ui/DialogueBubble.tscn" id="6_b7wkw"]
+[ext_resource type="PackedScene" uid="uid://c5dijak1l4hwq" path="res://scenes/ui/MissionBanner.tscn" id="7_sxsmd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_36trf"]
 size = Vector2(3601.75, 27.5)
@@ -89,6 +91,7 @@ position = Vector2(-12, 161)
 scale = Vector2(3, 3)
 
 [node name="ObjectiveLabel" type="Label" parent="Player" unique_id=1348700933]
+visible = false
 offset_left = -134.33333
 offset_top = -213.00002
 offset_right = -19.333328
@@ -106,6 +109,25 @@ position = Vector2(-1, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=826862855]
 position = Vector2(1494, -70)
 shape = SubResource("RectangleShape2D_jn645")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1729600284]
+layer = 10
+
+[node name="DialogueBubble" parent="UI" unique_id=1604241337 instance=ExtResource("6_b7wkw")]
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 3.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MissionBanner" parent="UI" unique_id=1150952867 instance=ExtResource("7_sxsmd")]
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 3.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="body_entered" from="InteractableItem" to="." method="_on_interactable_item_body_entered"]
 [connection signal="body_exited" from="InteractableItem" to="." method="_on_interactable_item_body_exited"]

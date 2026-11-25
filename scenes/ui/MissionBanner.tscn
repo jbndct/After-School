@@ -1,28 +1,28 @@
 [gd_scene format=3 uid="uid://c5dijak1l4hwq"]
 
 [ext_resource type="Script" uid="uid://cnvkvtwylbiwb" path="res://scripts/ui/mission_banner.gd" id="1_lxlvq"]
-[ext_resource type="Script" uid="uid://sj1qtnwcv4yy" path="res://scripts/ui/typewriter_label.gd" id="2_u5jjf"]
 
-[node name="MissionBanner" type="Control" unique_id=854453947]
+[node name="MissionBanner" type="Control" unique_id=1150952867]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource("1_lxlvq")
 
-[node name="Top" type="CenterContainer" parent="." unique_id=1235782730]
+[node name="Top" type="CenterContainer" parent="." unique_id=1282661876]
 layout_mode = 0
 anchor_right = 1.0
-offset_top = 32.0
+offset_top = 85.0
+offset_bottom = 105.0
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="Top" unique_id=857227820]
+[node name="Panel" type="PanelContainer" parent="Top" unique_id=1958654734]
 layout_mode = 2
 mouse_filter = 2
 theme_type_variation = &"MissionPanel"
 
-[node name="Text" type="RichTextLabel" parent="Top/Panel" unique_id=306798216]
+[node name="Text" type="RichTextLabel" parent="Top/Panel" unique_id=753555134]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
@@ -30,4 +30,3 @@ bbcode_enabled = true
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
-script = ExtResource("2_u5jjf")

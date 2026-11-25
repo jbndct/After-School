@@ -22,6 +22,7 @@ font_color = Color(0.8901961, 0.54509807, 0.023529412, 1)
 
 [node name="SettingsMenu" type="CanvasLayer" unique_id=1876814777]
 process_mode = 3
+layer = 11
 script = ExtResource("1_rbmmp")
 
 [node name="Overlay" type="Control" parent="." unique_id=1528647471]

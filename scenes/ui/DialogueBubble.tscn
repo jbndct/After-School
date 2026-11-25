@@ -2,32 +2,33 @@
 
 [ext_resource type="Script" uid="uid://cxwr6u4kbyq7" path="res://scripts/ui/dialogue_bubble.gd" id="1_yyqoo"]
 [ext_resource type="Script" uid="uid://sj1qtnwcv4yy" path="res://scripts/ui/typewriter_label.gd" id="2_inkug"]
+[ext_resource type="AudioStream" uid="uid://fr0p2pure0px" path="res://assets/audio/sfx/typing.wav" id="3_inkug"]
 [ext_resource type="Script" uid="uid://cbqltl8phhq8u" path="res://scripts/ui/triangle_icon.gd" id="3_ta3ge"]
 
-[node name="DialogueBubble" type="Control" unique_id=50263356]
+[node name="DialogueBubble" type="Control" unique_id=1604241337]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource("1_yyqoo")
 
-[node name="Bubble" type="VBoxContainer" parent="." unique_id=1542822618]
+[node name="Bubble" type="VBoxContainer" parent="." unique_id=33753779]
 layout_mode = 0
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Panel" type="PanelContainer" parent="Bubble" unique_id=548162597]
+[node name="Panel" type="PanelContainer" parent="Bubble" unique_id=1811285476]
 layout_mode = 2
 mouse_filter = 2
 theme_type_variation = &"DialogueBubble"
 
-[node name="Row" type="HBoxContainer" parent="Bubble/Panel" unique_id=864699868]
+[node name="Row" type="HBoxContainer" parent="Bubble/Panel" unique_id=1503813634]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="Text" type="RichTextLabel" parent="Bubble/Panel/Row" unique_id=1333387590]
+[node name="Text" type="RichTextLabel" parent="Bubble/Panel/Row" unique_id=552677298]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
@@ -38,17 +39,18 @@ bbcode_enabled = true
 fit_content = true
 scroll_active = false
 script = ExtResource("2_inkug")
+blip_sound = ExtResource("3_inkug")
 
-[node name="SkipCol" type="VBoxContainer" parent="Bubble/Panel/Row" unique_id=2073873761]
+[node name="SkipCol" type="VBoxContainer" parent="Bubble/Panel/Row" unique_id=1405649518]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Spacer" type="Control" parent="Bubble/Panel/Row/SkipCol" unique_id=1483745835]
+[node name="Spacer" type="Control" parent="Bubble/Panel/Row/SkipCol" unique_id=510165963]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="SkipIcon" type="Control" parent="Bubble/Panel/Row/SkipCol" unique_id=2136603295]
+[node name="SkipIcon" type="Control" parent="Bubble/Panel/Row/SkipCol" unique_id=1969298667]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(10, 12)
 layout_mode = 2
@@ -56,7 +58,7 @@ mouse_filter = 2
 script = ExtResource("3_ta3ge")
 points_down = false
 
-[node name="Tail" type="Control" parent="Bubble" unique_id=1874336791]
+[node name="Tail" type="Control" parent="Bubble" unique_id=1199535083]
 custom_minimum_size = Vector2(24, 12)
 layout_mode = 2
 size_flags_horizontal = 4

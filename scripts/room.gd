@@ -1,13 +1,21 @@
 # res://scripts/room.gd
 extends Node2D
-
 @onready var player = $Player
-@onready var objective_label = $Player/ObjectiveLabel
+@onready var bubble = $UI/DialogueBubble
+@onready var mission = $UI/MissionBanner
 @onready var interact_prompt = $InteractableItem/InteractPrompt
 @onready var door_prompt = $ExitDoor/DoorPrompt
 
 var player_in_interact_zone: bool = false
 var player_at_door: bool = false
+
+# Every time the objective text changes, the mission banner types it out
+var objective_text: String = "":
+	set(value):
+		if value == objective_text:
+			return
+		objective_text = value
+		mission.show_mission(value)
 
 func _ready() -> void:
 	AudioManager.play_bgm("bgm_hub")
@@ -21,6 +29,9 @@ func _ready() -> void:
 	if not DialogManager.dialog_finished.is_connected(_on_dialogue_finished):
 		DialogManager.dialog_finished.connect(_on_dialogue_finished)
 	
+	if not bubble.dialogue_finished.is_connected(_on_dialogue_finished):
+		bubble.dialogue_finished.connect(_on_dialogue_finished)
+		
 	update_objectives()
 
 func update_objectives() -> void:
@@ -29,22 +40,22 @@ func update_objectives() -> void:
 	var arrow = player.get_node_or_null("TutorialArrow")
 	
 	if not RunState.completed_dialogues.has(dialogue_id):
-		objective_label.text = DialogManager.get_text("obj_room_clear_head")
+		objective_text = DialogManager.get_text("obj_room_clear_head")
 		if arrow: arrow.set_target($InteractableItem)
 	else:
 		if phase == "morning":
-			objective_label.text = DialogManager.get_text("obj_room_to_school")
+			objective_text = DialogManager.get_text("obj_room_to_school")
 			if arrow: arrow.set_target($ExitDoor)
 		elif phase == "night":
 			if RunState.has_meta("work_shift_done"):
-				objective_label.text = DialogManager.get_text("obj_room_end_day")
+				objective_text = DialogManager.get_text("obj_room_end_day")
 				if arrow: arrow.set_target($ExitDoor)
 			else:
-				objective_label.text = DialogManager.get_text("obj_room_start_work")
+				objective_text = DialogManager.get_text("obj_room_start_work")
 				if arrow: arrow.set_target($InteractableItem)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if DialogManager.is_dialog_active:
+	if DialogManager.is_dialog_active or bubble.is_active:
 		return
 		
 	if event.is_action_pressed("interact"):
@@ -58,7 +69,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if RunState.completed_dialogues.has(dialogue_id):
 				if phase == "night" and not RunState.has_meta("work_shift_done"):
 					AudioManager.play_sfx("sfx_error_buzz")
-					objective_label.text = DialogManager.get_text("warn_room_finish_shift")
+					objective_text = DialogManager.get_text("warn_room_finish_shift")
 					await get_tree().create_timer(2.0).timeout
 					update_objectives()
 					return
@@ -69,7 +80,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				SceneManager.advance_story("room")
 			else:
 				AudioManager.play_sfx("sfx_error_buzz")
-				objective_label.text = DialogManager.get_text("warn_room_clear_head")
+				objective_text = DialogManager.get_text("warn_room_clear_head")
 				await get_tree().create_timer(2.0).timeout
 				update_objectives()
 
@@ -91,7 +102,7 @@ func trigger_interaction() -> void:
 		if phase == "night":
 			if RunState.has_meta("work_shift_done"):
 				AudioManager.play_sfx("sfx_error_buzz")
-				objective_label.text = DialogManager.get_text("warn_room_done_working")
+				objective_text = DialogManager.get_text("warn_room_done_working")
 				await get_tree().create_timer(2.0).timeout
 				update_objectives()
 			else:
@@ -101,7 +112,7 @@ func trigger_interaction() -> void:
 				SceneManager.load_scene("work")
 		elif phase == "morning":
 			AudioManager.play_sfx("sfx_error_buzz")
-			objective_label.text = DialogManager.get_text("warn_room_already_thought")
+			objective_text = DialogManager.get_text("warn_room_already_thought")
 			await get_tree().create_timer(2.0).timeout
 			update_objectives()
 
