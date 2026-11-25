@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dwt2fwn53txa7" path="res://scripts/menu.gd" id="1_xdvgc"]
 [ext_resource type="Texture2D" uid="uid://2eafws65ynyr" path="res://assets/sprites/start game.png" id="2_jmdev"]
 [ext_resource type="Texture2D" uid="uid://dx0qeup43qcsy" path="res://assets/sprites/settings button.png" id="3_b6cxs"]
-[ext_resource type="Texture2D" uid="uid://c0m87v1own4cs" path="res://assets/sprites/bg menu.png" id="4_aaywf"]
+[ext_resource type="Texture2D" uid="uid://dmeu6vccsdyx2" path="res://assets/sprites/menu.jpg" id="4_jmdev"]
 [ext_resource type="Texture2D" uid="uid://c41hw7a6h15wd" path="res://assets/sprites/title menu (2).png" id="5_1abgu"]
 
 [node name="Menu" type="Node2D" unique_id=1338268759]
@@ -17,10 +17,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -181.0
-offset_top = 343.0
-offset_right = 683.0
-offset_bottom = 733.0
+offset_left = 293.0
+offset_top = -16.0
+offset_right = 847.0
+offset_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
@@ -47,12 +47,12 @@ icon = ExtResource("3_b6cxs")
 flat = true
 
 [node name="Background" type="Sprite2D" parent="." unique_id=2051250186]
-position = Vector2(1008, 599.49994)
-scale = Vector2(0.7479853, 0.7923176)
-texture = ExtResource("4_aaywf")
+position = Vector2(955, 527)
+scale = Vector2(1.0135417, 1.0222223)
+texture = ExtResource("4_jmdev")
 
 [node name="Title" type="Sprite2D" parent="." unique_id=2043950573]
-position = Vector2(994.99994, 535)
+position = Vector2(1387, 435)
 scale = Vector2(0.669, 0.7)
 texture = ExtResource("5_1abgu")
 
