@@ -44,9 +44,9 @@ func _ready() -> void:
 	show_menu()
 
 func _setup_button_connections() -> void:
-	btn_slots.pressed.connect(_on_game_selected.bind("res://scenes/sugal_slots.tscn"))
-	btn_parlay.pressed.connect(_on_game_selected.bind("res://scenes/sugal_parlay.tscn"))
-	btn_roulette.pressed.connect(_on_game_selected.bind("res://scenes/sugal_roulette.tscn"))
+	btn_slots.pressed.connect(_on_game_selected.bind("res://scenes/minigames/sugal_slots.tscn"))
+	btn_parlay.pressed.connect(_on_game_selected.bind("res://scenes/minigames/sugal_parlay.tscn"))
+	btn_roulette.pressed.connect(_on_game_selected.bind("res://scenes/minigames/sugal_roulette.tscn"))
 	btn_exit.pressed.connect(_on_cash_out_pressed)
 	
 	var all_btns = [btn_slots, btn_parlay, btn_roulette, btn_exit]
