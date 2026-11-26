@@ -19,6 +19,7 @@ var gambling_net_result: int = 0
 var current_phase: String = "morning"
 var previous_location: String = ""
 var interruption_return_x: float = 0.0
+var credits_only: bool = false
 
 # --- RETROFITTED DIALOGUE STATE ---
 var completed_dialogues: Dictionary = {}
@@ -45,3 +46,4 @@ func reset_run() -> void:
 	completed_dialogues.clear()
 	if has_meta("work_shift_done"):
 		remove_meta("work_shift_done")
+	credits_only = false

@@ -19,15 +19,23 @@ var scroll_speed: float = 40.0
 func _ready() -> void:
 	EventBus.sugalhub_closed.emit()
 	
+	skip_button.pressed.connect(_on_skip_pressed)
+	_setup_credits()
+	
+	if RunState.credits_only:
+		RunState.credits_only = false
+		story_container.hide()
+		credits_container.show()
+		current_state = State.CREDITS
+		skip_button.text = "Back to Menu"
+		return
+	
 	story_container.show()
 	credits_container.hide()
-	
-	skip_button.pressed.connect(_on_skip_pressed)
 	skip_button.text = "Fast Forward"
 	
 	_evaluate_run()
-	_setup_credits()
-
+	
 func _evaluate_run() -> void:
 	var ending_title = ""
 	var ending_body = ""

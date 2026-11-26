@@ -13,6 +13,8 @@ func _ready() -> void:
 		quit_button.pressed.connect(_on_quit_pressed)
 	if settings_button:
 		settings_button.pressed.connect(_on_settings_pressed)
+	if credits_button:
+		credits_button.pressed.connect(_on_credits_pressed)
 		
 	AudioManager.play_bgm("bgm_menu")
 
@@ -32,3 +34,8 @@ func _on_quit_pressed() -> void:
 func _on_settings_pressed() -> void:
 	AudioManager.play_sfx("sfx_ui_click")
 	SettingsMenu._open_menu()
+	
+func _on_credits_pressed() -> void:
+	AudioManager.play_sfx("sfx_ui_click")
+	RunState.credits_only = true
+	SceneManager.load_scene("ending")
