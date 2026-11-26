@@ -1,55 +1,65 @@
 [gd_scene format=3 uid="uid://dfrd31wjhtut6"]
 
 [ext_resource type="Script" uid="uid://6yqcjhu0cpsh" path="res://scripts/Player.gd" id="1_p0vlq"]
-[ext_resource type="Texture2D" uid="uid://bsmhjgp84hu0b" path="res://assets/sprites/Player/Poses/Diego_Idle_1st4_01.png" id="2_d3wef"]
-[ext_resource type="Texture2D" uid="uid://driccfchl5i8w" path="res://assets/sprites/Player/Poses/Diego_Idle_1st4_02.png" id="3_o4126"]
-[ext_resource type="Texture2D" uid="uid://b1mcesx3wj271" path="res://assets/sprites/Player/Poses/Diego_Idle_1st4_03.png" id="4_lkdrv"]
-[ext_resource type="Texture2D" uid="uid://cpd4svbbllxst" path="res://assets/sprites/Player/Poses/Diego_Idle_1st4_04.png" id="5_p7iby"]
+[ext_resource type="Texture2D" uid="uid://cn0kj8q1ooi60" path="res://assets/sprites/Player/sheetwalk.jpg" id="3_qu4a1"]
 [ext_resource type="PackedScene" uid="uid://biif40fa0fqjc" path="res://scenes/other/SmartphoneUI.tscn" id="5_qu4a1"]
-[ext_resource type="Texture2D" uid="uid://d0y4rlofguh8i" path="res://assets/sprites/Player/Poses/Diego_Idle_2nd4_01.png" id="6_0rnld"]
 [ext_resource type="PackedScene" uid="uid://63m76ttgstor" path="res://scenes/other/TutorialArrow.tscn" id="6_70d11"]
-[ext_resource type="Texture2D" uid="uid://sbtyw23ta3kq" path="res://assets/sprites/Player/Poses/Diego_Idle_2nd4_02.png" id="7_srp4u"]
-[ext_resource type="Texture2D" uid="uid://q0r8vnl2cjj3" path="res://assets/sprites/Player/Poses/Diego_Idle_2nd4_03.png" id="8_jfpux"]
-[ext_resource type="Texture2D" uid="uid://bm2cnxjnmcjn2" path="res://assets/sprites/Player/Poses/Diego_Idle_2nd4_04.png" id="9_61ith"]
-[ext_resource type="Texture2D" uid="uid://bvi0y3n7qj23l" path="res://assets/sprites/Player/Poses/Diego_Walk_1st4_01.png" id="10_ebwui"]
-[ext_resource type="Texture2D" uid="uid://853cyruc8m83" path="res://assets/sprites/Player/Poses/Diego_Run_1st4_01.png" id="10_xsi7p"]
-[ext_resource type="Texture2D" uid="uid://cx72222nd17vc" path="res://assets/sprites/Player/Poses/Diego_Run_1st4_02.png" id="11_1jpwa"]
-[ext_resource type="Texture2D" uid="uid://tqsfc7dmum1q" path="res://assets/sprites/Player/Poses/Diego_Walk_1st4_02.png" id="11_sfy4j"]
-[ext_resource type="Texture2D" uid="uid://cyur41s7ki3b0" path="res://assets/sprites/Player/Poses/Diego_Walk_1st4_03.png" id="12_gv3ic"]
-[ext_resource type="Texture2D" uid="uid://ch7n2qx22wexy" path="res://assets/sprites/Player/Poses/Diego_Run_1st4_03.png" id="12_pfeki"]
-[ext_resource type="Texture2D" uid="uid://crr1jw65fyp0o" path="res://assets/sprites/Player/Poses/Diego_Run_1st4_04.png" id="13_axnmu"]
-[ext_resource type="Texture2D" uid="uid://dphkgohp3pfw2" path="res://assets/sprites/Player/Poses/Diego_Walk_1st4_04.png" id="13_b8lor"]
-[ext_resource type="Texture2D" uid="uid://mp3xvtoh0jk2" path="res://assets/sprites/Player/Poses/Diego_Walk_2nd4_01.png" id="14_6e537"]
-[ext_resource type="Texture2D" uid="uid://e78ied1xy6gw" path="res://assets/sprites/Player/Poses/Diego_Walk_2nd4_02.png" id="15_p07f3"]
-[ext_resource type="Texture2D" uid="uid://b3qva0bg7v778" path="res://assets/sprites/Player/Poses/Diego_Walk_2nd4_03.png" id="16_viqgg"]
-[ext_resource type="Texture2D" uid="uid://d300kpvnt2fv8" path="res://assets/sprites/Player/Poses/Diego_Walk_2nd4_04.png" id="17_fgkxt"]
+[ext_resource type="Texture2D" uid="uid://1u68kdb3ghxg" path="res://assets/sprites/Player/idle_spritesheet_4f_transparent.png" id="18_sfy4j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv3ic"]
+atlas = ExtResource("18_sfy4j")
+region = Rect2(0, 0, 560, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8lor"]
+atlas = ExtResource("18_sfy4j")
+region = Rect2(560, 0, 560, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6e537"]
+atlas = ExtResource("18_sfy4j")
+region = Rect2(1120, 0, 560, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p07f3"]
+atlas = ExtResource("18_sfy4j")
+region = Rect2(1680, 0, 560, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70d11"]
+atlas = ExtResource("3_qu4a1")
+region = Rect2(0, 0, 528, 1344)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cw2d6"]
+atlas = ExtResource("3_qu4a1")
+region = Rect2(528, 0, 528, 1344)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khinc"]
+atlas = ExtResource("3_qu4a1")
+region = Rect2(1056, 0, 528, 1344)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bruh7"]
+atlas = ExtResource("3_qu4a1")
+region = Rect2(1584, 0, 528, 1344)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6eyey"]
+atlas = ExtResource("3_qu4a1")
+region = Rect2(2112, 0, 528, 1344)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3wef"]
+atlas = ExtResource("3_qu4a1")
+region = Rect2(2640, 0, 528, 1344)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6e537"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_d3wef")
+"texture": SubResource("AtlasTexture_gv3ic")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_o4126")
+"texture": SubResource("AtlasTexture_b8lor")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_lkdrv")
+"texture": SubResource("AtlasTexture_6e537")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_p7iby")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_0rnld")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_srp4u")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_jfpux")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_61ith")
+"texture": SubResource("AtlasTexture_p07f3")
 }],
 "loop": true,
 "name": &"idle",
@@ -57,28 +67,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_xsi7p")
+"texture": SubResource("AtlasTexture_gv3ic")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_1jpwa")
+"texture": SubResource("AtlasTexture_b8lor")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_pfeki")
+"texture": SubResource("AtlasTexture_6e537")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_axnmu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_6e537")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_p07f3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_viqgg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_fgkxt")
+"texture": SubResource("AtlasTexture_p07f3")
 }],
 "loop": true,
 "name": &"run",
@@ -86,28 +84,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_ebwui")
+"texture": SubResource("AtlasTexture_70d11")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_sfy4j")
+"texture": SubResource("AtlasTexture_cw2d6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_gv3ic")
+"texture": SubResource("AtlasTexture_khinc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_b8lor")
+"texture": SubResource("AtlasTexture_bruh7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_6e537")
+"texture": SubResource("AtlasTexture_6eyey")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_p07f3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_viqgg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_fgkxt")
+"texture": SubResource("AtlasTexture_d3wef")
 }],
 "loop": true,
 "name": &"walk",
@@ -122,9 +114,9 @@ height = 114.0
 script = ExtResource("1_p0vlq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1557895820]
-scale = Vector2(0.18, 0.18)
+scale = Vector2(0.22, 0.22)
 sprite_frames = SubResource("SpriteFrames_6e537")
-animation = &"run"
+animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=110172285]
 shape = SubResource("CapsuleShape2D_v6fml")
