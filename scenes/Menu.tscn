@@ -46,14 +46,29 @@ size_flags_stretch_ratio = 0.58
 icon = ExtResource("3_b6cxs")
 flat = true
 
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer" unique_id=479269885]
+offset_left = 1290.0
+offset_top = 570.0
+offset_right = 1500.0
+offset_bottom = 630.0
+
+[node name="Credits" type="Button" parent="CanvasLayer/VBoxContainer3" unique_id=916715967]
+layout_mode = 2
+size_flags_stretch_ratio = 0.58
+theme_override_colors/font_color = Color(0.45490196, 0.36078432, 0.25882354, 1)
+theme_override_font_sizes/font_size = 12
+text = "CREDITS
+"
+icon_alignment = 1
+
 [node name="Background" type="Sprite2D" parent="." unique_id=2051250186]
 position = Vector2(955, 527)
 scale = Vector2(1.0135417, 1.0222223)
 texture = ExtResource("4_jmdev")
 
 [node name="Title" type="Sprite2D" parent="." unique_id=2043950573]
-position = Vector2(1387, 435)
-scale = Vector2(0.669, 0.7)
+position = Vector2(1387.238, 440.675)
+scale = Vector2(0.6678333, 0.6486425)
 texture = ExtResource("5_1abgu")
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Play" to="." method="_on_play_pressed"]
