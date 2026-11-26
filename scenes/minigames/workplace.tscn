@@ -1,28 +1,80 @@
 [gd_scene format=3 uid="uid://cvt5ec5sywufh"]
 
-[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/fonts/Iosevka_Charon/IosevkaCharon-Regular.ttf" id="2_72r4b"]
 [ext_resource type="Script" uid="uid://b6p8rokhsyuhe" path="res://scripts/workplace.gd" id="2_368pu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gkndc"]
-bg_color = Color(0.039215688, 0.078431375, 0.039215688, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="StyleBoxFlat" id="sb_inner"]
+bg_color = Color(0.1098, 0.0902, 0.0745, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72r4b"]
-bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.2, 1, 0.2, 1)
+[sub_resource type="StyleBoxFlat" id="sb_avatar"]
+bg_color = Color(0.3333, 0.3333, 0.3333, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.2549, 0.7255, 0.6549, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
 
-[node name="WorkplaceMinigame" type="Control" unique_id=353390390]
+[sub_resource type="StyleBoxFlat" id="sb_head"]
+bg_color = Color(0.17, 0.17, 0.17, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="sb_body"]
+bg_color = Color(0.17, 0.17, 0.17, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="sb_window"]
+bg_color = Color(1, 0.9215686, 0.83137256, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+border_color = Color(0.2549, 0.7255, 0.6549, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="sb_titlebar"]
+content_margin_right = 20.0
+bg_color = Color(0.2549, 0.7255, 0.6549, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+
+[sub_resource type="StyleBoxFlat" id="sb_dot"]
+bg_color = Color(1, 0.9215686, 0.83137256, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="sb_bar"]
+content_margin_left = 28.0
+content_margin_right = 28.0
+bg_color = Color(0.2667, 0.2667, 0.2667, 1)
+
+[sub_resource type="StyleBoxFlat" id="sb_header"]
+content_margin_left = 28.0
+bg_color = Color(0.2549, 0.7255, 0.6549, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+
+[sub_resource type="StyleBoxFlat" id="sb_orange"]
+bg_color = Color(0.9686, 0.3922, 0.0588, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="WorkplaceMinigame" type="Control" unique_id=610216296]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,74 +83,249 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_368pu")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=423252597]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.019607844, 0.019607844, 0.019607844, 1)
-
-[node name="TerminalMargin" type="MarginContainer" parent="." unique_id=939257769]
+[node name="Backdrop" type="ColorRect" parent="." unique_id=658231861]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
+mouse_filter = 2
+color = Color(0.0549, 0.0392, 0.0314, 1)
 
-[node name="TerminalScreen" type="PanelContainer" parent="TerminalMargin" unique_id=1733788239]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_gkndc")
+[node name="IllustrationBG" type="ColorRect" parent="." unique_id=857911862]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.487
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.1843, 0.2314, 0.2941, 1)
 
-[node name="Padding" type="MarginContainer" parent="TerminalMargin/TerminalScreen" unique_id=456621691]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+[node name="Illustration" type="TextureRect" parent="." unique_id=1410526861]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.487
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
 
-[node name="VBox" type="VBoxContainer" parent="TerminalMargin/TerminalScreen/Padding" unique_id=271653323]
-layout_mode = 2
-theme_override_constants/separation = 30
+[node name="LeftPanel" type="ColorRect" parent="." unique_id=1232255101]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.487
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0745, 0.0549, 0.0431, 1)
 
-[node name="Header" type="HBoxContainer" parent="TerminalMargin/TerminalScreen/Padding/VBox" unique_id=1422149916]
+[node name="InnerPanel" type="Panel" parent="LeftPanel" unique_id=1341504271]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.0
+offset_top = 77.0
+offset_right = -65.0
+offset_bottom = -77.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("sb_inner")
+
+[node name="StartScreen" type="Control" parent="LeftPanel/InnerPanel" unique_id=762558363]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Box" type="VBoxContainer" parent="LeftPanel/InnerPanel/StartScreen" unique_id=1722070860]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -220.0
+offset_right = 300.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="AvatarHolder" type="CenterContainer" parent="LeftPanel/InnerPanel/StartScreen/Box" unique_id=798645351]
 layout_mode = 2
 
-[node name="TimerLabel" type="Label" parent="TerminalMargin/TerminalScreen/Padding/VBox/Header" unique_id=1699926984]
+[node name="Avatar" type="Panel" parent="LeftPanel/InnerPanel/StartScreen/Box/AvatarHolder" unique_id=950527450]
+custom_minimum_size = Vector2(174, 174)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.2, 1, 0.2, 1)
-theme_override_fonts/font = ExtResource("2_72r4b")
+theme_override_styles/panel = SubResource("sb_avatar")
+
+[node name="Head" type="Panel" parent="LeftPanel/InnerPanel/StartScreen/Box/AvatarHolder/Avatar" unique_id=2038823440]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 40.0
+offset_right = 109.0
+offset_bottom = 84.0
+theme_override_styles/panel = SubResource("sb_head")
+
+[node name="Body" type="Panel" parent="LeftPanel/InnerPanel/StartScreen/Box/AvatarHolder/Avatar" unique_id=1285842296]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 90.0
+offset_right = 135.0
+offset_bottom = 138.0
+theme_override_styles/panel = SubResource("sb_body")
+
+[node name="StartButton" type="Button" parent="LeftPanel/InnerPanel/StartScreen/Box" unique_id=1370406364]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 60)
+layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 24
-text = "SYS_TIME: 60.00s"
+text = "START SHIFT"
 
-[node name="TicketLabel" type="Label" parent="TerminalMargin/TerminalScreen/Padding/VBox/Header" unique_id=1995880832]
+[node name="Instructions" type="VBoxContainer" parent="LeftPanel/InnerPanel/StartScreen/Box" unique_id=27921516]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.2, 1, 0.2, 1)
+theme_override_constants/separation = 8
+
+[node name="Label2" type="Label" parent="LeftPanel/InnerPanel/StartScreen/Box/Instructions" unique_id=1601361142]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.9, 0.86, 0.9)
 theme_override_font_sizes/font_size = 24
-text = "TICKETS: 0/5"
-horizontal_alignment = 2
+text = "Quota: Resolve 5 Tickets."
+horizontal_alignment = 1
 
-[node name="Divider" type="ColorRect" parent="TerminalMargin/TerminalScreen/Padding/VBox" unique_id=789617994]
-custom_minimum_size = Vector2(0, 2)
+[node name="Label3" type="Label" parent="LeftPanel/InnerPanel/StartScreen/Box/Instructions" unique_id=1295281102]
 layout_mode = 2
-color = Color(0.2, 1, 0.2, 1)
+theme_override_colors/font_color = Color(0.93, 0.9, 0.86, 0.9)
+theme_override_font_sizes/font_size = 24
+text = "Time Limit: 60 Seconds."
+horizontal_alignment = 1
 
-[node name="TypingDisplay" type="RichTextLabel" parent="TerminalMargin/TerminalScreen/Padding/VBox" unique_id=1261709570]
+[node name="TerminalState" type="Control" parent="LeftPanel/InnerPanel" unique_id=1606820658]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TicketWindow" type="PanelContainer" parent="LeftPanel/InnerPanel/TerminalState" unique_id=1094757312]
+custom_minimum_size = Vector2(666, 464)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -333.0
+offset_top = -232.0
+offset_right = 333.0
+offset_bottom = 232.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("sb_window")
+
+[node name="WinBox" type="VBoxContainer" parent="LeftPanel/InnerPanel/TerminalState/TicketWindow" unique_id=239187345]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TitleBar" type="PanelContainer" parent="LeftPanel/InnerPanel/TerminalState/TicketWindow/WinBox" unique_id=1954333737]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_styles/panel = SubResource("sb_titlebar")
+
+[node name="Dots" type="HBoxContainer" parent="LeftPanel/InnerPanel/TerminalState/TicketWindow/WinBox/TitleBar" unique_id=858820355]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="Dot1" type="Panel" parent="LeftPanel/InnerPanel/TerminalState/TicketWindow/WinBox/TitleBar/Dots" unique_id=1999711233]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("sb_dot")
+
+[node name="Dot2" type="Panel" parent="LeftPanel/InnerPanel/TerminalState/TicketWindow/WinBox/TitleBar/Dots" unique_id=1467047716]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("sb_dot")
+
+[node name="Dot3" type="Panel" parent="LeftPanel/InnerPanel/TerminalState/TicketWindow/WinBox/TitleBar/Dots" unique_id=854513943]
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("sb_dot")
+
+[node name="Body" type="MarginContainer" parent="LeftPanel/InnerPanel/TerminalState/TicketWindow/WinBox" unique_id=1537151795]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/normal_font = ExtResource("2_72r4b")
-theme_override_fonts/bold_font = ExtResource("2_72r4b")
-theme_override_font_sizes/normal_font_size = 32
-theme_override_font_sizes/bold_font_size = 32
+theme_override_constants/margin_left = 44
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 44
+theme_override_constants/margin_bottom = 30
+
+[node name="TypingDisplay" type="RichTextLabel" parent="LeftPanel/InnerPanel/TerminalState/TicketWindow/WinBox/Body" unique_id=1807887780]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 34
+theme_override_font_sizes/bold_font_size = 34
 bbcode_enabled = true
+text = "typing typing"
 scroll_active = false
 
-[node name="ErrorFlash" type="ColorRect" parent="." unique_id=818932328]
+[node name="BottomBar" type="PanelContainer" parent="LeftPanel/InnerPanel/TerminalState" unique_id=1948227475]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -63.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("sb_bar")
+
+[node name="BarRow" type="HBoxContainer" parent="LeftPanel/InnerPanel/TerminalState/BottomBar" unique_id=303562544]
+layout_mode = 2
+
+[node name="TimerLabel" type="Label" parent="LeftPanel/InnerPanel/TerminalState/BottomBar/BarRow" unique_id=948345731]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 26
+text = "TIME: 60s"
+vertical_alignment = 1
+
+[node name="TicketLabel" type="Label" parent="LeftPanel/InnerPanel/TerminalState/BottomBar/BarRow" unique_id=184933559]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"KeyLabel"
+theme_override_font_sizes/font_size = 34
+text = "0/5"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ErrorFlash" type="ColorRect" parent="." unique_id=1033585296]
+unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -109,54 +336,115 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 0, 0, 1)
 
-[node name="TutorialPopup" type="Panel" parent="." unique_id=255585927]
-custom_minimum_size = Vector2(500, 350)
+[node name="ResultLayer" type="Control" parent="." unique_id=1127695574]
+unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_72r4b")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TutorialPopup" unique_id=286203445]
+[node name="Dimmer" type="ColorRect" parent="ResultLayer" unique_id=505324592]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="ResultCard" type="PanelContainer" parent="ResultLayer" unique_id=327585423]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(666, 464)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -192.0
-offset_top = -129.0
-offset_right = 192.0
-offset_bottom = 129.0
+offset_left = -333.0
+offset_top = -232.0
+offset_right = 333.0
+offset_bottom = 232.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
-alignment = 1
+pivot_offset = Vector2(333, 232)
+theme_override_styles/panel = SubResource("sb_window")
 
-[node name="Label" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=1367744654]
+[node name="CardBox" type="VBoxContainer" parent="ResultLayer/ResultCard" unique_id=234986808]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 1, 0.2, 1)
-theme_override_font_sizes/font_size = 24
-text = "SYS_LOGIN: CUSTOMER SUPPORT"
+theme_override_constants/separation = 0
+
+[node name="Header" type="PanelContainer" parent="ResultLayer/ResultCard/CardBox" unique_id=833877399]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("sb_header")
+
+[node name="ResultTitle" type="Label" parent="ResultLayer/ResultCard/CardBox/Header" unique_id=1322743222]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"KeyLabel"
+theme_override_font_sizes/font_size = 60
+text = "Failed"
+vertical_alignment = 1
+
+[node name="CardBody" type="MarginContainer" parent="ResultLayer/ResultCard/CardBox" unique_id=2147403228]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 36
+
+[node name="Row" type="HBoxContainer" parent="ResultLayer/ResultCard/CardBox/CardBody" unique_id=441061051]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="ResultIcon" type="Panel" parent="ResultLayer/ResultCard/CardBox/CardBody/Row" unique_id=1937728381]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(93, 93)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("sb_orange")
+
+[node name="ResultIconLabel" type="Label" parent="ResultLayer/ResultCard/CardBox/CardBody/Row/ResultIcon" unique_id=838376811]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"KeyLabel"
+theme_override_font_sizes/font_size = 56
+text = "X"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=1293340148]
+[node name="TextCol" type="VBoxContainer" parent="ResultLayer/ResultCard/CardBox/CardBody/Row" unique_id=847665753]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
-text = "Quota: Resolve 5 Tickets. "
-horizontal_alignment = 1
-autowrap_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 28
 
-[node name="Label3" type="Label" parent="TutorialPopup/VBoxContainer" unique_id=766224690]
+[node name="ResultMessage" type="RichTextLabel" parent="ResultLayer/ResultCard/CardBox/CardBody/Row/TextCol" unique_id=2117927348]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
-text = "Time Limit: 60 Seconds."
-horizontal_alignment = 1
-autowrap_mode = 2
+theme_override_font_sizes/normal_font_size = 34
+theme_override_font_sizes/bold_font_size = 34
+bbcode_enabled = true
+text = "[b]Quota not Met!
+No money gained.[/b]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
-[node name="StartButton" type="Button" parent="TutorialPopup/VBoxContainer" unique_id=879181666]
+[node name="ResultScore" type="Label" parent="ResultLayer/ResultCard/CardBox/CardBody/Row/TextCol" unique_id=1708904937]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_hover_color = Color(0.2, 1, 0.2, 1)
-text = "INITIATE_SHIFT()"
+theme_override_colors/font_color = Color(0.4549, 0.3608, 0.2588, 0.6)
+theme_override_font_sizes/font_size = 28
+text = "0/5"
