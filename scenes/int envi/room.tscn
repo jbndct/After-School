@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bxdho438bytyt" path="res://scripts/room.gd" id="1_85yof"]
 [ext_resource type="PackedScene" uid="uid://dfrd31wjhtut6" path="res://scenes/Player.tscn" id="2_14vil"]
 [ext_resource type="PackedScene" uid="uid://dxaohdi5dqwd2" path="res://scenes/archive/DialogueBox.tscn" id="2_85yof"]
-[ext_resource type="Texture2D" uid="uid://dpnq5m46qlwk2" path="res://assets/sprites/Envi/room.png" id="2_jn645"]
+[ext_resource type="Texture2D" uid="uid://tyjavib2gup" path="res://assets/sprites/room.jpg" id="2_b7wkw"]
 [ext_resource type="FontFile" uid="uid://usltlsyb863f" path="res://assets/fonts/Iosevka_Charon/IosevkaCharon-Bold.ttf" id="3_jxe34"]
 [ext_resource type="PackedScene" uid="uid://c8gb3o13pjyo8" path="res://scenes/ui/DialogueBubble.tscn" id="6_b7wkw"]
 [ext_resource type="PackedScene" uid="uid://c5dijak1l4hwq" path="res://scenes/ui/MissionBanner.tscn" id="7_sxsmd"]
@@ -38,9 +38,9 @@ position = Vector2(3, 2)
 script = ExtResource("1_85yof")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=857301467]
-position = Vector2(83.2, -4.9999847)
-scale = Vector2(0.5819254, 0.56145835)
-texture = ExtResource("2_jn645")
+position = Vector2(759, -0.9999999)
+scale = Vector2(0.89599615, 0.9885127)
+texture = ExtResource("2_b7wkw")
 
 [node name="Floor" type="StaticBody2D" parent="." unique_id=1914316027]
 

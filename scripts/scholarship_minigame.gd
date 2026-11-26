@@ -1,6 +1,9 @@
 # res://scripts/scholarship_minigame.gd
 extends MinigameBase
 
+const TEAL := Color("#41B9A7")
+const ORANGE := Color("#F7640F")
+
 @onready var paper_ui = $Paper
 @onready var question_label = $Paper/MarginContainer/QuizLayout/QuestionLabel
 @onready var score_label = $Paper/MarginContainer/QuizLayout/ScoreLabel
@@ -8,6 +11,14 @@ extends MinigameBase
 
 @onready var tutorial_popup = $TutorialPopup
 @onready var start_button = $TutorialPopup/VBoxContainer/StartButton
+
+# Result card (the tilted FAILED / PASSED card)
+@onready var result_layer = $ResultLayer
+@onready var result_dimmer = $ResultLayer/Dimmer
+@onready var result_card = $ResultLayer/ResultCard
+@onready var result_title = %ResultTitle
+@onready var result_score = %ResultScore
+@onready var result_message = %ResultMessage
 
 var all_questions: Array = []
 var active_questions: Array = []
@@ -20,6 +31,7 @@ func setup_game() -> void:
 	minigame_id = "scholarship"
 	reward_amount = 5000 
 	paper_ui.hide()
+	result_layer.hide()
 	tutorial_popup.show()
 	start_button.pressed.connect(_on_start_pressed)
 	load_questions()
@@ -70,7 +82,9 @@ func load_question(index: int) -> void:
 		return
 
 	var q_data = active_questions[index]
-	question_label.text = "Q" + str(index + 1) + ". " + q_data["question"]
+	# The design shows the question text only. To show "Q1." again, use:
+	# question_label.text = "Q" + str(index + 1) + ". " + q_data["question"]
+	question_label.text = q_data["question"]
 	var buttons = options_container.get_children()
 	for i in range(buttons.size()):
 		if buttons[i] is Button:
@@ -94,21 +108,37 @@ func _on_option_pressed(selected_index: int) -> void:
 	load_question(current_question_index)
 
 func update_score_display() -> void:
-	score_label.text = "Score: %d / 10" % score
+	score_label.text = "Score: %d/10" % score
 
 func finish_quiz() -> void:
-	options_container.hide() 
-	if score >= required_score:
+	var passed: bool = score >= required_score
+	RunState.scholarship_passed = passed
+	if passed:
 		AudioManager.play_sfx("sfx_coin_fountain")
-		RunState.scholarship_passed = true
-		question_label.text = "EXAM COMPLETE\n\nFinal Score: %d / 10\n\nStatus: PASSED.\nStipend secured. Check your phone later." % score
-		question_label.add_theme_color_override("font_color", Color.DARK_GREEN)
-		await get_tree().create_timer(3.5).timeout
-		finish_game(true) 
 	else:
 		AudioManager.play_sfx("sfx_ear_ringing")
-		RunState.scholarship_passed = false
-		question_label.text = "EXAM COMPLETE\n\nFinal Score: %d / 10\n\nStatus: FAILED.\nScholarship denied. Without this, tuition is impossible..." % score
-		question_label.add_theme_color_override("font_color", Color.DARK_RED)
-		await get_tree().create_timer(3.5).timeout
-		finish_game(false)
+	_show_result(passed)
+	await get_tree().create_timer(4.0).timeout
+	finish_game(passed)
+
+# Dims the screen and drops in the tilted result card
+func _show_result(passed: bool) -> void:
+	result_title.text = "PASSED" if passed else "FAILED"
+	result_title.add_theme_color_override("font_color", TEAL if passed else ORANGE)
+	result_score.text = "%d/10" % score
+	if passed:
+		result_message.text = "Scholarship secured!\nStipend added. Check your phone later."
+	else:
+		result_message.text = "Scholarship Denied!\nwithout this, tuition is impossible."
+
+	result_layer.show()
+	result_dimmer.modulate.a = 0.0
+	result_card.modulate.a = 0.0
+	result_card.scale = Vector2(0.7, 0.7)
+	result_card.rotation_degrees = 0.0
+
+	var tw := create_tween().set_parallel(true)
+	tw.tween_property(result_dimmer, "modulate:a", 1.0, 0.4)
+	tw.tween_property(result_card, "modulate:a", 1.0, 0.25)
+	tw.tween_property(result_card, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(result_card, "rotation_degrees", -7.0, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
