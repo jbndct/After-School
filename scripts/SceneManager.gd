@@ -3,16 +3,16 @@ extends Node
 
 const SCENES = {
 	"menu": "res://scenes/Menu.tscn",
-	"room": "res://scenes/room.tscn",
-	"street": "res://scenes/street.tscn",
-	"school": "res://scenes/school.tscn",
-	"scholarship": "res://scenes/MinigameScholarship.tscn",
-	"work": "res://scenes/workplace.tscn",
+	"room": "res://scenes/int envi/room.tscn",
+	"street": "res://scenes/ext envi/street.tscn",
+	"school": "res://scenes/int envi/school.tscn",
+	"scholarship": "res://scenes/minigames/MinigameScholarship.tscn",
+	"work": "res://scenes/minigames/workplace.tscn",
 	"ending": "res://scenes/ending.tscn",
-	"sugal": "res://scenes/SugalHub.tscn",
+	"sugal": "res://scenes/mnigames/SugalHub.tscn",
 	"intro": "res://scenes/IntroStory.tscn",
-	"tutorial": "res://scenes/tutorial.tscn",
-	"advisory": "res://scenes/Advisory.tscn",
+	"tutorial": "res://scenes/other/tutorial.tscn",
+	"advisory": "res://scenes/other/Advisory.tscn",
 }
 
 func load_scene(scene_key: String) -> void:
