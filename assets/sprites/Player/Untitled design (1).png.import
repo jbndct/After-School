@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn0kj8q1ooi60"
-path="res://.godot/imported/sheetwalk.jpg-aac816535109b4ebc448974b9bf83c1d.ctex"
+uid="uid://cp1s5e1i7ss0"
+path="res://.godot/imported/Untitled design (1).png-2f09768edc7a774a03eed97181540393.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Player/sheetwalk.jpg"
-dest_files=["res://.godot/imported/sheetwalk.jpg-aac816535109b4ebc448974b9bf83c1d.ctex"]
+source_file="res://assets/sprites/Player/Untitled design (1).png"
+dest_files=["res://.godot/imported/Untitled design (1).png-2f09768edc7a774a03eed97181540393.ctex"]
 
 [params]
 
