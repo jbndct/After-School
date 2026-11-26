@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cvt5ec5sywufh"]
 
-[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/ui/IosevkaCharon-Regular.ttf" id="2_72r4b"]
+[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/fonts/Iosevka_Charon/IosevkaCharon-Regular.ttf" id="2_72r4b"]
 [ext_resource type="Script" uid="uid://b6p8rokhsyuhe" path="res://scripts/workplace.gd" id="2_368pu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gkndc"]

@@ -56,8 +56,8 @@ func _input(event: InputEvent) -> void:
 				_display_page(current_page)
 			else:
 				# Once the 5 slides are done, load the tutorial!
-				if ResourceLoader.exists("res://scenes/tutorial.tscn"):
-					get_tree().change_scene_to_file("res://scenes/tutorial.tscn")
+				if ResourceLoader.exists("res://scenes/other/tutorial.tscn"):
+					get_tree().change_scene_to_file("res://scenes/other/tutorial.tscn")
 				else:
 					get_tree().change_scene_to_file("res://scenes/room.tscn")
 
