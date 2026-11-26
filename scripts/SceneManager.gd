@@ -9,7 +9,7 @@ const SCENES = {
 	"scholarship": "res://scenes/minigames/MinigameScholarship.tscn",
 	"work": "res://scenes/minigames/workplace.tscn",
 	"ending": "res://scenes/ending.tscn",
-	"sugal": "res://scenes/mnigames/SugalHub.tscn",
+	"sugal": "res://scenes/minigames/SugalHub.tscn",
 	"intro": "res://scenes/IntroStory.tscn",
 	"tutorial": "res://scenes/other/tutorial.tscn",
 	"advisory": "res://scenes/other/Advisory.tscn",

@@ -1,7 +1,8 @@
 # res://scripts/room.gd
 extends Node2D
+
 @onready var player = $Player
-@onready var bubble = $UI/DialogueBubble
+@onready var bubble = get_node_or_null("UI/DialogueBubble")
 @onready var mission = $UI/MissionBanner
 @onready var interact_prompt = $InteractableItem/InteractPrompt
 @onready var door_prompt = $ExitDoor/DoorPrompt
@@ -15,106 +16,124 @@ var objective_text: String = "":
 		if value == objective_text:
 			return
 		objective_text = value
-		mission.show_mission(value)
+		if mission and mission.has_method("show_mission"):
+			mission.show_mission(value)
 
 func _ready() -> void:
 	AudioManager.play_bgm("bgm_hub")
-	
+
 	if RunState.previous_location == "street":
-		player.global_position.x = 100 
-		
-	interact_prompt.visible = false
-	door_prompt.visible = false
-	
+		player.global_position.x = 100
+
+	if interact_prompt:
+		interact_prompt.visible = false
+	if door_prompt:
+		door_prompt.visible = false
+
 	if not DialogManager.dialog_finished.is_connected(_on_dialogue_finished):
 		DialogManager.dialog_finished.connect(_on_dialogue_finished)
-	
-	if not bubble.dialogue_finished.is_connected(_on_dialogue_finished):
-		bubble.dialogue_finished.connect(_on_dialogue_finished)
-		
+
+	if bubble and bubble.has_signal("dialogue_finished"):
+		if not bubble.dialogue_finished.is_connected(_on_dialogue_finished):
+			bubble.dialogue_finished.connect(_on_dialogue_finished)
+
 	update_objectives()
+
+func _is_bubble_active() -> bool:
+	return bubble != null and ("is_active" in bubble) and bubble.is_active
 
 func update_objectives() -> void:
 	var phase = RunState.current_phase
 	var dialogue_id = "room_" + phase
 	var arrow = player.get_node_or_null("TutorialArrow")
-	
+
 	if not RunState.completed_dialogues.has(dialogue_id):
 		objective_text = DialogManager.get_text("obj_room_clear_head")
-		if arrow: arrow.set_target($InteractableItem)
+		if arrow:
+			arrow.set_target($InteractableItem)
 	else:
 		if phase == "morning":
 			objective_text = DialogManager.get_text("obj_room_to_school")
-			if arrow: arrow.set_target($ExitDoor)
+			if arrow:
+				arrow.set_target($ExitDoor)
 		elif phase == "night":
-			if RunState.has_meta("work_shift_done"):
+			if RunState.is_work_shift_done():
 				objective_text = DialogManager.get_text("obj_room_end_day")
-				if arrow: arrow.set_target($ExitDoor)
+				if arrow:
+					arrow.set_target($ExitDoor)
 			else:
 				objective_text = DialogManager.get_text("obj_room_start_work")
-				if arrow: arrow.set_target($InteractableItem)
+				if arrow:
+					arrow.set_target($InteractableItem)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if DialogManager.is_dialog_active or bubble.is_active:
+	if DialogManager.is_dialog_active or _is_bubble_active():
 		return
-		
+
 	if event.is_action_pressed("interact"):
 		if player_in_interact_zone:
-			interact_prompt.visible = false
+			if interact_prompt:
+				interact_prompt.visible = false
 			trigger_interaction()
 		elif player_at_door:
 			var phase = RunState.current_phase
 			var dialogue_id = "room_" + phase
-			
+
 			if RunState.completed_dialogues.has(dialogue_id):
-				if phase == "night" and not RunState.has_meta("work_shift_done"):
+				if phase == "night" and not RunState.is_work_shift_done():
 					AudioManager.play_sfx("sfx_error_buzz")
 					objective_text = DialogManager.get_text("warn_room_finish_shift")
 					await get_tree().create_timer(2.0).timeout
-					update_objectives()
+					if is_inside_tree():
+						update_objectives()
 					return
-					
+
 				var arrow = player.get_node_or_null("TutorialArrow")
-				if arrow: arrow.set_target(null)
+				if arrow:
+					arrow.set_target(null)
 				AudioManager.play_sfx("sfx_door_open")
 				SceneManager.advance_story("room")
 			else:
 				AudioManager.play_sfx("sfx_error_buzz")
 				objective_text = DialogManager.get_text("warn_room_clear_head")
 				await get_tree().create_timer(2.0).timeout
-				update_objectives()
+				if is_inside_tree():
+					update_objectives()
 
 func trigger_interaction() -> void:
 	AudioManager.play_sfx("sfx_ui_click")
 	var phase = RunState.current_phase
 	var dialogue_id = "room_" + phase
-	
+
 	if not RunState.completed_dialogues.has(dialogue_id):
 		if player and "current_state" in player:
 			player.current_state = player.State.LOCKED
-			
+
 		var json_id = "room_morning"
 		if phase == "night":
 			json_id = "room_night_passed" if RunState.scholarship_passed else "room_night_failed"
-			
+
 		DialogManager.start_world_dialog(json_id, player.global_position)
 	else:
 		if phase == "night":
-			if RunState.has_meta("work_shift_done"):
+			if RunState.is_work_shift_done():
 				AudioManager.play_sfx("sfx_error_buzz")
 				objective_text = DialogManager.get_text("warn_room_done_working")
 				await get_tree().create_timer(2.0).timeout
-				update_objectives()
+				if is_inside_tree():
+					update_objectives()
 			else:
 				var arrow = player.get_node_or_null("TutorialArrow")
-				if arrow: arrow.set_target(null)
+				if arrow:
+					arrow.set_target(null)
 				AudioManager.play_sfx("sfx_door_open")
 				SceneManager.load_scene("work")
 		elif phase == "morning":
 			AudioManager.play_sfx("sfx_error_buzz")
 			objective_text = DialogManager.get_text("warn_room_already_thought")
 			await get_tree().create_timer(2.0).timeout
-			update_objectives()
+			if is_inside_tree():
+				update_objectives()
 
 func _on_dialogue_finished() -> void:
 	var phase = RunState.current_phase
@@ -123,26 +142,31 @@ func _on_dialogue_finished() -> void:
 	if player and "current_state" in player:
 		player.current_state = player.State.FREE
 	update_objectives()
-	if player_at_door: door_prompt.visible = true
-	if player_in_interact_zone: interact_prompt.visible = true
+	if player_at_door and door_prompt:
+		door_prompt.visible = true
+	if player_in_interact_zone and interact_prompt:
+		interact_prompt.visible = true
 
 func _on_interactable_item_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in_interact_zone = true
-		interact_prompt.visible = true
+		if interact_prompt:
+			interact_prompt.visible = true
 
 func _on_interactable_item_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_in_interact_zone = false
-		interact_prompt.visible = false
+		if interact_prompt:
+			interact_prompt.visible = false
 
 func _on_exit_door_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_at_door = true
-		if RunState.completed_dialogues.has("room_" + RunState.current_phase):
+		if RunState.completed_dialogues.has("room_" + RunState.current_phase) and door_prompt:
 			door_prompt.visible = true
 
 func _on_exit_door_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player_at_door = false
-		door_prompt.visible = false
+		if door_prompt:
+			door_prompt.visible = false

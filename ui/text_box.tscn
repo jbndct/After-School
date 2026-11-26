@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://civrnw2rin7u8" path="res://ui/text_box.gd" id="1_jrwbe"]
 [ext_resource type="Texture2D" uid="uid://dqd0larl7js2g" path="res://assets/ui/Dialogue_box.png" id="2_edito"]
-[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/ui/IosevkaCharon-Regular.ttf" id="3_hh5wg"]
+[ext_resource type="FontFile" uid="uid://cjsg7uniky1fk" path="res://assets/fonts/Iosevka_Charon/IosevkaCharon-Regular.ttf" id="3_hh5wg"]
 
 [node name="TextBox" type="MarginContainer" unique_id=809015429]
 offset_left = -1.0
