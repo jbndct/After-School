@@ -185,12 +185,12 @@ func _end_shift() -> void:
 
 	if tickets_completed >= MAX_TICKETS:
 		AudioManager.play_sfx("sfx_coin_fountain")
-		reward_amount = 800
+		reward_amount = 7000
 		if typing_display:
 			typing_display.text = "[center][color=#33ff33]SHIFT COMPLETE.\nFULL WAGE EARNED.[/color][/center]"
 	else:
 		AudioManager.play_sfx("sfx_error_buzz")
-		reward_amount = 200
+		reward_amount = 1000
 		if typing_display:
 			typing_display.text = "[center][color=#ff3333]SHIFT FAILED.\nQUOTA NOT MET.\nPARTIAL WAGE APPLIED.[/color][/center]"
 

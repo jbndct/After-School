@@ -72,6 +72,11 @@ func deduct_money(amount: int) -> void:
 
 func reset() -> void:
 	RunState.reset_run()
+	sugal_opened = false
+	sugal_session_active = false
+	sugal_visits = 0
+	sugal_total_lost = 0
+	has_gambled = false
 
 func get_current_objective() -> String:
 	return "Go to school." # Dummy fallback so text boxes don't crash
