@@ -75,7 +75,7 @@ func play_sfx(sfx_name: String) -> void:
 	var player = sfx_pool[sfx_pool_index]
 	player.stream = stream
 	player.play()
-	
+	 
 	# Advance index and wrap around
 	sfx_pool_index = (sfx_pool_index + 1) % MAX_SFX_PLAYERS
 
@@ -86,5 +86,4 @@ func play_sfx(sfx_name: String) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_SPACE:
-		print("DEBUG: Spacebar pressed. Firing test SFX...")
 		play_sfx("sfx_ui_click")
