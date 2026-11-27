@@ -1,160 +1,309 @@
 [gd_scene format=3 uid="uid://bvif1vja8r37w"]
 
 [ext_resource type="Script" uid="uid://dg00b0csfq2wy" path="res://scripts/sugal_hub.gd" id="1_3kho2"]
-[ext_resource type="FontFile" uid="uid://ood803niatfl" path="res://assets/ui/PlayfairDisplay-ExtraBold.ttf" id="1_rsi76"]
-[ext_resource type="FontFile" uid="uid://bqrf3xq1vgc66" path="res://assets/ui/PlayfairDisplay-Bold.ttf" id="3_gfdq3"]
-[ext_resource type="StyleBox" uid="uid://crhqsq6ha8opt" path="res://scenes/ui/sugalhub_menu_normal.tres" id="4_ay62c"]
-[ext_resource type="StyleBox" uid="uid://ncm1nilrecto" path="res://scenes/ui/sugalhub_menu_pressed.tres" id="5_3nv2j"]
-[ext_resource type="StyleBox" uid="uid://cnx6vbjqsa8pl" path="res://scenes/ui/sugalhub_menu_hover.tres" id="6_3gpu8"]
+[ext_resource type="Texture2D" uid="uid://bh8bwybut685" path="res://assets/sprites/roulette.png" id="2_rac0m"]
+[ext_resource type="Texture2D" uid="uid://brd2g5kbycvjw" path="res://assets/sprites/parlay.png" id="3_ni0dx"]
+[ext_resource type="Texture2D" uid="uid://qrap81oniqgs" path="res://assets/sprites/slots.png" id="4_ht16k"]
+[ext_resource type="Texture2D" uid="uid://d10n83epfw075" path="res://assets/sprites/cashout.png" id="5_003tf"]
 
-[sub_resource type="Theme" id="Theme_gfdq3"]
-default_font = ExtResource("1_rsi76")
+[sub_resource type="StyleBoxFlat" id="sb_inner"]
+bg_color = Color(0.1333, 0.1098, 0.0941, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_3kho2"]
-font_size = 64
-font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
-outline_size = 4
-outline_color = Color(0, 0, 0, 1)
-shadow_color = Color(0, 0, 0, 1)
-shadow_offset = Vector2(4, 1)
+[sub_resource type="StyleBoxFlat" id="sb_fb_roulette"]
+bg_color = Color(0.5529, 0.102, 0.1529, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.6157, 0, 0.7)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
 
-[sub_resource type="LabelSettings" id="LabelSettings_rsi76"]
-font = ExtResource("3_gfdq3")
-font_size = 24
+[sub_resource type="StyleBoxFlat" id="sb_fb_parlay"]
+bg_color = Color(0.1216, 0.251, 0.549, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.6157, 0, 0.7)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
 
-[sub_resource type="LabelSettings" id="LabelSettings_gfdq3"]
-font_size = 48
-font_color = Color(1, 0.2, 0.2, 1)
+[sub_resource type="StyleBoxFlat" id="sb_fb_slots"]
+bg_color = Color(0.9216, 0.549, 0.0471, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.6157, 0, 0.7)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
 
-[sub_resource type="LabelSettings" id="LabelSettings_we3b4"]
-font_size = 24
-font_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+[sub_resource type="StyleBoxFlat" id="sb_fb_cash"]
+bg_color = Color(0.1216, 0.451, 0.2196, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.6157, 0, 0.7)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
 
-[node name="SugalHub" type="Control" unique_id=862425061]
+[node name="SugalHub" type="Control" unique_id=835757633]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_gfdq3")
 script = ExtResource("1_3kho2")
 
-[node name="Background" type="ColorRect" parent="." unique_id=102590004]
+[node name="Backdrop" type="ColorRect" parent="." unique_id=1111153272]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.101960786, 0.019607844, 0.019607844, 1)
+mouse_filter = 2
+color = Color(0.0745, 0.0549, 0.0431, 1)
 
-[node name="GoldBorder" type="ReferenceRect" parent="." unique_id=1410324612]
-visible = false
+[node name="IllustrationBG" type="ColorRect" parent="." unique_id=1030374069]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.485
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.1765, 0.2157, 0.2706, 1)
+
+[node name="Illustration" type="TextureRect" parent="." unique_id=1767722881]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.485
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="GameContainer" type="Control" parent="." unique_id=1520885582]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
-border_width = 4.0
-editor_only = false
+mouse_filter = 2
 
-[node name="GameContainer" type="Control" parent="." unique_id=1210637624]
+[node name="MenuUI" type="Control" parent="." unique_id=928810220]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="MenuUI" type="Control" parent="." unique_id=780323873]
+[node name="LeftPanel" type="ColorRect" parent="MenuUI" unique_id=57252525]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.485
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0745, 0.0549, 0.0431, 1)
+
+[node name="InnerPanel" type="Panel" parent="MenuUI/LeftPanel" unique_id=1649239230]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 58.0
+offset_right = -48.0
+offset_bottom = -58.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("sb_inner")
 
-[node name="VBox" type="VBoxContainer" parent="MenuUI" unique_id=1212240181]
+[node name="Box" type="VBoxContainer" parent="MenuUI/LeftPanel/InnerPanel" unique_id=330588553]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -340.0
+offset_top = -380.0
+offset_right = 340.0
+offset_bottom = 380.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 25
+theme_override_constants/separation = 70
+alignment = 1
 
-[node name="Title" type="Label" parent="MenuUI/VBox" unique_id=2002560396]
+[node name="Title" type="Label" parent="MenuUI/LeftPanel/InnerPanel/Box" unique_id=402241485]
 layout_mode = 2
-text = "SUGALHUB"
-label_settings = SubResource("LabelSettings_3kho2")
+theme_override_colors/font_color = Color(1, 0.6157, 0, 0)
+theme_override_colors/font_outline_color = Color(1, 0.6157, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 110
+text = "BETNA123"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="MenuUI/VBox" unique_id=1444769692]
+[node name="Grid" type="GridContainer" parent="MenuUI/LeftPanel/InnerPanel/Box" unique_id=1166003522]
 layout_mode = 2
-text = "Play Now"
-label_settings = SubResource("LabelSettings_rsi76")
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 28
+theme_override_constants/v_separation = 28
+columns = 2
+
+[node name="BtnRoulette" type="TextureButton" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid" unique_id=1298925779]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 230)
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("2_rac0m")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Fallback" type="Panel" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid/BtnRoulette" unique_id=38322939]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_fb_roulette")
+
+[node name="Label" type="Label" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid/BtnRoulette/Fallback" unique_id=66300021]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"KeyLabel"
+theme_override_font_sizes/font_size = 36
+text = "ROULETTE"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Grid" type="GridContainer" parent="MenuUI/VBox" unique_id=232802333]
-layout_mode = 2
-theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 20
-columns = 3
-
-[node name="BtnSlots" type="Button" parent="MenuUI/VBox/Grid" unique_id=376113724]
-custom_minimum_size = Vector2(300, 80)
+[node name="BtnParlay" type="TextureButton" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid" unique_id=618225875]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 230)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = ExtResource("4_ay62c")
-theme_override_styles/pressed = ExtResource("5_3nv2j")
-theme_override_styles/hover = ExtResource("6_3gpu8")
-text = "🎰  SKUTTER"
+texture_normal = ExtResource("3_ni0dx")
+ignore_texture_size = true
+stretch_mode = 6
 
-[node name="BtnParlay" type="Button" parent="MenuUI/VBox/Grid" unique_id=1144418794]
-custom_minimum_size = Vector2(300, 80)
+[node name="Fallback" type="Panel" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid/BtnParlay" unique_id=1353590182]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_fb_parlay")
+
+[node name="Label" type="Label" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid/BtnParlay/Fallback" unique_id=87833811]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"KeyLabel"
+theme_override_font_sizes/font_size = 36
+text = "PARLAY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnSlots" type="TextureButton" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid" unique_id=1060361083]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 230)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = ExtResource("4_ay62c")
-theme_override_styles/pressed = ExtResource("5_3nv2j")
-theme_override_styles/hover = ExtResource("6_3gpu8")
-text = "🏀 PARLAY"
+texture_normal = ExtResource("4_ht16k")
+ignore_texture_size = true
+stretch_mode = 6
 
-[node name="BtnRoulette" type="Button" parent="MenuUI/VBox/Grid" unique_id=1826530672]
-custom_minimum_size = Vector2(300, 80)
+[node name="Fallback" type="Panel" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid/BtnSlots" unique_id=1322572601]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_fb_slots")
+
+[node name="Label" type="Label" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid/BtnSlots/Fallback" unique_id=759516187]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"KeyLabel"
+theme_override_font_sizes/font_size = 36
+text = "SLOTS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnExit" type="TextureButton" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid" unique_id=2004343587]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 230)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = ExtResource("4_ay62c")
-theme_override_styles/pressed = ExtResource("5_3nv2j")
-theme_override_styles/hover = ExtResource("6_3gpu8")
-text = "🎡 ROULETTE"
+texture_normal = ExtResource("5_003tf")
+ignore_texture_size = true
+stretch_mode = 6
 
-[node name="Spacer" type="Control" parent="MenuUI/VBox" unique_id=1310940598]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
+[node name="Fallback" type="Panel" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid/BtnExit" unique_id=1506500900]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("sb_fb_cash")
 
-[node name="BtnExit" type="Button" parent="MenuUI/VBox" unique_id=1120425791]
-custom_minimum_size = Vector2(300, 60)
-layout_mode = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = ExtResource("4_ay62c")
-theme_override_styles/pressed = ExtResource("5_3nv2j")
-theme_override_styles/hover = ExtResource("6_3gpu8")
+[node name="Label" type="Label" parent="MenuUI/LeftPanel/InnerPanel/Box/Grid/BtnExit/Fallback" unique_id=1486759359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"KeyLabel"
+theme_override_font_sizes/font_size = 36
 text = "CASH OUT"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="WithdrawalOverlay" type="ColorRect" parent="." unique_id=961546944]
+[node name="WithdrawalOverlay" type="ColorRect" parent="." unique_id=977554903]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -164,87 +313,84 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.9411765)
 
-[node name="PanicLabel" type="Label" parent="WithdrawalOverlay" unique_id=1008966622]
+[node name="PanicLabel" type="Label" parent="WithdrawalOverlay" unique_id=528336295]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_top = 40.0
+offset_bottom = 63.0
 grow_horizontal = 2
-label_settings = SubResource("LabelSettings_gfdq3")
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 
-[node name="IntrusiveThoughtLabel" type="Label" parent="WithdrawalOverlay" unique_id=473879181]
+[node name="IntrusiveThoughtLabel" type="Label" parent="WithdrawalOverlay" unique_id=399696513]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -23.0
+offset_top = -63.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 0
-label_settings = SubResource("LabelSettings_we3b4")
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 28
 horizontal_alignment = 1
 
-[node name="FakeButtonsContainer" type="Control" parent="WithdrawalOverlay" unique_id=1500511829]
+[node name="FakeButtonsContainer" type="Control" parent="WithdrawalOverlay" unique_id=509112046]
+unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="FakeBtn1" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1068426384]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FakeBtn1" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1981385054]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 64.0
 focus_mode = 0
 text = "ONE MORE!"
 
-[node name="FakeBtn2" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=485319030]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FakeBtn2" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1982181125]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 64.0
 focus_mode = 0
 text = "PAPALDO KA!"
 
-[node name="FakeBtn3" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1579206231]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FakeBtn3" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1888123683]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 64.0
 focus_mode = 0
 text = "IISA PA YAN!"
 
-[node name="FakeBtn4" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=2003021630]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FakeBtn4" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=312466021]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 64.0
 focus_mode = 0
 text = "ANO? TARA?"
 
-[node name="FakeBtn5" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=1334773945]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FakeBtn5" type="Button" parent="WithdrawalOverlay/FakeButtonsContainer" unique_id=711183385]
+custom_minimum_size = Vector2(240, 64)
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 64.0
 focus_mode = 0
 text = "PLAY!"
 
-[node name="MovingExitButton" type="Button" parent="WithdrawalOverlay" unique_id=948235342]
-custom_minimum_size = Vector2(200, 60)
+[node name="MovingExitButton" type="Button" parent="WithdrawalOverlay" unique_id=2106561100]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 64)
 layout_mode = 0
-offset_right = 200.0
-offset_bottom = 60.0
-theme_override_colors/font_color = Color(0.6662356, 0.97591084, 0.48894763, 1)
-text = "CONFIRM EXIT
-"
+offset_right = 240.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.2549, 0.7255, 0.6549, 1)
+text = "CONFIRM EXIT"

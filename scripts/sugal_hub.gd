@@ -1,20 +1,22 @@
 # res://scripts/sugal_hub.gd
 extends MinigameBase
 
-@onready var background = $Background
-@onready var game_container = $GameContainer
-@onready var menu_ui = $MenuUI
-@onready var grid_container = $MenuUI/VBox/Grid
-@onready var btn_slots = $MenuUI/VBox/Grid/BtnSlots
-@onready var btn_parlay = $MenuUI/VBox/Grid/BtnParlay
-@onready var btn_roulette = $MenuUI/VBox/Grid/BtnRoulette
-@onready var btn_exit = $MenuUI/VBox/BtnExit
+const SLOTS_SCENE := "res://scenes/minigames/sugal_slots.tscn"
+const PARLAY_SCENE := "res://scenes/minigames/sugal_parlay.tscn"
+const ROULETTE_SCENE := "res://scenes/minigames/sugal_roulette.tscn"
 
-@onready var withdrawal_overlay = $WithdrawalOverlay
-@onready var panic_label = $WithdrawalOverlay/PanicLabel
-@onready var thought_label = $WithdrawalOverlay/IntrusiveThoughtLabel
-@onready var moving_exit_btn = $WithdrawalOverlay/MovingExitButton
-@onready var fake_buttons_container = $WithdrawalOverlay/FakeButtonsContainer
+@onready var game_container: Control = %GameContainer
+@onready var menu_ui: Control = %MenuUI
+@onready var btn_slots: TextureButton = %BtnSlots
+@onready var btn_parlay: TextureButton = %BtnParlay
+@onready var btn_roulette: TextureButton = %BtnRoulette
+@onready var btn_exit: TextureButton = %BtnExit
+
+@onready var withdrawal_overlay: CanvasItem = %WithdrawalOverlay
+@onready var panic_label: Label = %PanicLabel
+@onready var thought_label: Label = %IntrusiveThoughtLabel
+@onready var moving_exit_btn: Button = %MovingExitButton
+@onready var fake_buttons_container: Control = %FakeButtonsContainer
 
 var required_exit_clicks: int = 0
 var current_exit_clicks: int = 0
@@ -44,15 +46,25 @@ func _ready() -> void:
 	show_menu()
 
 func _setup_button_connections() -> void:
-	btn_slots.pressed.connect(_on_game_selected.bind("res://scenes/minigames/sugal_slots.tscn"))
-	btn_parlay.pressed.connect(_on_game_selected.bind("res://scenes/minigames/sugal_parlay.tscn"))
-	btn_roulette.pressed.connect(_on_game_selected.bind("res://scenes/minigames/sugal_roulette.tscn"))
+	btn_slots.pressed.connect(_on_game_selected.bind(SLOTS_SCENE))
+	btn_parlay.pressed.connect(_on_game_selected.bind(PARLAY_SCENE))
+	btn_roulette.pressed.connect(_on_game_selected.bind(ROULETTE_SCENE))
 	btn_exit.pressed.connect(_on_cash_out_pressed)
 	
-	var all_btns = [btn_slots, btn_parlay, btn_roulette, btn_exit]
-	for btn in all_btns:
-		btn.button_down.connect(func(): btn.add_theme_color_override("font_color", Color.BLACK))
-		btn.button_up.connect(func(): btn.remove_theme_color_override("font_color"))
+	for tile in [btn_slots, btn_parlay, btn_roulette, btn_exit]:
+		_setup_tile(tile)
+
+# Picture tiles: hide the colored placeholder once a Texture Normal is set, add a hover pop
+func _setup_tile(tile: TextureButton) -> void:
+	var fallback = tile.get_node_or_null("Fallback")
+	if fallback:
+		fallback.visible = tile.texture_normal == null
+	tile.pivot_offset = tile.custom_minimum_size / 2.0
+	tile.mouse_entered.connect(_tile_scale.bind(tile, 1.05))
+	tile.mouse_exited.connect(_tile_scale.bind(tile, 1.0))
+
+func _tile_scale(tile: Control, amount: float) -> void:
+	create_tween().tween_property(tile, "scale", Vector2(amount, amount), 0.12)
 
 func _setup_withdrawal_system() -> void:
 	move_timer = Timer.new()
@@ -73,21 +85,27 @@ func show_menu() -> void:
 
 func _on_game_selected(scene_path: String) -> void:
 	AudioManager.play_sfx("sfx_ui_click")
+	if is_instance_valid(active_game_instance):
+		return
 	if ResourceLoader.exists(scene_path):
 		var game_scene = load(scene_path)
 		active_game_instance = game_scene.instantiate()
 		if "hub_controller" in active_game_instance:
 			active_game_instance.hub_controller = self
+		else:
+			push_warning("SugalHub: " + scene_path + " has no hub_controller variable, LOBBY won't work")
 		game_container.add_child(active_game_instance)
 		menu_ui.hide()
 	else:
+		push_error("SugalHub: scene not found -> " + scene_path)
 		AudioManager.play_sfx("sfx_error_buzz")
 		_shake_ui(menu_ui)
 
 func return_to_menu() -> void:
-	if active_game_instance:
+	print("SugalHub: return_to_menu() called")
+	if is_instance_valid(active_game_instance):
 		active_game_instance.queue_free()
-		active_game_instance = null
+	active_game_instance = null
 	show_menu()
 
 func get_rigging_rtp() -> float:
@@ -104,13 +122,13 @@ func get_rigging_rtp() -> float:
 		4: win_chance = 0.10  # brutal drought
 		5: win_chance = 0.10  # still nothing
 		6: win_chance = 0.10  # rock bottom
-		7: win_chance = 0.35  # tease — feels like it's coming back
-		8: win_chance = 0.20  # rug pull — false hope crushed
+		7: win_chance = 0.35  # tease, feels like it's coming back
+		8: win_chance = 0.20  # rug pull, false hope crushed
 		9: win_chance = 0.65  # strong close so cycle 2 feels promising
 		_: win_chance = 0.10
 
 	if randf() < win_chance:
-		return 1.5  # win — whatever your standard payout multiplier is
+		return 1.5  # win, whatever your standard payout multiplier is
 	return 0.0      # loss
 
 func increment_play_count() -> void:
@@ -147,10 +165,10 @@ func _on_cash_out_pressed() -> void:
 
 func _move_all_buttons() -> void:
 	var screen_size = get_viewport().get_visible_rect().size
-	moving_exit_btn.position = Vector2(randf_range(50, screen_size.x - 200), randf_range(100, screen_size.y - 100))
+	moving_exit_btn.position = Vector2(randf_range(50, screen_size.x - 300), randf_range(160, screen_size.y - 140))
 	for fake_btn in fake_buttons_container.get_children():
 		if fake_btn is Button:
-			fake_btn.position = Vector2(randf_range(50, screen_size.x - 200), randf_range(100, screen_size.y - 100))
+			fake_btn.position = Vector2(randf_range(50, screen_size.x - 300), randf_range(160, screen_size.y - 140))
 
 func _on_moving_exit_pressed() -> void:
 	AudioManager.play_sfx("sfx_ui_click")
